@@ -1,0 +1,31 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace AirBNB.Models
+{
+    public class Host
+    {
+        private int numOfApartments;
+        private int totalIncome;
+        private int numOfCancelation;
+        private int id;
+        private string name;
+
+        public Host(int numOfApartments, int totalIncome, int numOfCancelation, int id, string name)
+        {
+            this.numOfApartments = numOfApartments;
+            this.totalIncome = totalIncome;
+            this.numOfCancelation = numOfCancelation;
+            this.id = id;
+            this.name = name;
+        }
+
+        public static int NumOfApartments { get => numOfApartments; set => numOfApartments = value; }
+        public static int TotalIncome { get => totalIncome; set => totalIncome = value; }
+        public static int NumOfCancelation { get => numOfCancelation; set => numOfCancelation = value; }
+        public int Id { get => id; set => id = value; }
+        public string Name { get => name; set => name = value; }
+    }
+}
