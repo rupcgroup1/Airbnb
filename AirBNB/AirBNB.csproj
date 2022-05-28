@@ -263,6 +263,7 @@
     <Content Include="site\images\agent-2.jpg" />
     <Content Include="site\images\ajax-loader.gif" />
     <Content Include="site\images\bg-clients.jpg" />
+    <Content Include="site\images\logo-1.png" />
     <Content Include="site\images\catalog_list-1.jpg" />
     <Content Include="site\images\catalog_list-2.jpg" />
     <Content Include="site\images\catalog_list-3.jpg" />
@@ -377,7 +378,6 @@
     <Content Include="site\images\left_sidebar_blog-7.jpg" />
     <Content Include="site\images\left_sidebar_blog-8.jpg" />
     <Content Include="site\images\loading.gif" />
-    <Content Include="site\images\logo-1.png" />
     <Content Include="site\images\logo-2.png" />
     <Content Include="site\images\photoswipe-controls.png" />
     <Content Include="site\images\post_page-1.jpg" />
