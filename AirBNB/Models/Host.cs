@@ -22,9 +22,9 @@ namespace AirBNB.Models
             this.name = name;
         }
 
-        public static int NumOfApartments { get => numOfApartments; set => numOfApartments = value; }
-        public static int TotalIncome { get => totalIncome; set => totalIncome = value; }
-        public static int NumOfCancelation { get => numOfCancelation; set => numOfCancelation = value; }
+        public  int NumOfApartments { get => numOfApartments; set => numOfApartments = value; }
+        public  int TotalIncome { get => totalIncome; set => totalIncome = value; }
+        public  int NumOfCancelation { get => numOfCancelation; set => numOfCancelation = value; }
         public int Id { get => id; set => id = value; }
         public string Name { get => name; set => name = value; }
     }

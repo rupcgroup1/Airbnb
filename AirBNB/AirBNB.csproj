@@ -160,6 +160,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Apartment.cs" />
+    <Compile Include="Models\Host.cs" />
+    <Compile Include="Models\Review.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -173,6 +177,7 @@
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Models\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Pages\Another.html" />
     <Content Include="Pages\Try.html" />
     <Content Include="Scripts\bootstrap.js" />
@@ -196,6 +201,10 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <Content Include="Models\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Models\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Models\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Models\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -842,7 +851,6 @@
     <Folder Include="AirBNB\Models\" />
     <Folder Include="AirBNB\obj\Debug\TempPE\" />
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
