@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AirBNB.Models.DAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -27,9 +28,10 @@ namespace AirBNB.Models
         private double y;
         private string city;
         private string address;
+        private double reviewsScore;
         //private Review[] reviews;
 
-        public Apartment(int id, string description, string name, int hostID, string existSince, string pic, string propType, int bedrooms, string bathrooms_text, int beds, int price, int minNights, int maxNights, int numOfReviews, string amenities, string aboutHost, double x, double y, string city, string address)
+        public Apartment(int id, string description, string name, int hostID, string existSince, string pic, string propType, int bedrooms, string bathrooms_text, int beds, int price, int minNights, int maxNights, int numOfReviews, string amenities, string aboutHost, double x, double y, string city, string address, double reviewsScore)
         {
             this.Id = id;
             this.Description = description;
@@ -51,6 +53,7 @@ namespace AirBNB.Models
             this.Y = y;
             this.City = city;
             this.Address = address;
+            this.ReviewsScore = reviewsScore;
         }
 
         public Apartment()
@@ -79,7 +82,8 @@ namespace AirBNB.Models
         public double Y { get => y; set => y = value; }
         public string City { get => city; set => city = value; }
         public string Address { get => address; set => address = value; }
-        
+        public double ReviewsScore { get => reviewsScore; set => reviewsScore = value; }
+
 
         //Getting a tiny apartments list to show in home page.
         public List<Apartment> getTinyList()

@@ -161,6 +161,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Apartment.cs" />
+    <Compile Include="Models\DAL\DataServices.cs" />
     <Compile Include="Models\Host.cs" />
     <Compile Include="Models\Review.cs" />
     <Compile Include="Models\User.cs" />
