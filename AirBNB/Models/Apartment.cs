@@ -58,6 +58,7 @@ namespace AirBNB.Models
 
         }
 
+        /// Getters & Setters
         public int Id { get => id; set => id = value; }
         public string Description { get => description; set => description = value; }
         public string Name { get => name; set => name = value; }
@@ -80,7 +81,13 @@ namespace AirBNB.Models
         public string Address { get => address; set => address = value; }
         
 
-
+        //Getting a tiny apartments list to show in home page.
+        public List<Apartment> getTinyList()
+        {
+            DataServices ds = new DataServices();
+            return ds.getTinyList();
+             
+        }
 
     }
 }
