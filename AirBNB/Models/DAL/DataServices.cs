@@ -41,28 +41,16 @@ namespace AirBNB.Models.DAL
             
             while (dr.Read())
             {
-                int id = Convert.ToInt16(dr["id"]);
-                string description = dr["description"].ToString();
+                int id = Convert.ToInt32(dr["id"]);
                 string name = dr["name"].ToString();
-                int hostId = Convert.ToInt16(dr["hostId"]);
-                string existSince = dr["existSince"].ToString();
-                string pic = dr["pic"].ToString();
-                string propType = dr["propType"].ToString(); 
-                int bedrooms = Convert.ToInt16(dr["bedrooms"]);
-                string bathrooms_text = dr["bathrooms_text"].ToString();
-                int beds = Convert.ToInt16(dr["beds"]);
+                string description = dr["description"].ToString();
+                string picture = dr["picture"].ToString();
+                string hostNeighbourhood = dr["hostNeighbourhood"].ToString();
+                string location = dr["location"].ToString();
                 int price = Convert.ToInt16(dr["price"]);
-                string address = dr["address"].ToString();
-                string city = dr["city"].ToString();
-                double x = Convert.ToDouble(dr["x"]);
-                double y = Convert.ToDouble(dr["y"]);
-                string aboutHost = dr["aboutHost"].ToString();
-                string amenities = dr["amenities"].ToString();
                 int numOfReviews = Convert.ToInt16(dr["numOfReviews"]);
-                int maxNights = Convert.ToInt16(dr["maxNights"]);
-                int minNights = Convert.ToInt16(dr["minNights"]);
-                double ReviewsScore = Convert.ToDouble(dr["ReviewsScore"]);
-                tinyList.Add(new Apartment(id,description,name,hostId,existSince,pic,propType,bedrooms,bathrooms_text,beds,price,minNights,maxNights,numOfReviews,amenities,aboutHost,x,y,city,address, ReviewsScore));
+                int reviewRating = Convert.ToInt16(dr["reviewRating"]);
+                tinyList.Add(new Apartment(id,name, description, picture, hostNeighbourhood, location, price, numOfReviews, reviewRating));
             }
 
             con.Close();
