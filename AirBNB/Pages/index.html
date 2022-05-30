@@ -32,10 +32,18 @@
 
         function successCB(apartments) {
             console.log(apartments);
+            render();
         }
 
         function errorCB(error) {
 
+        }
+
+        function render() {
+            let parent = $('.row .clearleft-custom');
+            parent.children('div').each(function () {
+                console.log(1);
+            });
         }
 
 
