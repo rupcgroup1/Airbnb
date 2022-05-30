@@ -5,6 +5,11 @@
         .thumbnail .img-link, .img-thumbnail-variant-1 img, .img-thumbnail-variant-1 .caption {
             border-radius: 20px;
         }
+
+        .img-link {
+            width:370px;
+            height:250px;
+        }
     </style>
 
     <!-- Site Title-->
@@ -32,20 +37,33 @@
 
         function successCB(apartments) {
             console.log(apartments);
-            render();
+            render(apartments);
         }
 
         function errorCB(error) {
 
         }
 
-        function render() {
-            //let parent = $('.row .clearleft-custom');
-            let parent = $('#tamir').find('.row .clearleft-custom');
-            //שורה 473
-            console.log(parent);
-            parent.children('div').each(function () {
+        function render(apartments) {
+
+            arrImgs = $('.thumbnail-3.thumbnail img');
+            arrDivs = $('.thumbnail-3.thumbnail .caption');
+
+            for (i in apartments) {
+
+                let img = arrImgs.eq(i);
+                img.attr("src", apartments[i].Picture);
+
+                let div = arrDivs.eq(i);
+                let str = apartments[i].Price + '$/<span class="mon text-regular">month</span>';
+                console.log(div.find('.thumbnail-price .h5'))
+                div.find('span').first().html(str);
+            }
+
+            // not working :(
+            $('.thumbnail-3.thumbnail').each(function () {
                 console.log(1);
+
             });
         }
 
