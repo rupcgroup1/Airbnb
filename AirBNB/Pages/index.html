@@ -87,7 +87,12 @@
 
             });
         }
-        function renderTopPage(apartments) {            $('.price').html(apartments[6].Price + '$<span>/night</span>');            $('.h3').html(apartments[6].Name);            $('.swiper-caption-wrap').find('p').last().html(renderDescription(apartments[6].Description, 10));             $('.swiper-slide').css("background-image", 'url("'+apartments[6].Picture+'")');        }
+        function renderTopPage(apartments) {
+            $('.price').html(apartments[6].Price + '$<span>/night</span>');
+            $('.h3').html(apartments[6].Name);
+            $('.swiper-caption-wrap').find('p').last().html(renderDescription(apartments[6].Description, 10)); 
+            $('.swiper-slide').css("background-image", 'url("'+apartments[6].Picture+'")');
+        }
 
         function renderDescription(des,size) {
             let words = des.split(' ');
@@ -124,7 +129,7 @@
                 img.attr("src", apartmentCatgeories[i].Picture);
                 let div = arrDivs.eq(i);
                 div.find('h4').html(apartmentCatgeories[i].PropertyType);
-                div.find('p').html(apartmentCatgeories[i].Count);
+                div.find('p').html(apartmentCatgeories[i].Count + " Properties");
                 count += apartmentCatgeories[i].Count;
                 size += apartmentCatgeories[i].Count;
             }
@@ -134,8 +139,8 @@
             let img = arr_aTags.eq(3).find('img');
             img.attr("src", apartmentCatgeories[3].Picture);
             let div = arrDivs.eq(3);
-            div.find('h4').html("Other");
-            div.find('p').html(size - count);
+            div.find('h4').html("Other" );
+            div.find('p').html((size - count) + " Properties");
         }
 
 
@@ -758,143 +763,8 @@
             </div>
           </div>
         </section>
-        <!--Section our team-->
-        <section class="section-lg">
-          <div class="container">
-            <h2>Our Real Estate Agents</h2>
-            <hr>
-            <!-- Owl Carousel-->
-            <div class="owl-carousel owl-carousel-mod-3" data-items="1" data-sm-items="2" data-md-items="2" data-lg-items="3" data-stage-padding="0" data-loop="false" data-margin="30" data-autoplay="true" data-owl='{"dots":true}'>
-              <div class="team-member">
-                <div class="media media-mod-3">
-                  <divquote class="quote">
-                  <div class="img-wrap"><img src="images/index-17.jpg" alt="" width="50" height="50"></div>
-                  <cite class="text-start"><span class="h6 text-primary text-ubold">Richard Santos</span><span class="text-lightest">Web Designer, New York</span></cite>
-                  <p>
-                    <q>I just don't know how to describe your services... They are extraordinary! I am quite happy with them! Just keep up going this way!</q>
-                  </p>
-                </blockquote>
-              </div>
-              <div class="col-12 col-md-6">
-                <blockquote class="quote">
-                  <div class="img-wrap"><img src="images/index-18.jpg" alt="" width="50" height="50"></div>
-                  <cite class="text-start"><span class="h6 text-primary text-ubold">Diana Valdez</span><span class="text-lightest">Teacher, San Diego</span></cite>
-                  <p>
-                    <q>Thank you very much. I'm impressed with your service. I've already told my friends about your company and your quick response, thanks again!</q>
-                  </p>
-                </blockquote>
-              </div>
-              <div class="col-12 col-md-6">
-                <blockquote class="quote">
-                  <div class="img-wrap"><img src="images/client-1.jpg" alt="" width="50" height="50"></div>
-                  <cite class="text-start"><span class="h6 text-primary text-ubold">George Ortega</span><span class="text-lightest">Manager, New York</span></cite>
-                  <p>
-                    <q>Great organization! Your prompt answer became a pleasant surprise for me. You`ve rendered an invaluable service! Thank you very much!</q>
-                  </p>
-                </blockquote>
-              </div>
-              <div class="col-12"><a class="btn btn-sushi btn-sm" href="#">read more testimonials</a></div>
-            </div>
-          </div>
-        </section>
+       
       </main>
-      <!-- Page Footer-->
-      <footer class="page-foot text-start bg-gray">
-        <section class="footer-content">
-          <div class="container">
-            <div class="row flow-offset-3">
-              <div class="col-12 col-md-6 col-xl-3">
-                <div class="rd-navbar-brand"><a class="brand-name" href="index.html"><img src="images/logo-2.png" alt=""></a></div>
-                <p>We believe in Simple, Creative & Flexible Design Standards.</p>
-                <address class="address">
-                  <dl>
-                    <dt>Headquarters:</dt>
-                    <dd>795 Folsom Ave, Suite 600 San Francisco, CA 94107</dd>
-                  </dl>
-                  <dl class="dl-horizontal-mod-1">
-                    <dt>Phone</dt>
-                    <dd><a class="text-primary" href="callto:#">(91) 8547 632521</a></dd>
-                  </dl>
-                  <dl class="dl-horizontal-mod-1">
-                    <dt>Fax</dt>
-                    <dd><a class="text-primary" href="callto:#">(91) 11 4752 1433</a></dd>
-                  </dl>
-                  <dl class="dl-horizontal-mod-1">
-                    <dt>Email</dt>
-                    <dd><a class="text-primary" href="mailto:#">info@canvas.com</a></dd>
-                  </dl>
-                </address>
-              </div>
-              <div class="col-12 col-md-6 col-xl-3">
-                <h6 class="text-ubold">Blogroll</h6>
-                <ul class="list-marked well6 text-start">
-                  <li><a href="#">Documentation</a></li>
-                  <li><a href="#">Feedback</a></li>
-                  <li><a href="#">Plugins</a></li>
-                  <li><a href="#">Support Forums</a></li>
-                  <li><a href="#">Themes</a></li>
-                  <li><a href="#">WordPress Blog</a></li>
-                  <li><a href="#">WordPress Planet</a></li>
-                </ul>
-              </div>
-              <div class="col-12 col-md-6 col-xl-3">
-                <h6 class="text-ubold">Recent posts</h6>
-                <div class="blog-post text-start">
-                  <div class="blog-post-title"><a class="text-primary" href="blog_post.html">Believe in the Business of Your Dreams</a></div>
-                  <div class="blog-post-time">
-                    <time class="small" datetime="2016">December 28, 2016</time>
-                  </div>
-                </div>
-                <div class="blog-post text-start">
-                  <div class="blog-post-title"><a class="text-primary" href="blog_post.html">Establishing Your Brand on College Campuses</a></div>
-                  <div class="blog-post-time">
-                    <time class="small" datetime="2016">December 28, 2016</time>
-                  </div>
-                </div>
-                <div class="blog-post text-start">
-                  <div class="blog-post-title"><a class="text-primary" href="blog_post.html">Beautiful Rumi Quotes that are Worth Reading</a></div>
-                  <div class="blog-post-time">
-                    <time class="small" datetime="2016">December 28, 2016</time>
-                  </div>
-                </div>
-              </div>
-              <div class="col-12 col-md-6 col-xl-3">
-                <h6 class="text-ubold">Newsletter</h6>
-                <p class="text-gray">Enter your email address to receive all news, updates on new arrivals, special offers and other information.</p>
-                <!-- RD Mailform-->
-                <form class="rd-mailform text-start subscribe" data-form-output="form-output-global" data-form-type="subscribe" method="post" action="bat/rd-mailform.php">
-                  <div class="form-wrap">
-                    <label class="form-label" for="email-sub"></label>
-                    <input class="form-input" id="email-sub" type="email" name="email" data-constraints="@Required @Email" placeholder="Enter e-mail">
-                  </div>
-                  <button class="btn btn-sushi btn-sm">subscribe</button>
-                </form>
-              </div>
-            </div>
-          </div>
-        </section>
-        <section class="copyright">
-          <div class="container">
-            <div class="row row-30 justify-content-between">
-              <div class="col-md-auto">
-                <p>&#169;<span class="copyright-year">All Rights Reserved</span><a href="terms.html">Terms of Use and Privacy Policy</a></p>
-              </div>
-              <div class="col-md-auto">
-                <ul class="list-inline">
-                  <li><a class="fa-facebook" href="#"></a></li>
-                  <li><a class="fa-twitter" href="#"></a></li>
-                  <li><a class="fa-pinterest-p" href="#"></a></li>
-                  <li><a class="fa-vimeo" href="#"></a></li>
-                  <li><a class="fa-google" href="#"></a></li>
-                  <li><a class="fa-rss" href="#"></a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </section>
-        <!-- Rd Mailform result field-->
-        <div class="rd-mailform-validate"></div>
-      </footer>
     </div>
     <!-- Global Mailform Output-->
     <div class="snackbars" id="form-output-global"></div>
