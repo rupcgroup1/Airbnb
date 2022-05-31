@@ -79,7 +79,7 @@ namespace AirBNB.Models
             this.reviewLocation = reviewLocation;
             this.numOfRentals = 0;
             this.numOfCancel = 0;
-            count = -1; //not from used apartment
+            Count = -1; //not from used apartment
         }
 
         // for first render.
@@ -100,7 +100,7 @@ namespace AirBNB.Models
         {
             this.propertyType = propertyType;
             this.picture = picture;
-            this.count = count;
+            this.Count = count;
         }
 
         public int Id { get => id; set => id = value; }
@@ -133,8 +133,9 @@ namespace AirBNB.Models
         public int NumOfRentals { get => numOfRentals; set => numOfRentals = value; }
         public int NumOfCancel { get => numOfCancel; set => numOfCancel = value; }
         public string Since { get => since; set => since = value; }
+        public int Count { get => count; set => count = value; }
 
-        
+
         //Getting a tiny apartments list to show in home page.
         public List<Apartment> getTinyList()
         {

@@ -10,6 +10,11 @@
             width:370px;
             height:250px;
         }
+
+        .img-thumbnail-variant-1 img {
+            width: 570px;
+            height: 380px;
+        }
     </style>
 
     <!-- Site Title-->
@@ -33,8 +38,8 @@
         $(document).ready(function () {
             api = `../api/Apartments/tinyGet`;
             ajaxCall("GET", api, "", successCB, errorCB);
-            apiPopular = "../api/"
-            ajaxCall("GET", apiPopular, successPopularCB, errorPopularCB);
+            apiPopular = `../api/Apartments/propertyTypeGet`;
+            ajaxCall("GET", apiPopular,"", successPopularCB, errorPopularCB);
         });
 
         function successCB(apartments) {
@@ -48,25 +53,8 @@
         }
 
         function successPopularCB(apartmentCatgeories) {
-            console.log(apartmentCatgeories)
-            arrImgs = $('.img-thumbnail-variant-1').find('img');      // catch all categories imgs.
-            arrDivs = $('.img-thumbnail-variant-1 .caption'); // catch all apartments description divs.
-            count = 0;
-            for (var i = 0; i < 3; i++) {
-
-                let img = arrImgs.eq(i);
-                img.attr("src", apartmentCatgeories[i].Picture);
-                let div = arrDivs.eq(i);
-                div.find('h4').html(apartmentCatgeories[i].PropertyType);
-                div.find('p').html(apartmentCatgeories[i].Count);
-                count += apartmentCatgeories[i].Count;
-            }
-            let img = arrImgs.eq(i);
-            img.attr("src", apartmentCatgeories[3].Picture);
-            let div = arrDivs.eq(i);
-            div.find('h4').html("Other");
-            div.find('p').html(100 - count);
-
+            console.log(apartmentCatgeories);
+            renderPropertyType(apartmentCatgeories);
         }
 
         function errorPopularCB(error) {
@@ -122,6 +110,32 @@
             if (i > 0.5)
                 str += '<span class="fa-star-half"></span>';
             return str;
+        }
+
+        function renderPropertyType(apartmentCatgeories) {
+            let arr_aTags = $('.img-thumbnail-variant-1');      // catch all categories imgs.
+            let arrDivs = $('.img-thumbnail-variant-1 .caption'); // catch all apartments description divs.
+            let count = 0;
+            let size = 0;
+            for (var i = 0; i < 3; i++) {
+
+                let img = arr_aTags.eq(i).find('img');
+                console.log(img);
+                img.attr("src", apartmentCatgeories[i].Picture);
+                let div = arrDivs.eq(i);
+                div.find('h4').html(apartmentCatgeories[i].PropertyType);
+                div.find('p').html(apartmentCatgeories[i].Count);
+                count += apartmentCatgeories[i].Count;
+                size += apartmentCatgeories[i].Count;
+            }
+            for (var i = 3; i < apartmentCatgeories.length; i++) {
+                size += apartmentCatgeories[i].Count;
+            }
+            let img = arr_aTags.eq(3).find('img');
+            img.attr("src", apartmentCatgeories[3].Picture);
+            let div = arrDivs.eq(3);
+            div.find('h4').html("Other");
+            div.find('p').html(size - count);
         }
 
 
@@ -493,25 +507,25 @@
             <h2>Popular categories</h2>
             <hr>
             <div class="row offset-custom-11">
-              <div class="col-12 col-md-6"><a class="img-thumbnail-variant-1" href="property-catalog-single.html"><img src="images/categories-1.jpg" alt="" width="570" height="380">
+              <div class="col-12 col-md-6"><a class="img-thumbnail-variant-1" href="property-catalog-single.html"><img src="" alt="" width="570" height="380">
                   <div class="caption">
-                    <h4 class="text-white">Studio Apartments</h4>
-                    <p>54 properties</p>
+                    <h4 class="text-white">s</h4>
+                    <p></p>
                   </div></a></div>
-              <div class="col-12 col-md-6"><a class="img-thumbnail-variant-1" href="property-catalog-single.html"><img src="images/categories-2.jpg" alt="" width="570" height="380">
+              <div class="col-12 col-md-6"><a class="img-thumbnail-variant-1" href="property-catalog-single.html"><img src="" alt="" width="570" height="380">
                   <div class="caption">
-                    <h4 class="text-white">Luxury Houses</h4>
-                    <p>36 properties</p>
+                    <h4 class="text-white"></h4>
+                    <p></p>
                   </div></a></div>
-              <div class="col-12 col-md-6"><a class="img-thumbnail-variant-1" href="property-catalog-single.html"><img src="images/categories-3.jpg" alt="" width="570" height="380">
+              <div class="col-12 col-md-6"><a class="img-thumbnail-variant-1" href="property-catalog-single.html"><img src="" alt="" width="570" height="380">
                   <div class="caption">
-                    <h4 class="text-white">Cozy Houses</h4>
-                    <p>61 properties</p>
+                    <h4 class="text-white"></h4>
+                    <p></p>
                   </div></a></div>
-              <div class="col-12 col-md-6"><a class="img-thumbnail-variant-1" href="property-catalog-single.html"><img src="images/categories-4.jpg" alt="" width="570" height="380">
+              <div class="col-12 col-md-6"><a class="img-thumbnail-variant-1" href="property-catalog-single.html"><img src="" alt="" width="570" height="380">
                   <div class="caption">
-                    <h4 class="text-white">With Swimming Pool</h4>
-                    <p>24 properties</p>
+                    <h4 class="text-white"></h4>
+                    <p></p>
                   </div></a></div>
             </div>
           </div>
@@ -753,151 +767,7 @@
             <div class="owl-carousel owl-carousel-mod-3" data-items="1" data-sm-items="2" data-md-items="2" data-lg-items="3" data-stage-padding="0" data-loop="false" data-margin="30" data-autoplay="true" data-owl='{"dots":true}'>
               <div class="team-member">
                 <div class="media media-mod-3">
-                  <div class="media-left img-width-auto"><img src="images/agency-2.jpg" alt="" width="100" height="100"></div>
-                  <div class="media-body">
-                    <h5 class="text-sushi">Heather Turner</h5>
-                    <p>Listing Agent</p>
-                    <dl class="dl-horizontal-mod-1 text-ubold text-abbey">
-                      <dt>tel.</dt>
-                      <dd><a href="callto:#">1-800-1234-567</a></dd>
-                    </dl>
-                  </div>
-                </div>
-                <p>She is our leading specialist in everything concerning Real Estate and property management.</p><a class="btn btn-sm btn-primary" href="agent-personal.html">Get in touch</a>
-              </div>
-              <div class="team-member">
-                <div class="media media-mod-3">
-                  <div class="media-left img-width-auto"><img src="images/agency-3.jpg" alt="" width="100" height="100"></div>
-                  <div class="media-body">
-                    <h5 class="text-sushi">Keith Howard</h5>
-                    <p>Listing Agent</p>
-                    <dl class="dl-horizontal-mod-1 text-ubold text-abbey">
-                      <dt>tel.</dt>
-                      <dd><a href="callto:#">1-800-1234-567</a></dd>
-                    </dl>
-                  </div>
-                </div>
-                <p>He is our leading specialist in everything concerning Real Estate and property management.</p><a class="btn btn-sm btn-primary" href="agent-personal.html">Get in touch</a>
-              </div>
-              <div class="team-member">
-                <div class="media media-mod-3">
-                  <div class="media-left img-width-auto"><img src="images/agency-4.jpg" alt="" width="100" height="100"></div>
-                  <div class="media-body">
-                    <h5 class="text-sushi">Keith Howard</h5>
-                    <p>Listing Agent</p>
-                    <dl class="dl-horizontal-mod-1 text-ubold text-abbey">
-                      <dt>tel.</dt>
-                      <dd><a href="callto:#">1-800-1234-567</a></dd>
-                    </dl>
-                  </div>
-                </div>
-                <p>He is our leading specialist in everything concerning Real Estate and property management.</p><a class="btn btn-sm btn-primary" href="agent-personal.html">Get in touch</a>
-              </div>
-              <div class="team-member">
-                <div class="media media-mod-3">
-                  <div class="media-left img-width-auto"><img src="images/agency-5.jpg" alt="" width="100" height="100"></div>
-                  <div class="media-body">
-                    <h5 class="text-sushi">Crystal Martinez</h5>
-                    <p>Listing Agent</p>
-                    <dl class="dl-horizontal-mod-1 text-ubold text-abbey">
-                      <dt>tel.</dt>
-                      <dd><a href="callto:#">1-800-1234-567</a></dd>
-                    </dl>
-                  </div>
-                </div>
-                <p>She is our leading specialist in everything concerning Real Estate and property management.</p><a class="btn btn-sm btn-primary" href="agent-personal.html">Get in touch</a>
-              </div>
-              <div class="team-member">
-                <div class="media media-mod-3">
-                  <div class="media-left img-width-auto"><img src="images/agency-6.jpg" alt="" width="100" height="100"></div>
-                  <div class="media-body">
-                    <h5 class="text-sushi">Brittany Long</h5>
-                    <p>Listing Agent</p>
-                    <dl class="dl-horizontal-mod-1 text-ubold text-abbey">
-                      <dt>tel.</dt>
-                      <dd><a href="callto:#">1-800-1234-567</a></dd>
-                    </dl>
-                  </div>
-                </div>
-                <p>She is our leading specialist in everything concerning Real Estate and property management.</p><a class="btn btn-sm btn-primary" href="agent-personal.html">Get in touch</a>
-              </div>
-              <div class="team-member">
-                <div class="media media-mod-3">
-                  <div class="media-left img-width-auto"><img src="images/agency-7.jpg" alt="" width="100" height="100"></div>
-                  <div class="media-body">
-                    <h5 class="text-sushi">Rebecca King</h5>
-                    <p>Listing Agent</p>
-                    <dl class="dl-horizontal-mod-1 text-ubold text-abbey">
-                      <dt>tel.</dt>
-                      <dd><a href="callto:#">1-800-1234-567</a></dd>
-                    </dl>
-                  </div>
-                </div>
-                <p>She is our leading specialist in everything concerning Real Estate and property management.</p><a class="btn btn-sm btn-primary" href="agent-personal.html">Get in touch</a>
-              </div>
-              <div class="team-member">
-                <div class="media media-mod-3">
-                  <div class="media-left img-width-auto"><img src="images/agency-2.jpg" alt="" width="100" height="100"></div>
-                  <div class="media-body">
-                    <h5 class="text-sushi">Heather Turner</h5>
-                    <p>Listing Agent</p>
-                    <dl class="dl-horizontal-mod-1 text-ubold text-abbey">
-                      <dt>tel.</dt>
-                      <dd><a href="callto:#">1-800-1234-567</a></dd>
-                    </dl>
-                  </div>
-                </div>
-                <p>She is our leading specialist in everything concerning Real Estate and property management.</p><a class="btn btn-sm btn-primary" href="agent-personal.html">Get in touch</a>
-              </div>
-              <div class="team-member">
-                <div class="media media-mod-3">
-                  <div class="media-left img-width-auto"><img src="images/agency-3.jpg" alt="" width="100" height="100"></div>
-                  <div class="media-body">
-                    <h5 class="text-sushi">Keith Howard</h5>
-                    <p>Listing Agent</p>
-                    <dl class="dl-horizontal-mod-1 text-ubold text-abbey">
-                      <dt>tel.</dt>
-                      <dd><a href="callto:#">1-800-1234-567</a></dd>
-                    </dl>
-                  </div>
-                </div>
-                <p>He is our leading specialist in everything concerning Real Estate and property management.</p><a class="btn btn-sm btn-primary" href="agent-personal.html">Get in touch</a>
-              </div>
-              <div class="team-member">
-                <div class="media media-mod-3">
-                  <div class="media-left img-width-auto"><img src="images/agency-4.jpg" alt="" width="100" height="100"></div>
-                  <div class="media-body">
-                    <h5 class="text-sushi">Keith Howard</h5>
-                    <p>Listing Agent</p>
-                    <dl class="dl-horizontal-mod-1 text-ubold text-abbey">
-                      <dt>tel.</dt>
-                      <dd><a href="callto:#">1-800-1234-567</a></dd>
-                    </dl>
-                  </div>
-                </div>
-                <p>He is our leading specialist in everything concerning Real Estate and property management.</p><a class="btn btn-sm btn-primary" href="agent-personal.html">Get in touch</a>
-              </div>
-            </div>
-          </div>
-        </section>
-        <!--Section Testimonials-->
-        <section class="section-lg text-center text-md-start bg-clients">
-          <div class="container">
-            <h2 class="text-white">Testimonials</h2>
-            <hr>
-            <!-- Owl Carousel-->
-            <div class="row flow-offset-1 clearleft-custom-2">
-              <div class="col-12 col-md-6">
-                <blockquote class="quote">
-                  <div class="img-wrap"><img src="images/index-16.jpg" alt="" width="50" height="50"></div>
-                  <cite class="text-start"><span class="h6 text-primary text-ubold">Laura Russell</span><span class="text-lightest">Journalist, San Diego</span></cite>
-                  <p>
-                    <q class="text-white">Thank you for your prompt response and the help that you gave me. You always have a quick solution to any problem. What an excellent level of customer service!</q>
-                  </p>
-                </blockquote>
-              </div>
-              <div class="col-12 col-md-6">
-                <blockquote class="quote">
+                  <divquote class="quote">
                   <div class="img-wrap"><img src="images/index-17.jpg" alt="" width="50" height="50"></div>
                   <cite class="text-start"><span class="h6 text-primary text-ubold">Richard Santos</span><span class="text-lightest">Web Designer, New York</span></cite>
                   <p>
