@@ -12,11 +12,18 @@ namespace AirBNB.Controllers
     {
         [HttpGet]
         [Route("api/Apartments/tinyGet")]
-        public List<Apartment> Get()
+        public List<Apartment> tinyGet()
         {
             Apartment apartment = new Apartment();
             return apartment.getTinyList();
-            
+        }
+
+        [HttpGet]
+        [Route("api/Apartments/propertyTypeGet")]
+        public List<Apartment> propertyTypeGet()
+        {
+            Apartment apartment = new Apartment();
+            return apartment.getAllPropertyType();
         }
 
         // GET api/<controller>/5

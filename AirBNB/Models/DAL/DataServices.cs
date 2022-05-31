@@ -70,5 +70,76 @@ namespace AirBNB.Models.DAL
 
             return command;
         }
+
+        public List<Apartment> getAllPropertyType()
+        {
+            SqlConnection con = Connect();
+
+            // Create Command
+            SqlCommand command = CreateSelectgetAllPropertyTypeCommand(con);
+
+            SqlDataReader dr = command.ExecuteReader(CommandBehavior.CloseConnection);
+
+            List<Apartment> list = new List<Apartment>();
+
+
+            while (dr.Read())
+            {
+                string propertyType = dr["propertyType"].ToString();
+                int count = Convert.ToInt16(dr["count"]);
+                string picture = getPicturePropertyType(propertyType);
+                list.Add(new Apartment(propertyType,count,picture));
+            }
+
+            con.Close();
+            return list;
+        }
+
+        private SqlCommand CreateSelectgetAllPropertyTypeCommand(SqlConnection con)
+        {
+
+            SqlCommand command = new SqlCommand();
+            command.CommandText = "PSPgetAllPropertyType";
+            command.Connection = con;
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.CommandTimeout = 10; // in seconds
+
+            return command;
+        }
+
+        public string getPicturePropertyType(string propertyType)
+        {
+            SqlConnection con = Connect();
+
+            // Create Command
+            SqlCommand command = CreateSelectPicturePropertyTypeCommand(con, propertyType);
+
+            SqlDataReader dr = command.ExecuteReader(CommandBehavior.CloseConnection);
+
+            string picture = "";
+
+            while (dr.Read())
+            {
+                picture = dr["picture"].ToString();
+            }
+
+            con.Close();
+            return picture;
+        }
+
+        private SqlCommand CreateSelectPicturePropertyTypeCommand(SqlConnection con, string propertyType)
+        {
+
+            SqlCommand command = new SqlCommand();
+            command.CommandText = "PSPgetPictureByPropertyType";
+            command.Parameters.AddWithValue("@propertyType", propertyType);
+            command.Connection = con;
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.CommandTimeout = 10; // in seconds
+
+            return command;
+        }
+
+
     }
 }
