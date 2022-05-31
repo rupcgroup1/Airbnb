@@ -91,6 +91,7 @@
             $('.price').html(apartments[6].Price + '$<span>/night</span>');
             $('.h3').html(apartments[6].Name);
             $('.swiper-caption-wrap').find('p').last().html(renderDescription(apartments[6].Description, 10)); 
+            $("#desc").html(renderDescription(apartments[6].Description, 10)); 
             $('.swiper-slide').css("background-image", 'url("'+apartments[6].Picture+'")');
         }
 
@@ -373,7 +374,7 @@
                   <div class="swiper-caption-wrap" data-caption-animate="fadeInDown">
                     <p class="h3" data-caption-animate="fadeIn" data-caption-delay="800"></p>
                     <hr data-caption-animate="fadeIn" data-caption-delay="800">
-                    <p data-desc="desc" class="d-none d-md-block" data-caption-animate="fadeIn" data-caption-delay="800"></p>
+                    <p id="desc" class="d-none d-md-block" data-caption-animate="fadeIn" data-caption-delay="800">Loading...</p>
                     <div class="price text-ubold" data-caption-animate="fadeIn" data-caption-delay="800"></div><a class="btn btn-sm btn-sushi" href="property-catalog-single.html" data-caption-animate="fadeIn" data-caption-delay="800">book now</a>
                   </div>
                 </div>
