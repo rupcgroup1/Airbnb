@@ -38,6 +38,7 @@
         function successCB(apartments) {
             console.log(apartments);
             render(apartments);
+            renderTopPage(apartments);
         }
 
         function errorCB(error) {
@@ -49,7 +50,7 @@
             arrImgs = $('.thumbnail-3.thumbnail img');      // catch all apartments imgs.
             arrDivs = $('.thumbnail-3.thumbnail .caption'); // catch all apartments description divs.
 
-            for (i in apartments) {
+            for (var i = 0; i < 6; i++) {
 
                 let img = arrImgs.eq(i);                    
                 img.attr("src", apartments[i].Picture);     
@@ -58,7 +59,7 @@
                 let str = apartments[i].Price + '$/<span class="mon text-regular">night</span>';
                 div.find('span').first().html(str);
                 div.find('a').html(apartments[i].Name);
-                div.find('p').html(renderDescription(apartments[i].Description));
+                div.find('p').html(renderDescription(apartments[i].Description,38));
                 div.find('li').first().parent().html(renderStars(apartments[i].ReviewRating, apartments[i].NumOfReviews));
                 div.find('.describe-2 li').first().html( apartments[i].Bedrooms + ' bedrooms');
                 div.find('.describe-2 li').last().html(apartments[i].MinNights + ' min nights');
@@ -70,11 +71,48 @@
 
             });
         }
+        function renderTopPage(apartments) {
 
-        function renderDescription(des) {
+            arrPrices = $('.price');      // catch all apartments imgs.
+            arrNames = $('.h3');
+            arrDivs = $('.swiper-caption-wrap'); // catch all apartments description divs.
+
+            for (var i = 0; i < 3; i++) {
+
+                let price = arrPrices.eq(i);
+                price.html(apartments[i].Price + '$<span>/night</span>');
+
+                let name = arrNames.eq(i);
+                name.html(apartments[i].Name);
+
+                let desc = arrDivs.eq(i).find('p').last();
+                desc.html(renderDescription(apartments[i].Description, 10));
+
+                /*
+                img.attr("src", apartments[i].Picture);
+
+                let div = arrDivs.eq(i);
+                let str = apartments[i].Price + '$/<span class="mon text-regular">night</span>';
+                div.find('span').first().html(str);
+                div.find('a').html(apartments[i].Name);
+                div.find('p').html(renderDescription(apartments[i].Description));
+                div.find('li').first().parent().html(renderStars(apartments[i].ReviewRating, apartments[i].NumOfReviews));
+                div.find('.describe-2 li').first().html(apartments[i].Bedrooms + ' bedrooms');
+                div.find('.describe-2 li').last().html(apartments[i].MinNights + ' min nights');
+                */
+            }
+
+            // not working :(
+            $('.thumbnail-3.thumbnail').each(function () {
+                //console.log(1);
+
+            });
+        }
+
+        function renderDescription(des,size) {
             let words = des.split(' ');
             let str = "";
-            for (var i = 0; i < 38; i++) {
+            for (var i = 0; i < size; i++) {
                 if (words[i].localeCompare('/><b>The') == 0 && words[i + 1].localeCompare('space</b><br') == 0)
                     break;
                 str += words[i] + " ";
@@ -324,8 +362,8 @@
                   <div class="swiper-caption-wrap" data-caption-animate="fadeInDown">
                     <p class="h3" data-caption-animate="fadeIn" data-caption-delay="800">1530-2 Liberty Ave 4</p>
                     <hr data-caption-animate="fadeIn" data-caption-delay="800">
-                    <p class="d-none d-md-block" data-caption-animate="fadeIn" data-caption-delay="800">This is a 3 bedroom, 2.0 bathroom multi family home. It is located  at 1530 Liberty Ave Hillside.</p>
-                    <div class="price text-ubold" data-caption-animate="fadeIn" data-caption-delay="800">$309.00<span>/day</span></div><a class="btn btn-sm btn-sushi" href="property-catalog-single.html" data-caption-animate="fadeIn" data-caption-delay="800">book now</a>
+                    <p data-desc="desc" class="d-none d-md-block" data-caption-animate="fadeIn" data-caption-delay="800">This is a 3 bedroom, 2.0 bathroom multi family home. It is located  at 1530 Liberty Ave Hillside.</p>
+                    <div class="price text-ubold" data-caption-animate="fadeIn" data-caption-delay="800"></div><a class="btn btn-sm btn-sushi" href="property-catalog-single.html" data-caption-animate="fadeIn" data-caption-delay="800">book now</a>
                   </div>
                 </div>
               </div>
@@ -336,8 +374,8 @@
                   <div class="swiper-caption-wrap" data-caption-animate="fadeInDown">
                     <p class="h3" data-caption-animate="fadeIn" data-caption-delay="800">53 Rachel Ct 53</p>
                     <hr data-caption-animate="fadeIn" data-caption-delay="800">
-                    <p class="d-none d-md-block" data-caption-animate="fadeIn" data-caption-delay="800">A renovated apartment for rent by owner. 2 bedroom,  2 full bath living and dining room</p>
-                    <div class="price text-ubold" data-caption-animate="fadeIn" data-caption-delay="800">$216.00<span>/day</span></div><a class="btn btn-sm btn-sushi" href="property-catalog-single.html" data-caption-animate="fadeIn" data-caption-delay="800">book now</a>
+                    <p data-desc="desc" class="d-none d-md-block" data-caption-animate="fadeIn" data-caption-delay="800">A renovated apartment for rent by owner. 2 bedroom,  2 full bath living and dining room</p>
+                    <div class="price text-ubold" data-caption-animate="fadeIn" data-caption-delay="800"></div><a class="btn btn-sm btn-sushi" href="property-catalog-single.html" data-caption-animate="fadeIn" data-caption-delay="800">book now</a>
                   </div>
                 </div>
               </div>
@@ -348,8 +386,8 @@
                   <div class="swiper-caption-wrap" data-caption-animate="fadeInDown">
                     <p class="h3" data-caption-animate="fadeIn" data-caption-delay="800">Modera Loft</p>
                     <hr data-caption-animate="fadeIn" data-caption-delay="800">
-                    <p class="d-none d-md-block" data-caption-animate="fadeIn" data-caption-delay="800">Make Modera Loft your home and reside in historic Jersey City style.</p>
-                    <div class="price text-ubold" data-caption-animate="fadeIn" data-caption-delay="800">$239.00<span>/day</span></div><a class="btn btn-sm btn-sushi" href="property-catalog-single.html" data-caption-animate="fadeIn" data-caption-delay="800">book now</a>
+                    <p data-desc="desc" class="d-none d-md-block" data-caption-animate="fadeIn" data-caption-delay="800">Make Modera Loft your home and reside in historic Jersey City style.</p>
+                    <div class="price text-ubold" data-caption-animate="fadeIn" data-caption-delay="800"></div><a class="btn btn-sm btn-sushi" href="property-catalog-single.html" data-caption-animate="fadeIn" data-caption-delay="800">book now</a>
                   </div>
                 </div>
               </div>
