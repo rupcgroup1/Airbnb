@@ -33,6 +33,8 @@
         $(document).ready(function () {
             api = `../api/Apartments/tinyGet`;
             ajaxCall("GET", api, "", successCB, errorCB);
+            apiPopular = "../api/"
+            ajaxCall("GET", apiPopular, successPopularCB, errorPopularCB);
         });
 
         function successCB(apartments) {
@@ -43,6 +45,32 @@
 
         function errorCB(error) {
 
+        }
+
+        function successPopularCB(apartmentCatgeories) {
+            console.log(apartmentCatgeories)
+            arrImgs = $('.img-thumbnail-variant-1').find('img');      // catch all categories imgs.
+            arrDivs = $('.img-thumbnail-variant-1 .caption'); // catch all apartments description divs.
+            count = 0;
+            for (var i = 0; i < 3; i++) {
+
+                let img = arrImgs.eq(i);
+                img.attr("src", apartmentCatgeories[i].Picture);
+                let div = arrDivs.eq(i);
+                div.find('h4').html(apartmentCatgeories[i].PropertyType);
+                div.find('p').html(apartmentCatgeories[i].Count);
+                count += apartmentCatgeories[i].Count;
+            }
+            let img = arrImgs.eq(i);
+            img.attr("src", apartmentCatgeories[3].Picture);
+            let div = arrDivs.eq(i);
+            div.find('h4').html("Other");
+            div.find('p').html(100 - count);
+
+        }
+
+        function errorPopularCB(error) {
+            console.log(error);
         }
 
         function render(apartments) {
