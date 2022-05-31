@@ -45,12 +45,13 @@ namespace AirBNB.Models.DAL
                 string name = dr["name"].ToString();
                 string description = dr["description"].ToString();
                 string picture = dr["picture"].ToString();
-                string hostNeighbourhood = dr["hostNeighbourhood"].ToString();
-                string location = dr["location"].ToString();
+                int minNights = Convert.ToInt16(dr["minNights"]);
                 int price = Convert.ToInt16(dr["price"]);
                 int numOfReviews = Convert.ToInt16(dr["numOfReviews"]);
-                int reviewRating = Convert.ToInt16(dr["reviewRating"]);
-                tinyList.Add(new Apartment(id,name, description, picture, hostNeighbourhood, location, price, numOfReviews, reviewRating));
+                double reviewRating = Convert.ToDouble(dr["reviewRating"]);
+                int bedrooms = Convert.ToInt16(dr["bedrooms"]);
+                tinyList.Add(new Apartment(id,name, description, picture, price, numOfReviews, reviewRating, bedrooms, minNights));
+
             }
 
             con.Close();

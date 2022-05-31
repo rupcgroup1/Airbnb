@@ -47,7 +47,7 @@ namespace AirBNB.Models
 
         }
 
-        public Apartment(int id, string name, string description, string neighborhoodOverview, string picture, int hostID, string since, int hostResponseTime, string hostNeighbourhood, string location, double x, double y, string propertyType, string roomType, string bathroomsText, int bedrooms, int beds, string amenities, int price, int minNights, int maxNights, int availability365, int numOfReviews, string lastReview, double reviewRating, double reviewCleanliness, double reviewCommunication, double reviewLocation, double reviewValue, int numOfRentals, int numOfCancel)
+        public Apartment(int id, string name, string description, string neighborhoodOverview, string picture, int hostID, string since, int hostResponseTime, string hostNeighbourhood, string location, double x, double y, string propertyType, string roomType, string bathroomsText, int bedrooms, int beds, string amenities, int price, int minNights, int maxNights, int availability365, int numOfReviews, string lastReview, double reviewRating, double reviewCleanliness, double reviewCommunication, double reviewLocation, double reviewValue)
         {
             this.id = id;
             this.name = name;
@@ -78,22 +78,22 @@ namespace AirBNB.Models
             this.reviewCommunication = reviewCommunication;
             this.reviewLocation = reviewLocation;
             this.reviewValue = reviewValue;
-            this.numOfRentals = numOfRentals;
-            this.numOfCancel = numOfCancel;
+            this.numOfRentals = 0;
+            this.numOfCancel = 0;
         }
 
         // for first render.
-        public Apartment(int id, string name, string description, string picture, string hostNeighbourhood, string location, int price, int numOfReviews, double reviewRating)
+        public Apartment(int id, string name, string description, string picture, int price, int numOfReviews, double reviewRating, int bedrooms, int minNights)
         {
             this.id = id;
             this.name = name;
             this.description = description;
             this.picture = picture;
-            this.hostNeighbourhood = hostNeighbourhood;
-            this.location = location;
             this.price = price;
             this.numOfReviews = numOfReviews;
             this.reviewRating = reviewRating;
+            this.bedrooms = bedrooms;
+            this.minNights = minNights;
         }
 
         public int Id { get => id; set => id = value; }

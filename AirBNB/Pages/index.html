@@ -46,26 +46,55 @@
 
         function render(apartments) {
 
-            arrImgs = $('.thumbnail-3.thumbnail img');
-            arrDivs = $('.thumbnail-3.thumbnail .caption');
+            arrImgs = $('.thumbnail-3.thumbnail img');      // catch all apartments imgs.
+            arrDivs = $('.thumbnail-3.thumbnail .caption'); // catch all apartments description divs.
 
             for (i in apartments) {
 
-                let img = arrImgs.eq(i);
-                img.attr("src", apartments[i].Picture);
+                let img = arrImgs.eq(i);                    
+                img.attr("src", apartments[i].Picture);     
 
                 let div = arrDivs.eq(i);
-                let str = apartments[i].Price + '$/<span class="mon text-regular">month</span>';
-                console.log(div.find('.thumbnail-price .h5'))
+                let str = apartments[i].Price + '$/<span class="mon text-regular">night</span>';
                 div.find('span').first().html(str);
+                div.find('a').html(apartments[i].Name);
+                div.find('p').html(renderDescription(apartments[i].Description));
+                div.find('li').first().parent().html(renderStars(apartments[i].ReviewRating, apartments[i].NumOfReviews));
+                div.find('.describe-2 li').first().html("sdsdsdsd");
+                div.find('.describe-2 li').last().html();
             }
 
             // not working :(
             $('.thumbnail-3.thumbnail').each(function () {
-                console.log(1);
+                //console.log(1);
 
             });
         }
+
+        function renderDescription(des) {
+            let words = des.split(' ');
+            let str = "";
+            for (var i = 0; i < 38; i++) {
+                if (words[i].localeCompare('/><b>The') == 0 && words[i + 1].localeCompare('space</b><br') == 0)
+                    break;
+                str += words[i] + " ";
+            }
+            str += "...";
+            return str;
+        }
+
+        function renderStars(score,reviews) {
+            let str = "<p style='text-align:center'>" + score.toFixed(2) + ' (' + reviews + ')</p>';
+            console.log(score);
+            for (var i = score; i >= 1; i--) {
+                str += '<span class="fa-star"></span>';
+            }
+            if (i > 0.5)
+                str += '<span class="fa-star-half"></span>';
+            return str;
+        }
+
+
 
 
     </script>
