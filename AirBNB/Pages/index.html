@@ -71,12 +71,7 @@
 
             });
         }
-        function renderTopPage(apartments) {
-            $('.price').html(apartments[6].Price + '$<span>/night</span>');
-            $('.h3').html(apartments[6].Name);
-            $('.swiper-caption-wrap').find('p').last().html(renderDescription(apartments[6].Description, 10)); 
-            $('.swiper-slide').css("background-image", 'url("'+apartments[6].Picture+'")');
-        }
+        function renderTopPage(apartments) {            $('.price').html(apartments[6].Price + '$<span>/night</span>');            $('.h3').html(apartments[6].Name);            $('.swiper-caption-wrap').find('p').last().html(renderDescription(apartments[6].Description, 10));             $('.swiper-slide').css("background-image", 'url("'+apartments[6].Picture+'")');        }
 
         function renderDescription(des,size) {
             let words = des.split(' ');
@@ -324,21 +319,23 @@
       <section>
         <!--Swiper-->
         <div class="swiper-container swiper-slider swiper-slider-1">
-          <div class="">
-            <div class="swiper-slide" data-slide-bg="">
+          <div class="swiper-wrapper">
+            <div id="tamir" class="swiper-slide" data-slide-bg="images/slide-2.jpg">
               <div class="swiper-slide-caption section-xs">
                 <div class="container">
                   <div class="swiper-caption-wrap" data-caption-animate="fadeInDown">
-                    <p class="h3" data-caption-animate="fadeIn" data-caption-delay="800"></p>
+                    <p class="h3" data-caption-animate="fadeIn" data-caption-delay="800">53 Rachel Ct 53</p>
                     <hr data-caption-animate="fadeIn" data-caption-delay="800">
-                    <p class="d-none d-md-block" data-caption-animate="fadeIn" data-caption-delay="800"></p>
+                    <p data-desc="desc" class="d-none d-md-block" data-caption-animate="fadeIn" data-caption-delay="800">A renovated apartment for rent by owner. 2 bedroom,  2 full bath living and dining room</p>
                     <div class="price text-ubold" data-caption-animate="fadeIn" data-caption-delay="800"></div><a class="btn btn-sm btn-sushi" href="property-catalog-single.html" data-caption-animate="fadeIn" data-caption-delay="800">book now</a>
                   </div>
                 </div>
               </div>
-            </div>
+            </div>  
           </div>
-
+          <!-- Swiper Navigation-->
+          <!--<div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>-->
         </div>
       </section>
       <!-- Page Content-->
