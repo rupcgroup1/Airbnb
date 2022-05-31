@@ -60,8 +60,8 @@
                 div.find('a').html(apartments[i].Name);
                 div.find('p').html(renderDescription(apartments[i].Description));
                 div.find('li').first().parent().html(renderStars(apartments[i].ReviewRating, apartments[i].NumOfReviews));
-                div.find('.describe-2 li').first().html("sdsdsdsd");
-                div.find('.describe-2 li').last().html();
+                div.find('.describe-2 li').first().html( apartments[i].Bedrooms + ' bedrooms');
+                div.find('.describe-2 li').last().html(apartments[i].MinNights + ' min nights');
             }
 
             // not working :(
@@ -84,7 +84,7 @@
         }
 
         function renderStars(score,reviews) {
-            let str = "<p style='text-align:center'>" + score.toFixed(2) + ' (' + reviews + ')</p>';
+            let str = "<p style='text-align:center'>" + score.toFixed(1) + ' (' + reviews + ')</p>';
             console.log(score);
             for (var i = score; i >= 1; i--) {
                 str += '<span class="fa-star"></span>';
@@ -516,7 +516,7 @@
         <!--Section Recent Properties-->
         <section class="section-lg text-center text-md-start">
           <div class="container">
-            <h2>Recent Properties</h2>
+            <h2>Top Reviews Apartments</h2>
             <hr>
             <div class="row clearleft-custom" id="tamir">
               <div class="col-12 col-md-6 col-lg-4">

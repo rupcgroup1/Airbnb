@@ -36,7 +36,6 @@ namespace AirBNB.Models
         private double reviewCleanliness;
         private double reviewCommunication;
         private double reviewLocation;
-        private double reviewValue;
         private int numOfRentals;
         private int numOfCancel;
         //private Review[] reviews;
@@ -47,7 +46,7 @@ namespace AirBNB.Models
 
         }
 
-        public Apartment(int id, string name, string description, string neighborhoodOverview, string picture, int hostID, string since, int hostResponseTime, string hostNeighbourhood, string location, double x, double y, string propertyType, string roomType, string bathroomsText, int bedrooms, int beds, string amenities, int price, int minNights, int maxNights, int availability365, int numOfReviews, string lastReview, double reviewRating, double reviewCleanliness, double reviewCommunication, double reviewLocation, double reviewValue)
+        public Apartment(int id, string name, string description, string neighborhoodOverview, string picture, int hostID, string since, int hostResponseTime, string hostNeighbourhood, string location, double x, double y, string propertyType, string roomType, string bathroomsText, int bedrooms, int beds, string amenities, int price, int minNights, int maxNights, int availability365, int numOfReviews, string lastReview, double reviewRating, double reviewCleanliness, double reviewCommunication, double reviewLocation)
         {
             this.id = id;
             this.name = name;
@@ -77,7 +76,6 @@ namespace AirBNB.Models
             this.reviewCleanliness = reviewCleanliness;
             this.reviewCommunication = reviewCommunication;
             this.reviewLocation = reviewLocation;
-            this.reviewValue = reviewValue;
             this.numOfRentals = 0;
             this.numOfCancel = 0;
         }
@@ -123,7 +121,6 @@ namespace AirBNB.Models
         public double ReviewCleanliness { get => reviewCleanliness; set => reviewCleanliness = value; }
         public double ReviewCommunication { get => reviewCommunication; set => reviewCommunication = value; }
         public double ReviewLocation { get => reviewLocation; set => reviewLocation = value; }
-        public double ReviewValue { get => reviewValue; set => reviewValue = value; }
         public int NumOfRentals { get => numOfRentals; set => numOfRentals = value; }
         public int NumOfCancel { get => numOfCancel; set => numOfCancel = value; }
         public string Since { get => since; set => since = value; }
