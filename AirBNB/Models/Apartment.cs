@@ -15,7 +15,7 @@ namespace AirBNB.Models
         private string picture;
         private int hostID;
         private string since;
-        private int hostResponseTime;
+        private string hostResponseTime;
         private string hostNeighbourhood;
         private string location;
         private double x;
@@ -47,7 +47,7 @@ namespace AirBNB.Models
 
         }
 
-        public Apartment(int id, string name, string description, string neighborhoodOverview, string picture, int hostID, string since, int hostResponseTime, string hostNeighbourhood, string location, double x, double y, string propertyType, string roomType, string bathroomsText, int bedrooms, int beds, string amenities, int price, int minNights, int maxNights, int availability365, int numOfReviews, string lastReview, double reviewRating, double reviewCleanliness, double reviewCommunication, double reviewLocation)
+        public Apartment(int id, string name, string description, string neighborhoodOverview, string picture, int hostID, string since, string hostResponseTime, string hostNeighbourhood, string location, double x, double y, string propertyType, string roomType, string bathroomsText, int bedrooms, int beds, string amenities, int price, int minNights, int maxNights, int availability365, int numOfReviews, string lastReview, double reviewRating, double reviewCleanliness, double reviewCommunication, double reviewLocation)
         {
             this.id = id;
             this.name = name;
@@ -109,7 +109,7 @@ namespace AirBNB.Models
         public string NeighborhoodOverview { get => neighborhoodOverview; set => neighborhoodOverview = value; }
         public string Picture { get => picture; set => picture = value; }
         public int HostID { get => hostID; set => hostID = value; }
-        public int HostResponseTime { get => hostResponseTime; set => hostResponseTime = value; }
+        public string HostResponseTime { get => hostResponseTime; set => hostResponseTime = value; }
         public string HostNeighbourhood { get => hostNeighbourhood; set => hostNeighbourhood = value; }
         public string Location { get => location; set => location = value; }
         public double X { get => x; set => x = value; }
@@ -148,6 +148,12 @@ namespace AirBNB.Models
             DataServices ds = new DataServices();
             return ds.getAllPropertyType();
 
+        }
+
+        public Apartment getApartmentByID(int id)
+        {
+            DataServices ds = new DataServices();
+            return ds.getApartmentByID(id);
         }
 
     }

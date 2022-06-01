@@ -95,6 +95,8 @@ namespace AirBNB.Models.DAL
             return list;
         }
 
+
+
         private SqlCommand CreateSelectgetAllPropertyTypeCommand(SqlConnection con)
         {
 
@@ -139,6 +141,77 @@ namespace AirBNB.Models.DAL
 
             return command;
         }
+
+        public Apartment getApartmentByID(int id)
+        {
+            SqlConnection con = Connect();
+
+            // Create Command
+            SqlCommand command = CreateSelectPicturePropertyTypeCommand(con, id);
+
+            SqlDataReader dr = command.ExecuteReader(CommandBehavior.CloseConnection);
+
+            Apartment a = null;
+
+            while (dr.Read())
+            {
+                string name = dr["name"].ToString();
+                string description = dr["description"].ToString();
+                string picture = dr["picture"].ToString();
+                int minNights = Convert.ToInt16(dr["minNights"]);
+                int price = Convert.ToInt16(dr["price"]);
+                int numOfReviews = Convert.ToInt16(dr["numOfReviews"]);
+                double reviewRating = Convert.ToDouble(dr["reviewRating"]);
+                int bedrooms = Convert.ToInt16(dr["bedrooms"]);
+                string neighborhoodOverview = dr["neighborhoodOverview"].ToString();
+                int hostID = Convert.ToInt32(dr["hostId"]);
+                string since = dr["since"].ToString();
+                string hostResponseTime = dr["hostResponseTime"].ToString();
+                string hostNeighbourhood = dr["hostNeighbourhood"].ToString();
+                string location = dr["location"].ToString();
+                double x = Convert.ToDouble(dr["x"]);
+                double y = Convert.ToDouble(dr["y"]);
+                string propertyType = dr["propertyType"].ToString();
+                string roomType = dr["roomType"].ToString();
+                string bathroomsText = dr["bathroomsText"].ToString();
+                int beds = Convert.ToInt16(dr["beds"]);
+                string amenities = dr["amenities"].ToString();
+                int maxNights = Convert.ToInt16(dr["maxNights"]);
+                int availability365 = Convert.ToInt16(dr["availability365"]);
+                string lastReview = dr["lastReview"].ToString();
+                double reviewCleanliness = Convert.ToDouble(dr["reviewCleanliness"]);
+                double reviewCommunication = Convert.ToDouble(dr["reviewCommunication"]);
+                double reviewLocation = Convert.ToDouble(dr["reviewLocation"]);
+                int numOfRentals = Convert.ToInt16(dr["numOfRentals"]);
+                int numOfCancel = Convert.ToInt16(dr["numOfCancel"]);
+                int count = Convert.ToInt16(dr["count"]);
+                a = new Apartment(id, name, description, neighborhoodOverview, picture, hostID, since, hostResponseTime, hostNeighbourhood,location, x, y, propertyType, roomType, bathroomsText, bedrooms, beds, amenities, price, minNights, maxNights, availability365, numOfReviews, lastReview, reviewRating, reviewCleanliness, reviewCommunication, reviewLocation);
+            }
+
+            con.Close();
+            if (a != null)
+                return a;
+            return null;
+
+
+        }
+
+        private SqlCommand CreateSelectPicturePropertyTypeCommand(SqlConnection con, int id)
+        {
+
+            SqlCommand command = new SqlCommand();
+            command.CommandText = "PSPgetApartmentByID";
+            command.Parameters.AddWithValue("@propertyType", id);
+            command.Connection = con;
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.CommandTimeout = 10; // in seconds
+
+            return command;
+        }
+
+
+
+
 
 
     }
