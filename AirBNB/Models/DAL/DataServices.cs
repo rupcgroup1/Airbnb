@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -147,7 +148,7 @@ namespace AirBNB.Models.DAL
             SqlConnection con = Connect();
 
             // Create Command
-            SqlCommand command = CreateSelectPicturePropertyTypeCommand(con, id);
+            SqlCommand command = CreateSelectApartmentByIdCommand(con, id);
 
             SqlDataReader dr = command.ExecuteReader(CommandBehavior.CloseConnection);
 
@@ -175,16 +176,19 @@ namespace AirBNB.Models.DAL
                 string roomType = dr["roomType"].ToString();
                 string bathroomsText = dr["bathroomsText"].ToString();
                 int beds = Convert.ToInt16(dr["beds"]);
-                string amenities = dr["amenities"].ToString();
+
+                string amenitiesArr = dr["amenities"].ToString();
+                JArray jarr = JArray.Parse(amenitiesArr);
+                List<string> amenities = new List<string>();
+                foreach (string item in jarr)
+                    amenities.Add(item.ToString());
+
                 int maxNights = Convert.ToInt16(dr["maxNights"]);
                 int availability365 = Convert.ToInt16(dr["availability365"]);
                 string lastReview = dr["lastReview"].ToString();
                 double reviewCleanliness = Convert.ToDouble(dr["reviewCleanliness"]);
                 double reviewCommunication = Convert.ToDouble(dr["reviewCommunication"]);
                 double reviewLocation = Convert.ToDouble(dr["reviewLocation"]);
-                int numOfRentals = Convert.ToInt16(dr["numOfRentals"]);
-                int numOfCancel = Convert.ToInt16(dr["numOfCancel"]);
-                int count = Convert.ToInt16(dr["count"]);
                 a = new Apartment(id, name, description, neighborhoodOverview, picture, hostID, since, hostResponseTime, hostNeighbourhood,location, x, y, propertyType, roomType, bathroomsText, bedrooms, beds, amenities, price, minNights, maxNights, availability365, numOfReviews, lastReview, reviewRating, reviewCleanliness, reviewCommunication, reviewLocation);
             }
 
@@ -196,12 +200,12 @@ namespace AirBNB.Models.DAL
 
         }
 
-        private SqlCommand CreateSelectPicturePropertyTypeCommand(SqlConnection con, int id)
+        private SqlCommand CreateSelectApartmentByIdCommand(SqlConnection con, int id)
         {
 
             SqlCommand command = new SqlCommand();
             command.CommandText = "PSPgetApartmentByID";
-            command.Parameters.AddWithValue("@propertyType", id);
+            command.Parameters.AddWithValue("@id", id);
             command.Connection = con;
             command.CommandType = System.Data.CommandType.StoredProcedure;
             command.CommandTimeout = 10; // in seconds

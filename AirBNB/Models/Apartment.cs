@@ -25,7 +25,7 @@ namespace AirBNB.Models
         private string bathroomsText;
         private int bedrooms;
         private int beds;
-        private string amenities;
+        private List<string> amenities;
         private int price;
         private int minNights;
         private int maxNights;
@@ -47,7 +47,7 @@ namespace AirBNB.Models
 
         }
 
-        public Apartment(int id, string name, string description, string neighborhoodOverview, string picture, int hostID, string since, string hostResponseTime, string hostNeighbourhood, string location, double x, double y, string propertyType, string roomType, string bathroomsText, int bedrooms, int beds, string amenities, int price, int minNights, int maxNights, int availability365, int numOfReviews, string lastReview, double reviewRating, double reviewCleanliness, double reviewCommunication, double reviewLocation)
+        public Apartment(int id, string name, string description, string neighborhoodOverview, string picture, int hostID, string since, string hostResponseTime, string hostNeighbourhood, string location, double x, double y, string propertyType, string roomType, string bathroomsText, int bedrooms, int beds, List<string> amenities, int price, int minNights, int maxNights, int availability365, int numOfReviews, string lastReview, double reviewRating, double reviewCleanliness, double reviewCommunication, double reviewLocation)
         {
             this.id = id;
             this.name = name;
@@ -66,7 +66,7 @@ namespace AirBNB.Models
             this.bathroomsText = bathroomsText;
             this.bedrooms = bedrooms;
             this.beds = beds;
-            this.amenities = amenities;
+            this.Amenities = amenities;
             this.price = price;
             this.minNights = minNights;
             this.maxNights = maxNights;
@@ -119,7 +119,6 @@ namespace AirBNB.Models
         public string BathroomsText { get => bathroomsText; set => bathroomsText = value; }
         public int Bedrooms { get => bedrooms; set => bedrooms = value; }
         public int Beds { get => beds; set => beds = value; }
-        public string Amenities { get => amenities; set => amenities = value; }
         public int Price { get => price; set => price = value; }
         public int MinNights { get => minNights; set => minNights = value; }
         public int MaxNights { get => maxNights; set => maxNights = value; }
@@ -134,6 +133,7 @@ namespace AirBNB.Models
         public int NumOfCancel { get => numOfCancel; set => numOfCancel = value; }
         public string Since { get => since; set => since = value; }
         public int Count { get => count; set => count = value; }
+        public List<string> Amenities { get => amenities; set => amenities = value; }
 
 
         //Getting a tiny apartments list to show in home page.
