@@ -448,15 +448,6 @@
     <Content Include="Pages\images\warning_bar_0000_us.jpg" />
     <Content Include="Pages\images\youtube-play.png" />
     <Content Include="Pages\images\_blank.png" />
-    <Content Include="Pages\index-cent-dark.html" />
-    <Content Include="Pages\index-cent.html" />
-    <Content Include="Pages\index-corp-default.html" />
-    <Content Include="Pages\index-corp.html" />
-    <Content Include="Pages\index-light.html" />
-    <Content Include="Pages\index-min.html" />
-    <Content Include="Pages\index-sidebar.html" />
-    <Content Include="Pages\index-wid-dark.html" />
-    <Content Include="Pages\index-wid.html" />
     <Content Include="Pages\index.html" />
     <Content Include="Pages\js\core.min.js" />
     <Content Include="Pages\js\html5shiv.min.js" />
