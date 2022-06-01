@@ -1,6 +1,6 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html class="wide wow-animation" lang="en">
-  <head>
+<head>
     <!-- Site Title-->
     <title>Single Property Page</title>
     <meta name="format-detection" content="telephone=no">
@@ -13,7 +13,34 @@
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/fonts.css">
     <link rel="stylesheet" href="css/style.css">
-  </head>
+
+    <script src="../Scripts/ajaxCalls.js"></script>
+    <script src="../Scripts/jquery-3.3.1.min.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+
+            if (localStorage.getItem("apartmentId") == undefined)  // change it!!!!!!!!!!!!!!!
+                return;
+
+            let id = JSON.parse(localStorage.getItem("apartmentId"));
+            console.log(id);
+            let api = `../api/Apartments/${id}`;
+            ajaxCall("GET", api, "", successCB, errorCB);
+
+        });
+
+        function successCB(apartment) {
+            console.log(apartment);
+        }
+
+        function errorCB() {
+            alert("error");
+        }
+
+    </script>
+</head>
   <body>
     <div class="preloader">
       <div class="preloader-body">
