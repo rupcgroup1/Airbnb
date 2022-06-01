@@ -116,9 +116,10 @@
             return str;
         }
 
-        function renderStars(score,reviews) {
-            let str = "<p style='text-align:center'>" + score.toFixed(1) + ' (' + reviews + ')</p>';
-            console.log(score);
+        function renderStars(score, reviews) {
+            if (reviews > 0)
+                str = "<p style='text-align:center'>" + score.toFixed(1) + ' (' + reviews + ')</p>';
+            else str = "<p>" + score.toFixed(1) + '</p>';
             for (var i = score; i >= 1; i--) {
                 str += '<span class="fa-star"></span>';
             }

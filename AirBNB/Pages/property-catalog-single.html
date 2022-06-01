@@ -25,23 +25,88 @@
                 return;
 
             let id = JSON.parse(localStorage.getItem("apartmentId"));
-            console.log(id);
             let api = `../api/Apartments/${id}`;
-            ajaxCall("GET", api, "", successCB, errorCB);
+            ajaxCall("GET", api, "", successApartmentCB, errorCB);
+
+            
+            api == `../api/Reviews/${id}`;
+            ajaxCall("GET", api, "", successReviewsCB, errorCB);
 
         });
 
-        function successCB(apartment) {
-            renderApartment(apartment);
+        function successApartmentCB(apartment) {
+            // Render aparetment details.
+
+            // Header
+            $('#price').html(apartment.Price + '$<span class="mon text-regular">/night</span>');
+            $('#name').html(apartment.Name);
+            $('#location').html(apartment.Location);
+             
+            // Picture
+            $('#img').attr('src', apartment.Picture);
+            $('#img').parent().attr("href", apartment.Picture); // for presenting img by click on it and adding more features.
+
+            // Table
+            $('#since').html((apartment.Since).split(' ')[0]);
+            $('#hostResponseTime').html(apartment.HostResponseTime);
+            $('#neighbourhood').html(apartment.HostNeighbourhood);
+            $('#propertyType').html(apartment.PropertyType);
+            $('#roomType').html(apartment.RoomType);
+            $('#bathrooms').html(apartment.BathroomsText);
+            $('#bedrooms').html(apartment.Bedrooms);
+            $('#beds').html(apartment.Beds);
+            $('#amenities').html(renderAmenities(apartment.Amenities));
+            $('#minNights').html(apartment.MinNights);
+            $('#maxNights').html(apartment.MaxNights);
+            $('#availability365').html(apartment.Availability365);
+            $('#lastReview').html((apartment.LastReview).split(' ')[0]);
+            $('#numOfReviews').html(apartment.NumOfReviews);
+            $('#reviewRating').html(renderStars(apartment.ReviewRating, 0));
+            $('#reviewCleanliness').html(renderStars(apartment.ReviewCleanliness, 0));
+            $('#reviewCommunication').html(renderStars(apartment.ReviewCommunication, 0));
+            $('#reviewLocation').html(renderStars(apartment.ReviewLocation, 0));
+
+            // Description
+            $('#description').html((apartment.Description).split('License number')[0]);
+
+        }
+
+        // for render amenities.
+        function renderAmenities(arr) {
+            let str = "";
+            if (arr.length > 1) {
+                for (var i = 0; i < arr.length - 2; i++) {
+                    str += arr[i] + " ,";
+                }
+                str += arr[i] + " and " + arr[i + 1] + ".";
+            }
+            else if (arr.length == 1)
+                str += arr[0] + ".";
+            else str += "None.";
+            
+            return str;
+        }
+
+        function successReviewsCB(reviews) {
+            // render reviews
+            // TODO
         }
 
         function errorCB() {
             alert("error");
         }
 
-        function renderApartment(apartment) {
-            $('#img').attr('src', apartment.Picture); 
-            $('#img').parent().attr("href", apartment.Picture); // for presenting img by click on it and adding more features.
+
+        function renderStars(score, reviews) { // need to put in js file.
+            if (reviews > 0)
+                str = "<p style='text-align:center'>" + score.toFixed(1) + ' (' + reviews + ')</p>';
+            else str = "<p>" + score.toFixed(1)+ '</p>';
+            for (var i = score; i >= 1; i--) {
+                str += '<span class="fa-star"></span>';
+            }
+            if (i > 0.5)
+                str += '<span class="fa-star-half"></span>';
+            return str;
         }
 
     </script>
@@ -286,18 +351,18 @@
           <div class="container">
             <div class="row flow-offset-7">
               <div class="col-12 col-md-6 col-lg-3">
-                <p>Agent</p><a class="h5 text-sushi text-regular" href="agent-personal.html">Heather Turner</a>
+                <p>Name</p><p id="name" class="h5 text-sushi text-regular" >Heather Turner</p>
               </div>
               <div class="col-12 col-md-6 col-lg-3">
-                <p>Agency</p><a class="h5 text-sushi text-regular" href="#">Modern Estate Inc.</a>
-              </div>
+                <p>Agency</p><p class="h5 text-sushi text-regular" >Modern Estate Inc.</p>
+              </div>    
               <div class="col-12 col-md-6 col-lg-3 col-xl-3">
                 <p>Location</p>
-                <p class="h5 text-regular">7758 Laguna heights Court, San Francisco, MA 02127</p>
+                <p id="location" class="h5 text-sushi text-regular">7758 Laguna heights Court, San Francisco, MA 02127</p>
               </div>
               <div class="col-12 col-md-6 col-lg-3 col-xl-2 offset-xl-1">
                 <p>Price</p>
-                <p class="thumbnail-price h5">$2490.00<span class="mon text-regular">/month</span></p>
+                <p id="price" class=" text-sushi thumbnail-price h5">$2490.00<span class="mon text-regular">/night</span></p>
               </div>
             </div>
           </div>
@@ -316,75 +381,85 @@
                                 <table class="table table-default">
                                     <tbody>
                                         <tr>
-                                            <td>Area</td>
-                                            <td>1200 sq ft</td>
+                                            <td>Neighbourhood</td>
+                                            <td id="neighbourhood"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Property type</td>
+                                            <td id="propertyType"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Room type</td>
+                                            <td id="roomType"></td>
                                         </tr>
                                         <tr>
                                             <td>Bedrooms</td>
-                                            <td>4</td>
+                                            <td id="bedrooms"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Beds</td>
+                                            <td id="beds"></td>
                                         </tr>
                                         <tr>
                                             <td>Bathrooms</td>
-                                            <td>2</td>
+                                            <td id="bathrooms"></td>
                                         </tr>
                                         <tr>
-                                            <td>Garages</td>
-                                            <td>2</td>
+                                            <td>Amenities</td>
+                                            <td id="amenities"></td>
                                         </tr>
                                         <tr>
-                                            <td>Features</td>
-                                            <td>Lawn, Sprinkler System, Marble Floors</td>
+                                            <td>Min nights</td>
+                                            <td id="minNights"></td>
                                         </tr>
                                         <tr>
-                                            <td>Year Built</td>
-                                            <td>1998</td>
+                                            <td>Max nights</td>
+                                            <td id="maxNights"></td>
                                         </tr>
                                         <tr>
-                                            <td>Lot Size</td>
-                                            <td>5.45</td>
+                                            <td>Availability in the last 365 days</td>
+                                            <td id="availability365"></td>
                                         </tr>
                                         <tr>
-                                            <td>School District</td>
-                                            <td>San Francisco Glen (925) 862-2026</td>
+                                            <td>Exist since</td>
+                                            <td id="since"></td>
                                         </tr>
                                         <tr>
-                                            <td>High School</td>
-                                            <td>Call School District</td>
+
+                                            <td>Host response time</td>
+                                            <td id="hostResponseTime"></td>
                                         </tr>
                                         <tr>
-                                            <td>Middle School</td>
-                                            <td>Call School District</td>
+                                            <td>Reviews</td>
+                                            <td id="numOfReviews"></td>
                                         </tr>
                                         <tr>
-                                            <td>Elementary School</td>
-                                            <td>Call School District</td>
+                                            <td>Last review date</td>
+                                            <td id="lastReview"></td>
                                         </tr>
                                         <tr>
-                                            <td>Parking Type</td>
-                                            <td>Garage - Attached</td>
+                                            <td>Review rating</td>
+                                            <td id="reviewRating">stars</td>
                                         </tr>
                                         <tr>
-                                            <td>Room Count</td>
-                                            <td>6</td>
+                                            <td>Review cleanliness</td>
+                                            <td id="reviewCleanliness">stars</td>
                                         </tr>
                                         <tr>
-                                            <td>Roof Type</td>
-                                            <td>Tile</td>
+                                            <td>Review communication</td>
+                                            <td id="reviewCommunication">stars</td>
                                         </tr>
                                         <tr>
-                                            <td>View Type</td>
-                                            <td>Mountain</td>
+                                            <td>Review location</td>
+                                            <td id="reviewLocation">stars</td>
                                         </tr>
-                                        <tr>
-                                            <td>Exterior Type</td>
-                                            <td>Stucco</td>
-                                        </tr>
+
+
                                     </tbody>
                                 </table>
                             </div>
-                            <h4 class="border-bottom offset-custom-8">Description</h4>
-                            <p>405 Canyon Vista Dr Spectacular mountain view, sublime privacy & endless flexibility converge right here on 1 of Mt Washington's favorite streets. Sunrise breakfast vistas, discreet gated entry & the luxury of an open loft office/den plus the 2/2 practicality let you love it just as it is or spend happy veranda hours contemplating expansive Dwell or HGTV dreams. Cars to pamper or creative space high on your list?</p>
-                            <p>The enclosed carport is ready and waiting. Longing to build some raised garden beds? The generous Meyer lemon will dress your fresh veggies in style. Contemplating happy gatherings? The indoor ope...n flow welcomes cozy dinners or that long summer feast under the stars. Lovingly cared for, wonderfully sited for all that brings you to Mt Washington, handy to NELA & beyond.</p>
+                            <h4  class="border-bottom offset-custom-8">Description</h4>
+                            <div id="description"></div>
                             <h4 class="border-bottom offset-custom-8">Reviews</h4>
                             <div class="media media-mod-2 comment">
                                 <div class="media-left round"><img class="round" src="images/post_page-4.jpg" alt="" width="70" height="70"></div>
