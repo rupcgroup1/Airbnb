@@ -27,9 +27,10 @@ namespace AirBNB.Controllers
         }
 
         // GET api/<controller>/5
-        public string Get(int id)
+        public Apartment Get(int id)
         {
-            return "value";
+            Apartment a = new Apartment();
+            return a.getApartmentByID(id);
         }
 
         // POST api/<controller>
