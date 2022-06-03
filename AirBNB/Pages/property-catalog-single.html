@@ -119,8 +119,8 @@
             let div = $("#mainReviews");
             let str = "";
             for (let i = 0; i < reviews.length; i++) {
-                str += "<div class='media media-mod-2 comment'>" + '<div class="media-body">' + "<p class=h6 text-sushi text-ubold" > + reviews[i].ReviewerName + "</p>" +
-                    "<time class=fa-calendar" + reviews[i].Date.split(' ')[0] + "</time>" + "<p class=text-light-custom>" + reviews[i].RevComment + "</p>" + "</div>" + "</div>";
+                str += "<div class='media media-mod-2 comment'><div class='media-body'><p class='h6 text-sushi text-ubold'>" + reviews[i].ReviewerName;
+                str += "</p><time class='fa-calendar'>" + reviews[i].Date.split(' ')[0] + "</time><p class='text-light-custom'>" + reviews[i].RevComment + "</p></div></div>";
             }
             div.html(str); 
         }
@@ -370,17 +370,14 @@
         <section class="bg-gray-dark section-md section-md-mod-1">
           <div class="container">
             <div class="row flow-offset-7">
-              <div class="col-12 col-md-6 col-lg-3">
+              <div class="col-12 col-md-8 col-lg-4">
                 <p>Name</p><p id="name" class="h5 text-sushi text-regular" >Heather Turner</p>
-              </div>
-              <div class="col-12 col-md-6 col-lg-3">
-                <p>Agency</p><p class="h5 text-sushi text-regular" >Modern Estate Inc.</p>
-              </div>    
-              <div class="col-12 col-md-6 col-lg-3 col-xl-3">
+              </div> 
+              <div class="col-12 col-md-8 col-lg-4 col-xl-3">
                 <p>Location</p>
                 <p id="location" class="h5 text-sushi text-regular">7758 Laguna heights Court, San Francisco, MA 02127</p>
               </div>
-              <div class="col-12 col-md-6 col-lg-3 col-xl-2 offset-xl-1">
+              <div class="col-12 col-md-8 col-lg-4 col-xl-2 offset-xl-1">
                 <p>Price</p>
                 <p id="price" class=" text-sushi thumbnail-price h5">$2490.00<span class="mon text-regular">/night</span></p>
               </div>
