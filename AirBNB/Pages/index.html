@@ -36,14 +36,25 @@
     <!-- Script-->
     <script>
         $(document).ready(function () {
+
             api = `../api/Apartments/tinyGet`;
             ajaxCall("GET", api, "", successCB, errorCB);
+
             apiPopular = `../api/Apartments/propertyTypeGet`;
             ajaxCall("GET", apiPopular, "", successPopularCB, errorPopularCB);
-            singleApartment();
+
+            routeSingleApratmentHTML();
+
+            //api = `../api/Apartments/propertyTypes`;
+            //ajaxCall("GET", api, "", getPropertyTypesSCB, errorCB);
+
+            //api = `../api/Apartments/roomTypes`;
+            //ajaxCall("GET", api, "", getRoomTypesSCB, errorCB);
+
+            $('#searchBTN').on('click',searchApartments);
         });
 
-        function singleApartment() {
+        function routeSingleApratmentHTML() {
             $('.img-link, .text-sushi').click(function (event) {
                 // Remember the link href
                 let href = 'property-catalog-single.html';
@@ -62,7 +73,24 @@
         }
 
         function errorCB(error) {
+            console.error(error);
+        }
 
+        function searchApartments() {
+            let keyword = $('#keyword').val();
+            //let api = '../api/Apartments';
+            //ajaxCall('GET', api, JSON.stringify(keyword), searchSCB, errorCB);
+
+            let api = `../api/Apartments/byKeyWord/${keyword}`;
+            ajaxCall('GET', api, "", searchSCB, errorCB);
+
+
+        }
+
+        function searchSCB(apartments) {
+            localStorage.setItem('searchApartments', JSON.stringify(apartments));
+            
+            //window.location = ''; 
         }
 
         function successPopularCB(apartmentCatgeories) {
@@ -71,7 +99,7 @@
         }
 
         function errorPopularCB(error) {
-            console.log(error);
+            console.error(error);
         }
 
         function render(apartments) {
@@ -406,7 +434,7 @@
             <section class="section-md section-bottom-0 bg-gray-dark">
                 <div class="container position-margin-top">
                     <div class="search-form-wrap bg-default container-shadow">
-                        <h3>Find Your Home</h3>
+                        <h3>Find Your Apartment</h3>
                         <form class="form-variant-1" action="#" name="search-form">
                             <div class="form-wrap">
                                 <label class="form-label" for="keyword">Keyword</label>
@@ -475,7 +503,7 @@
                                     <option value="6">6</option>
                                 </select>
                             </div>
-                            <button class="btn btn-sm btn-sushi btn-min-width-sm">Search</button>
+                            <button class="btn btn-sm btn-sushi btn-min-width-sm" id="searchBTN">Search</button>
                             <div class="features">
                                 <a class="btn-features" href="" onclick="return false"><span></span>Look for certain features</a>
                                 <ul class="checkbox-list list-inline">
