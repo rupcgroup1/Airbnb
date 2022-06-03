@@ -632,7 +632,6 @@
           let zoom = parseInt(plugins.maps[i].getAttribute("data-zoom"), 10) || 11;
           let styles = plugins.maps[i].hasAttribute('data-styles') ? JSON.parse(plugins.maps[i].getAttribute("data-styles")) : [];
           let center = plugins.maps[i].getAttribute("data-center") || "New York";
-
           // Initialize map
           let map = new google.maps.Map(plugins.maps[i].querySelectorAll(".google-map")[0], {
             zoom:        zoom,
