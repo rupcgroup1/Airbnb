@@ -156,5 +156,11 @@ namespace AirBNB.Models
             return ds.getApartmentByID(id);
         }
 
+        public List<Apartment> getAllApartmentsByKeyWord(string keyword)
+        {
+            DataServices ds = new DataServices();
+            return ds.getAllApartmentsByKeyWord(keyword);
+        }
+
     }
 }

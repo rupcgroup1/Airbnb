@@ -19,6 +19,14 @@ namespace AirBNB.Controllers
         }
 
         [HttpGet]
+        [Route("api/Apartments/byKeyWord/{keyword}")]
+        public List<Apartment> getListByKeyWord(string keyword)
+        {
+            Apartment apartment = new Apartment();
+            return apartment.getAllApartmentsByKeyWord(keyword);
+        }
+
+        [HttpGet]
         [Route("api/Apartments/propertyTypeGet")]
         public List<Apartment> propertyTypeGet()
         {
