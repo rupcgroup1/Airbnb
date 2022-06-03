@@ -244,6 +244,7 @@ namespace AirBNB.Models.DAL
 
             SqlCommand command = new SqlCommand();
             command.CommandText = "PSPgetAllApartmentReviews";
+            command.Parameters.AddWithValue("@id", id);
             command.Connection = con;
             command.CommandType = System.Data.CommandType.StoredProcedure;
             command.CommandTimeout = 10; // in seconds
