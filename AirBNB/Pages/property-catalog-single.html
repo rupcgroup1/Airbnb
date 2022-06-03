@@ -69,6 +69,9 @@
             // Description
             $('#description').html((apartment.Description).split('License number')[0]);
 
+            //Render reviews
+            //renderReviews(apartment.Id);
+
         }
 
         // for render amenities.
@@ -107,6 +110,26 @@
             if (i > 0.5)
                 str += '<span class="fa-star-half"></span>';
             return str;
+        }
+
+        function renderReviews(id) {
+            api = `../api/Reviews/apartmentReviews/${id}`;
+            ajaxCall("GET",api,"",reviewSCB,reviewECB);
+        }
+
+        function reviewSCB(reviews) {
+            console.log(reviews);
+            let div = $("#mainReviews");
+            let str = "";
+            for (let i = 0; i < reviews.length; i++) {
+                str += "<div class='media media-mod-2 comment'>" + '<div class="media-body">' + "<p class=h6 text-sushi text-ubold" > + reviews[i].ReviewerName + "</p>" +
+                    "<time class=fa-calendar" + reviews[i].Date.split(' ')[0] + "</time>" + "<p class=text-light-custom>" + reviews[i].RevComment + "</p>" + "</div>" + "</div>";
+            }
+            div.html(str); 
+        }
+
+        function reviewECB(error) {
+            console.log(error);
         }
 
     </script>
@@ -458,25 +481,31 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <h4  class="border-bottom offset-custom-8">Description</h4>
+                            <h4 class="border-bottom offset-custom-8">Description</h4>
                             <div id="description"></div>
+
+                            <!--Reviews-->
                             <h4 class="border-bottom offset-custom-8">Reviews</h4>
-                            <div class="media media-mod-2 comment">
-                                <div class="media-left round"><img class="round" src="images/post_page-4.jpg" alt="" width="70" height="70"></div>
-                                <div class="media-body">
-                                    <p class="h6 text-sushi text-ubold">Marilyn Taylor</p>
-                                    <time class="fa-calendar" datetime="2016">May 21, 2016 at 5:50 pm</time>
-                                    <p class="text-light-custom">I just don't know how to describe your services... They are extraordinary! I am quite happy with them! Just keep up going this way!</p><a class="text-sushi" href="#"><span class="fa-mail-reply icon"></span><span>Reply</span></a>
+                            <br/>
+                            <div id="mainReviews">
+                                <div class="media media-mod-2 comment">
+                                    <div class="media-body">
+                                        <p class="h6 text-sushi text-ubold">Marilyn Taylor</p>
+                                        <time class="fa-calendar" datetime="2016">May 21, 2016 at 5:50 pm</time>
+                                        <p class="text-light-custom">I just don't know how to describe your services... They are extraordinary! I am quite happy with them! Just keep up going this way!</p>
+                                    </div>
+                                </div>
+
+                                <div class="media media-mod-2 comment">
+                                    <div class="media-body">
+                                        <p class="h6 text-sushi text-ubold">Tamir Uzan</p>
+                                        <time class="fa-calendar" datetime="2016">May 21, 2016 at 5:50 pm</time>
+                                        <p class="text-light-custom">I just don't know how to describe your services... They are extraordinary! I am quite happy with them! Just keep up going this way!</p>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="media media-mod-2 comment comment-repost">
-                                <div class="media-left round"><img class="round" src="images/post_page-5.jpg" alt="" width="70" height="70"></div>
-                                <div class="media-body">
-                                    <p class="h6 text-sushi text-ubold">Heather Turner</p>
-                                    <time class="fa-calendar" datetime="2016">May 21, 2016 at 6:23 pm</time>
-                                    <p class="text-light-custom">Thank you!</p><a class="text-sushi" href="#"><span class="fa-mail-reply icon"></span><span>Reply</span></a>
-                                </div>
-                            </div>
+
+
                             <h4 class="border-bottom offset-custom-8">Write Review</h4>
                             <!-- RD Mailform-->
                             <form class="text-start offset-custom-11">
