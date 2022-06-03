@@ -88,13 +88,12 @@
         }
 
         function searchSCB(apartments) {
+            console.log(apartments);
             localStorage.setItem('searchApartments', JSON.stringify(apartments));
-            
             //window.location = ''; 
         }
 
         function successPopularCB(apartmentCatgeories) {
-            console.log(apartmentCatgeories);
             renderPropertyType(apartmentCatgeories);
         }
 
@@ -164,7 +163,6 @@
             for (var i = 0; i < 3; i++) {
 
                 let img = arr_aTags.eq(i).find('img');
-                console.log(img);
                 img.attr("src", apartmentCatgeories[i].Picture);
                 let div = arrDivs.eq(i);
                 div.find('h4').html(apartmentCatgeories[i].PropertyType);
