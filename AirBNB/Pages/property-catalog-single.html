@@ -68,7 +68,7 @@
             $('#description').html((apartment.Description).split('License number')[0]);
 
             //Render reviews
-            //renderReviews(apartment.Id);
+            renderReviews(apartment.Id);
 
         }
 
@@ -110,7 +110,7 @@
         }
 
         function renderReviews(id) {
-            api = `../api/Reviews/apartmentReviews/${id}`;
+            api = `../api/Reviews/apartment/${id}`;
             ajaxCall("GET",api,"",reviewSCB,reviewECB);
         }
 

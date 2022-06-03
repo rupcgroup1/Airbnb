@@ -240,16 +240,15 @@ namespace AirBNB.Models.DAL
         }
 
             private SqlCommand CreateSelectgetAllPropertyTypeCommand(SqlConnection con, int id)
-        {
+            {
+                SqlCommand command = new SqlCommand();
+                command.CommandText = "PSPgetAllApartmentReviews";
+                command.Connection = con;
+                command.CommandType = System.Data.CommandType.StoredProcedure;
+                command.CommandTimeout = 10; // in seconds
 
-            SqlCommand command = new SqlCommand();
-            command.CommandText = "PSPgetAllApartmentReviews";
-            command.Connection = con;
-            command.CommandType = System.Data.CommandType.StoredProcedure;
-            command.CommandTimeout = 10; // in seconds
-
-            return command;
-        }
+                return command;
+            }
 
 
 
