@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AirBNB.Models.DAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -7,17 +8,17 @@ namespace AirBNB.Models
 {
     public class Review
     {
-        private int propID;
-        private int revID;
+        private int listing_id;
+        private int id;
         private string date;
         private int reviewerID;
         private string reviewerName;
         private string revComment;
 
-        public Review(int propID, int revID, string date, int reviewerID, string reviewerName, string revComment)
+        public Review(int listing_id, int id, string date, int reviewerID, string reviewerName, string revComment)
         {
-            this.PropID = propID;
-            this.RevID = revID;
+            this.Listing_id = listing_id;
+            this.Id = id;
             this.Date = date;
             this.ReviewerID = reviewerID;
             this.ReviewerName = reviewerName;
@@ -29,11 +30,17 @@ namespace AirBNB.Models
 
         }
 
-        public int PropID { get => propID; set => propID = value; }
-        public int RevID { get => revID; set => revID = value; }
+        public int Listing_id { get => listing_id; set => listing_id = value; }
+        public int Id { get => id; set => id = value; }
         public string Date { get => date; set => date = value; }
         public int ReviewerID { get => reviewerID; set => reviewerID = value; }
         public string ReviewerName { get => reviewerName; set => reviewerName = value; }
         public string RevComment { get => revComment; set => revComment = value; }
+
+        public List<Review> getAllApartmentReviews(int id)
+        {
+            DataServices ds = new DataServices();
+            return ds.getAllApartmentReviews(id);
+        }
     }
 }
