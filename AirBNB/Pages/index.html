@@ -15,6 +15,13 @@
             width: 570px;
             height: 380px;
         }
+        #from, #to {
+            color: #83AE3E;
+
+        }
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            color: #83AE3E;
+        }
     </style>
 
     <!-- Site Title-->
@@ -45,12 +52,6 @@
 
             routeSingleApratmentHTML();
 
-            //api = `../api/Apartments/propertyTypes`;
-            //ajaxCall("GET", api, "", getPropertyTypesSCB, errorCB);
-
-            //api = `../api/Apartments/roomTypes`;
-            //ajaxCall("GET", api, "", getRoomTypesSCB, errorCB);
-
             $('#searchBTN').on('click',searchApartments);
         });
 
@@ -78,8 +79,6 @@
 
         function searchApartments() {
             let keyword = $('#keyword').val();
-            //let api = '../api/Apartments';
-            //ajaxCall('GET', api, JSON.stringify(keyword), searchSCB, errorCB);
 
             let api = `../api/Apartments/byKeyWord/${keyword}`;
             ajaxCall('GET', api, "", searchSCB, errorCB);
@@ -439,25 +438,14 @@
                             </div>
 
                             <div class="form-wrap">
-                                <label class="form-label" for="select-search-2">Room Type</label>
-                                <select class="form-input select-filter" id="select-search-2" data-minimum-results-for-search="Infinity">
-                                    <option value="Any" selected>Any</option>
-                                    <option value="Vacant land">Vacant land</option>
-                                    <option value="Commercial">Commercial</option>
-                                    <option value="Residential">Residential</option>
-                                    <option value="Homes">Homes</option>
-                                    <option value="Condos">Condos</option>
-                                    <option value="Townhouses">Townhouses</option>
-                                    <option value="Foreclosures">Foreclosures</option>
-                                </select>
+                                <label class="form-label" for="select-search-2">From</label>
+                                <br/>
+                                <input type="date" id="from" />
                             </div>
                             <div class="form-wrap">
-                                <label class="form-label" for="select-search-3">Property Type</label>
-                                <select class="form-input select-filter" id="select-search-3" data-minimum-results-for-search="Infinity">
-                                    <option value="Any" selected>Any</option>
-                                    <option value="Under Construction">Under Construction</option>
-                                    <option value="Ready to Move">Ready to Move</option>
-                                </select>
+                                <label class="form-label" for="select-search-3">To</label>
+                                <br/>
+                                <input type="date" id="to" />
                             </div>
                             <div class="form-wrap width-1">
                                 <span>Price (USD)<br></span>
@@ -477,7 +465,7 @@
                                 <div class="rd-range" data-min="500" data-max="22000" data-start="[2000, 20000]" data-step="50" data-tooltip="true" data-min-diff="500" data-input=".rd-range-input-value-3" data-input-2=".rd-range-input-value-4"></div>
                             </div>
                             <div class="form-wrap width-2">
-                                <label class="form-label" for="select-search-7">Min Beds</label>
+                                <label class="form-label" for="select-search-7">Min Bedrooms</label>
                                 <select class="form-input select-filter" id="select-search-7" data-minimum-results-for-search="Infinity">
                                     <option value="Any" selected>Any</option>
                                     <option value="1">1</option>
@@ -489,53 +477,17 @@
                                 </select>
                             </div>
                             <div class="form-wrap width-2">
-                                <label class="form-label" for="select-search-8">Min Baths</label>
+                                <label class="form-label" for="select-search-8">Review rating</label>
                                 <select class="form-input select-filter" id="select-search-8" data-minimum-results-for-search="Infinity">
                                     <option value="Any" selected>Any</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
+                                    <option value="1">1+</option>
+                                    <option value="2">2+</option>
+                                    <option value="3">3+</option>
+                                    <option value="4">4+</option>
                                     <option value="5">5</option>
-                                    <option value="6">6</option>
                                 </select>
                             </div>
                             <button class="btn btn-sm btn-sushi btn-min-width-sm" id="searchBTN">Search</button>
-                            <div class="features">
-                                <a class="btn-features" href="" onclick="return false"><span></span>Look for certain features</a>
-                                <ul class="checkbox-list list-inline">
-                                    <li>
-                                        <label class="checkbox-inline">
-                                            <input name="input-group-radio" value="checkbox-1" type="checkbox" checked><span>Central Heating (7)</span>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label class="checkbox-inline">
-                                            <input name="input-group-radio" value="checkbox-2" type="checkbox"><span>Lawn (6)</span>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label class="checkbox-inline">
-                                            <input name="input-group-radio" value="checkbox-3" type="checkbox"><span>Marble Floors (8)</span>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label class="checkbox-inline">
-                                            <input name="input-group-radio" value="checkbox-4" type="checkbox"><span>Fire Alarm (5)</span>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label class="checkbox-inline">
-                                            <input name="input-group-radio" value="checkbox-5" type="checkbox"><span>Home Theater (3)</span>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label class="checkbox-inline">
-                                            <input name="input-group-radio" value="checkbox-6" type="checkbox"><span>Hurricane Shutters (1)</span>
-                                        </label>
-                                    </li>
-                                </ul>
-                            </div>
                         </form>
                     </div>
                 </div>
