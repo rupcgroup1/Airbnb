@@ -250,6 +250,50 @@ namespace AirBNB.Models.DAL
             return command;
         }
 
+        // Get apartments by a keyword.
+        public List<Apartment> getAllApartmentsByKeyWord(string keyword)
+        {
+            SqlConnection con = Connect();
+
+            // Create Command
+            SqlCommand command = CreateSelectCommandByKeyWord(con,keyword);
+
+            SqlDataReader dr = command.ExecuteReader(CommandBehavior.CloseConnection);
+
+            List<Apartment> keyWordList = new List<Apartment>();
+
+
+            while (dr.Read())
+            {
+                int id = Convert.ToInt32(dr["id"]);
+                string name = dr["name"].ToString();
+                string description = dr["description"].ToString();
+                string picture = dr["picture"].ToString();
+                int minNights = Convert.ToInt16(dr["minNights"]);
+                int price = Convert.ToInt16(dr["price"]);
+                int numOfReviews = Convert.ToInt16(dr["numOfReviews"]);
+                double reviewRating = Convert.ToDouble(dr["reviewRating"]);
+                int bedrooms = Convert.ToInt16(dr["bedrooms"]);
+                keyWordList.Add(new Apartment(id, name, description, picture, price, numOfReviews, reviewRating, bedrooms, minNights));
+            }
+
+            con.Close();
+            return keyWordList;
+        }
+
+        private SqlCommand CreateSelectCommandByKeyWord(SqlConnection con,string keyword)
+        {
+
+            SqlCommand command = new SqlCommand();
+            command.CommandText = "PSPgetApartmentsByKeyWord";
+            command.Parameters.AddWithValue("@keyWord", keyword);
+            command.Connection = con;
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.CommandTimeout = 10; // in seconds
+
+            return command;
+        }
+
 
     }
 }
