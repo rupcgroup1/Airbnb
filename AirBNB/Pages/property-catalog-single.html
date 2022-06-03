@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/fonts.css">
     <link rel="stylesheet" href="css/style.css">
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwgbLOX5Asukel9nJJzqnqYEXSCCQh1GU&callback=initMap"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwgbLOX5Asukel9nJJzqnqYEXSCCQh1GU"></script>
     <script src="../Scripts/ajaxCalls.js"></script>
     <script src="../Scripts/jquery-3.3.1.min.js"></script>
     <style>
@@ -76,15 +76,21 @@
             renderReviews(apartment.Id);
 
             // Initialize and add the map
+            console.log(apartment.X, apartment.Y);
+
             initMap(apartment.X, apartment.Y);
-            window.initMap = initMap;
+            //window.initMap = initMap;
 
         }
 
         function initMap(x, y) {
             //Map options
+
+            console.log(x);
+            console.log(y);
+
             var options = {
-                zoom: 5,
+                zoom: 8,
                 center: { lat: x, lng: y }
             }
             var map = new google.maps.Map(document.getElementById("map"), options);
@@ -562,8 +568,8 @@
                     <!--Please note that YOUR_API_KEY should replaced with your key.-->
                     <!--Example: <div class="google-map-container" data-key="YOUR_API_KEY">-->
                     <div id="map">
-                      <div class=""></div>
-                      <ul class="">
+                      <div class="google-map google-map-4"></div>
+                      <ul class="google-map-markers">
                         <li ></li>
                       </ul>
                   </div>     
