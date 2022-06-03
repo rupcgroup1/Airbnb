@@ -96,8 +96,6 @@ namespace AirBNB.Models.DAL
             return list;
         }
 
-
-
         private SqlCommand CreateSelectgetAllPropertyTypeCommand(SqlConnection con)
         {
 
@@ -214,7 +212,44 @@ namespace AirBNB.Models.DAL
         }
 
 
+        public List<Review> getAllApartmentReviews(int id)
+        {
+            SqlConnection con = Connect();
 
+            // Create Command
+            SqlCommand command = CreateSelectCommand(con);
+
+            SqlDataReader dr = command.ExecuteReader(CommandBehavior.CloseConnection);
+
+            List<Review> reviews = new List<Review>();
+
+
+            while (dr.Read())
+            {
+                int revId = Convert.ToInt32(dr["id"]);
+                string reviewerName = dr["reviewer_name"].ToString();
+                string revComments = dr["comments"].ToString();
+                int reviewerID = Convert.ToInt16(dr["reviewer_id"]);
+                string date = dr["date"].ToString();
+
+                reviews.Add(new Review(id, revId, date, reviewerID, reviewerName, revComments));
+            }
+
+            con.Close();
+            return reviews;
+        }
+
+            private SqlCommand CreateSelectgetAllPropertyTypeCommand(SqlConnection con, int id)
+        {
+
+            SqlCommand command = new SqlCommand();
+            command.CommandText = "PSPgetAllApartmentReviews";
+            command.Connection = con;
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.CommandTimeout = 10; // in seconds
+
+            return command;
+        }
 
 
 
