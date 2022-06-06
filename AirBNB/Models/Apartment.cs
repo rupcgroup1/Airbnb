@@ -21,6 +21,7 @@ namespace AirBNB.Models
         private double x;
         private double y;
         private string propertyType;
+        private int accommodates;
         private string roomType;
         private string bathroomsText;
         private int bedrooms;
@@ -47,7 +48,7 @@ namespace AirBNB.Models
 
         }
 
-        public Apartment(int id, string name, string description, string neighborhoodOverview, string picture, int hostID, string since, string hostResponseTime, string hostNeighbourhood, string location, double x, double y, string propertyType, string roomType, string bathroomsText, int bedrooms, int beds, List<string> amenities, int price, int minNights, int maxNights, int availability365, int numOfReviews, string lastReview, double reviewRating, double reviewCleanliness, double reviewCommunication, double reviewLocation)
+        public Apartment(int id, string name, string description, string neighborhoodOverview, string picture, int hostID, string since, string hostResponseTime, string hostNeighbourhood, string location, double x, double y, string propertyType, int accommodates, string roomType, string bathroomsText, int bedrooms, int beds, List<string> amenities, int price, int minNights, int maxNights, int availability365, int numOfReviews, string lastReview, double reviewRating, double reviewCleanliness, double reviewCommunication, double reviewLocation)
         {
             this.id = id;
             this.name = name;
@@ -62,6 +63,7 @@ namespace AirBNB.Models
             this.x = x;
             this.y = y;
             this.propertyType = propertyType;
+            this.accommodates = accommodates;
             this.roomType = roomType;
             this.bathroomsText = bathroomsText;
             this.bedrooms = bedrooms;
@@ -83,7 +85,7 @@ namespace AirBNB.Models
         }
 
         // for first render.
-        public Apartment(int id, string name, string description, string picture, int price, int numOfReviews, double reviewRating, int bedrooms, int minNights)
+        public Apartment(int id, string name, string description, string picture, int price, int numOfReviews, double reviewRating, int bedrooms, int accommodates)
         {
             this.id = id;
             this.name = name;
@@ -93,7 +95,7 @@ namespace AirBNB.Models
             this.numOfReviews = numOfReviews;
             this.reviewRating = reviewRating;
             this.bedrooms = bedrooms;
-            this.minNights = minNights;
+            this.accommodates = accommodates;
         }
 
         public Apartment(string propertyType,  int count, string picture)
@@ -134,6 +136,7 @@ namespace AirBNB.Models
         public string Since { get => since; set => since = value; }
         public int Count { get => count; set => count = value; }
         public List<string> Amenities { get => amenities; set => amenities = value; }
+        public int Accommodates { get => accommodates; set => accommodates = value; }
 
 
         //Getting a tiny apartments list to show in home page.

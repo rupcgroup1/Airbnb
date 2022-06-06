@@ -46,12 +46,12 @@ namespace AirBNB.Models.DAL
                 string name = dr["name"].ToString();
                 string description = dr["description"].ToString();
                 string picture = dr["picture"].ToString();
-                int minNights = Convert.ToInt16(dr["minNights"]);
+                int accommodates = Convert.ToInt16(dr["accommodates"]);
                 int price = Convert.ToInt16(dr["price"]);
                 int numOfReviews = Convert.ToInt16(dr["numOfReviews"]);
                 double reviewRating = Convert.ToDouble(dr["reviewRating"]);
                 int bedrooms = Convert.ToInt16(dr["bedrooms"]);
-                tinyList.Add(new Apartment(id,name, description, picture, price, numOfReviews, reviewRating, bedrooms, minNights));
+                tinyList.Add(new Apartment(id,name, description, picture, price, numOfReviews, reviewRating, bedrooms, accommodates));
 
             }
 
@@ -171,6 +171,7 @@ namespace AirBNB.Models.DAL
                 double x = Convert.ToDouble(dr["x"]);
                 double y = Convert.ToDouble(dr["y"]);
                 string propertyType = dr["propertyType"].ToString();
+                int accommodates = Convert.ToInt16(dr["accommodates"]);
                 string roomType = dr["roomType"].ToString();
                 string bathroomsText = dr["bathroomsText"].ToString();
                 int beds = Convert.ToInt16(dr["beds"]);
@@ -187,7 +188,7 @@ namespace AirBNB.Models.DAL
                 double reviewCleanliness = Convert.ToDouble(dr["reviewCleanliness"]);
                 double reviewCommunication = Convert.ToDouble(dr["reviewCommunication"]);
                 double reviewLocation = Convert.ToDouble(dr["reviewLocation"]);
-                a = new Apartment(id, name, description, neighborhoodOverview, picture, hostID, since, hostResponseTime, hostNeighbourhood,location, x, y, propertyType, roomType, bathroomsText, bedrooms, beds, amenities, price, minNights, maxNights, availability365, numOfReviews, lastReview, reviewRating, reviewCleanliness, reviewCommunication, reviewLocation);
+                a = new Apartment(id, name, description, neighborhoodOverview, picture, hostID, since, hostResponseTime, hostNeighbourhood,location, x, y, propertyType, accommodates, roomType, bathroomsText, bedrooms, beds, amenities, price, minNights, maxNights, availability365, numOfReviews, lastReview, reviewRating, reviewCleanliness, reviewCommunication, reviewLocation);
             }
 
             con.Close();
@@ -269,12 +270,12 @@ namespace AirBNB.Models.DAL
                 string name = dr["name"].ToString();
                 string description = dr["description"].ToString();
                 string picture = dr["picture"].ToString();
-                int minNights = Convert.ToInt16(dr["minNights"]);
+                int accommodates = Convert.ToInt16(dr["accommodates"]);
                 int price = Convert.ToInt16(dr["price"]);
                 int numOfReviews = Convert.ToInt16(dr["numOfReviews"]);
                 double reviewRating = Convert.ToDouble(dr["reviewRating"]);
                 int bedrooms = Convert.ToInt16(dr["bedrooms"]);
-                keyWordList.Add(new Apartment(id, name, description, picture, price, numOfReviews, reviewRating, bedrooms, minNights));
+                keyWordList.Add(new Apartment(id, name, description, picture, price, numOfReviews, reviewRating, bedrooms, accommodates));
             }
 
             con.Close();
