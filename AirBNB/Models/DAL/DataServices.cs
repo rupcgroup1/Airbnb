@@ -188,7 +188,8 @@ namespace AirBNB.Models.DAL
                 double reviewCleanliness = Convert.ToDouble(dr["reviewCleanliness"]);
                 double reviewCommunication = Convert.ToDouble(dr["reviewCommunication"]);
                 double reviewLocation = Convert.ToDouble(dr["reviewLocation"]);
-                a = new Apartment(id, name, description, neighborhoodOverview, picture, hostID, since, hostResponseTime, hostNeighbourhood,location, x, y, propertyType, accommodates, roomType, bathroomsText, bedrooms, beds, amenities, price, minNights, maxNights, availability365, numOfReviews, lastReview, reviewRating, reviewCleanliness, reviewCommunication, reviewLocation);
+                double distance = Convert.ToDouble(dr["distance"]);
+                a = new Apartment(id, name, description, neighborhoodOverview, picture, hostID, since, hostResponseTime, hostNeighbourhood,location, x, y, propertyType, accommodates, roomType, bathroomsText, bedrooms, beds, amenities, price, minNights, maxNights, availability365, numOfReviews, lastReview, reviewRating, reviewCleanliness, reviewCommunication, reviewLocation, distance);
             }
 
             con.Close();

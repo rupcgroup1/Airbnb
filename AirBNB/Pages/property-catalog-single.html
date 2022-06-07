@@ -21,6 +21,11 @@
             width: 100%;
             height: 200px;
         }
+        .airlogobnb {
+            width: 300px;
+            height: 100px;
+        }
+
     </style>
     <script>
 
@@ -28,10 +33,27 @@
 
             if (localStorage.getItem("apartmentId") == undefined)  // change it!!!!!!!!!!!!!!!
                 return;
-
+            
             let id = JSON.parse(localStorage.getItem("apartmentId"));
             let api = `../api/Apartments/${id}`;
             ajaxCall("GET", api, "", successApartmentCB, errorCB);
+
+            /*
+            var flag = 0;
+            $('#showReviews').on('click', () => {
+                let btn = $('#showReviews');
+                if (flag == 0) {
+                    $('.hide-review').show();
+                    btn.html('Hide reviews');
+                    flag = 1;
+                }
+                else {
+                    $('.hide-review').hide();
+                    btn.html('Show all reviews');
+                    flag = 0;
+                }
+            });
+            */
 
         });
 
@@ -67,6 +89,7 @@
             $('#reviewCommunication').html(renderStars(apartment.ReviewCommunication, 0));
             $('#reviewLocation').html(renderStars(apartment.ReviewLocation, 0));
             $('#accommodates').html(renderPersons(apartment.Accommodates));
+            $('#distance').html(apartment.Distance.toFixed(2)+' km');
 
             // Description
             $('#description').html((apartment.Description)/*.split('License number')[0]*/);
@@ -148,11 +171,19 @@
             console.log(reviews);
             let div = $("#mainReviews");
             let str = "";
+            let size = 5; // how many reviews to show before click thr button "Show all reviews";
+
             for (let i = 0; i < reviews.length; i++) {
-                str += "<div class='media media-mod-2 comment'><div class='media-body'><p class='h6 text-sushi text-ubold'>" + reviews[i].ReviewerName;
+                str += "<div class='media media-mod-2 comment";
+                if (i > size-1) // add to all other reviews class.
+                    str += " hide-review";
+                str+="'><div class='media-body'><p class='h6 text-sushi text-ubold'>" + reviews[i].ReviewerName;
                 str += "</p><time class='fa-calendar'>" + reviews[i].Date.split(' ')[0] + "</time><p class='text-light-custom'>" + reviews[i].RevComment + "</p></div></div>";
             }
             div.html(str);
+            /*
+            $('.hide-review').hide(); // hide all the other reviews.
+            */
         }
 
         function reviewECB(error) {
@@ -472,6 +503,11 @@
                                                     <td id="availability365"></td>
                                                 </tr>
                                                 <tr>
+
+                                                    <td>Distance from the center</td>
+                                                    <td id="distance"></td>
+                                                </tr>
+                                                <tr>
                                                     <td>Exist since</td>
                                                     <td id="since"></td>
                                                 </tr>
@@ -535,6 +571,7 @@
                                         </div>
                                     </div>
 
+                                    <button id="showReviews" class="btn btn-sushi">Show all reviews</button>
 
                                     <h4 class="border-bottom offset-custom-8">Write Review</h4>
                                     <!-- RD Mailform-->
