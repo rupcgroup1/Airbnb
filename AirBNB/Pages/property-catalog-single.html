@@ -69,7 +69,7 @@
             $('#accommodates').html(renderPersons(apartment.Accommodates));
 
             // Description
-            $('#description').html((apartment.Description).split('License number')[0]);
+            $('#description').html((apartment.Description)/*.split('License number')[0]*/);
 
             //Render reviews
             renderReviews(apartment.Id);
