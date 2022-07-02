@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Web;
 using System.Web.Configuration;
@@ -253,12 +254,12 @@ namespace AirBNB.Models.DAL
         }
 
         // Get apartments by search.
-        public List<Apartment> getAllApartmentsBySearch(string keyword, DateTime from, DateTime to, int minP, int maxP, int minD, int maxD, int beds, int rating)
+        public List<Apartment> getAllApartmentsBySearch(string keyword, string from, string to, int minP, int maxP, double minD, double maxD, int beds, int rating)
         {
             SqlConnection con = Connect();
 
             // Create Command
-            SqlCommand command = CreateSelectCommandBySearch(con,keyword, from, to, minP, maxP, minD, maxD, beds, rating);
+            SqlCommand command = CreateSelectCommandBySearch(con,keyword, from, to, minP, maxP, minD / (double)1000, maxD / (double)1000, beds, rating);
 
             SqlDataReader dr = command.ExecuteReader(CommandBehavior.CloseConnection);
 
@@ -283,7 +284,7 @@ namespace AirBNB.Models.DAL
             return apartmentsList;
         }
 
-        private SqlCommand CreateSelectCommandBySearch(SqlConnection con,string keyword, DateTime from, DateTime to, int minP, int maxP, int minD, int maxD, int beds, int rating)
+        private SqlCommand CreateSelectCommandBySearch(SqlConnection con,string keyword, string from, string to, int minP, int maxP, double minD, double maxD, int beds, int rating)
         {
 
             SqlCommand command = new SqlCommand();
