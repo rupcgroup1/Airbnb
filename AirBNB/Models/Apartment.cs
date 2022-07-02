@@ -162,10 +162,10 @@ namespace AirBNB.Models
             return ds.getApartmentByID(id);
         }
 
-        public List<Apartment> getAllApartmentsByKeyWord(string keyword)
+        public List<Apartment> getAllApartmentsBySearch(string keyword, DateTime from, DateTime to, int minP, int maxP, int minD, int maxD, int beds, int rating)
         {
             DataServices ds = new DataServices();
-            return ds.getAllApartmentsByKeyWord(keyword);
+            return ds.getAllApartmentsBySearch(keyword, from, to, minP, maxP, minD, maxD, beds, rating);
         }
 
     }

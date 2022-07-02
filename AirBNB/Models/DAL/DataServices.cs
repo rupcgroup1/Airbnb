@@ -252,13 +252,13 @@ namespace AirBNB.Models.DAL
             return command;
         }
 
-        // Get apartments by a keyword.
-        public List<Apartment> getAllApartmentsByKeyWord(string keyword)
+        // Get apartments by search.
+        public List<Apartment> getAllApartmentsBySearch(string keyword, DateTime from, DateTime to, int minP, int maxP, int minD, int maxD, int beds, int rating)
         {
             SqlConnection con = Connect();
 
             // Create Command
-            SqlCommand command = CreateSelectCommandByKeyWord(con,keyword);
+            SqlCommand command = CreateSelectCommandBySearch(con,keyword, from, to, minP, maxP, minD, maxD, beds, rating);
 
             SqlDataReader dr = command.ExecuteReader(CommandBehavior.CloseConnection);
 
@@ -283,12 +283,20 @@ namespace AirBNB.Models.DAL
             return keyWordList;
         }
 
-        private SqlCommand CreateSelectCommandByKeyWord(SqlConnection con,string keyword)
+        private SqlCommand CreateSelectCommandBySearch(SqlConnection con,string keyword, DateTime from, DateTime to, int minP, int maxP, int minD, int maxD, int beds, int rating)
         {
 
             SqlCommand command = new SqlCommand();
-            command.CommandText = "PSPgetApartmentsByKeyWord";
+            command.CommandText = "PSPgetApartmentsBySearch";
             command.Parameters.AddWithValue("@keyWord", keyword);
+            command.Parameters.AddWithValue("@dateFrom", from);
+            command.Parameters.AddWithValue("@dateTo", to);
+            command.Parameters.AddWithValue("@pTo", minP);
+            command.Parameters.AddWithValue("@pFrom", maxP);
+            command.Parameters.AddWithValue("@disFrom", minD);
+            command.Parameters.AddWithValue("@disTo", maxD);
+            command.Parameters.AddWithValue("@beds", beds);
+            command.Parameters.AddWithValue("@rating", rating);
             command.Connection = con;
             command.CommandType = System.Data.CommandType.StoredProcedure;
             command.CommandTimeout = 10; // in seconds

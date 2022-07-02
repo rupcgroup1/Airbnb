@@ -18,12 +18,13 @@ namespace AirBNB.Controllers
             return apartment.getTinyList();
         }
 
+
         [HttpGet]
-        [Route("api/Apartments/byKeyWord/{keyword}")]
-        public List<Apartment> getListByKeyWord(string keyword)
+        [Route("api/Apartments/search/{keyword}/{from}/{to}/{minP}/{maxP}/{minD}/{maxD}/{beds}/{rating}")]
+        public List<Apartment> getListByKeyWord(string keyword, DateTime from, DateTime to, int minP, int maxP, int minD, int maxD, int beds,int rating)
         {
             Apartment apartment = new Apartment();
-            return apartment.getAllApartmentsByKeyWord(keyword);
+            return apartment.getAllApartmentsBySearch(keyword, from, to, minP, maxP, minD, maxD, beds, rating);
         }
 
         [HttpGet]
