@@ -73,8 +73,16 @@
 
         function searchApartments() {
             let keyword = $('#keyword').val();
+            let from = $('#from').val();
+            let to = $('#to').val();
+            let minP = $('#range-1').val();
+            let maxP = $('#range-2').val();
+            let minD = $('#range-3').val();
+            let maxD = $('#range-4').val();
+            let beds = $('#select2-select-search-7-container').val();
+            let rating = $('#select2-select-search-8-container').val();
 
-            let api = `../api/Apartments/byKeyWord/${keyword}`;
+            let api = `../api/Apartments/search/${keyword}/${from}/${to}/${minP}/${maxP}/${minD}/${maxD}/${beds}/${rating}`;
             ajaxCall('GET', api, "", searchSCB, errorCB);
 
 
@@ -440,12 +448,12 @@
                             <div class="form-wrap">
                                 <label class="form-label" for="from">From</label>
                                 <br />
-                                <input type="date" class="form-input" id="from" />
+                                <input type="date" class="form-input" id="from" required/>
                             </div>
                             <div class="form-wrap">
                                 <label class="form-label" for="to">To</label>
                                 <br />
-                                <input type="date" class="form-input" id="to" />
+                                <input type="date" class="form-input" id="to" required/>
                             </div>
                             <div class="form-wrap width-1">
                                 <span>Price (USD)<br></span>
