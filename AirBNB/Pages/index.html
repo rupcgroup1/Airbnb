@@ -46,7 +46,8 @@
 
             routeSingleApratmentHTML();
 
-            $('#searchBTN').on('click',searchApartments);
+            $('#frmSubmit').submit(searchApartments);
+            
         });
 
         function routeSingleApratmentHTML() {
@@ -84,10 +85,10 @@
             if (beds == 0) beds = 1;
             if (rating == 0) rating = 1;
             if (keyword.localeCompare('Any') == 0) keyword = "";
-        
-
             let api = `../api/Apartments/search/${keyword}/${from}/${to}/${minP}/${maxP}/${minD}/${maxD}/${beds}/${rating}`;
             ajaxCall('GET', api, "", searchSCB, errorCB);
+
+            return false;
 
 
         }
@@ -443,7 +444,7 @@
                 <div class="container position-margin-top">
                     <div class="search-form-wrap bg-default container-shadow">
                         <h3>Find Your Apartment</h3>
-                        <form class="form-variant-1" action="#" name="search-form">
+                        <form class="form-variant-1" action="#" id="frmSubmit"name="search-form">
                             <div class="form-wrap">
                                 <label class="form-label" for="keyword">Keyword</label>
                                 <input class="form-input" id="keyword" value="Any" type="text" name="keyword" placeholder="Any">
@@ -499,7 +500,7 @@
                                     <option value="5">5</option>
                                 </select>
                             </div>
-                            <button class="btn btn-sm btn-sushi btn-min-width-sm" id="searchBTN">Search</button>
+                            <input type="submit" class="btn btn-sm btn-sushi btn-min-width-sm" value="Search"/>
                         </form>
                     </div>
                 </div>
