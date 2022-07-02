@@ -38,7 +38,7 @@
             let api = `../api/Apartments/${id}`;
             ajaxCall("GET", api, "", successApartmentCB, errorCB);
 
-            /*
+            
             var flag = 0;
             $('#showReviews').on('click', () => {
                 let btn = $('#showReviews');
@@ -53,7 +53,7 @@
                     flag = 0;
                 }
             });
-            */
+            
 
         });
 
@@ -181,9 +181,8 @@
                 str += "</p><time class='fa-calendar'>" + reviews[i].Date.split(' ')[0] + "</time><p class='text-light-custom'>" + reviews[i].RevComment + "</p></div></div>";
             }
             div.html(str);
-            /*
+            
             $('.hide-review').hide(); // hide all the other reviews.
-            */
         }
 
         function reviewECB(error) {

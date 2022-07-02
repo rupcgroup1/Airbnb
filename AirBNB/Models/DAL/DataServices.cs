@@ -64,7 +64,7 @@ namespace AirBNB.Models.DAL
         {
 
             SqlCommand command = new SqlCommand();
-            command.CommandText = "SPgetTinyList";
+            command.CommandText = "PSPgetTinyList";
             command.Connection = con;
             command.CommandType = System.Data.CommandType.StoredProcedure;
             command.CommandTimeout = 10; // in seconds
