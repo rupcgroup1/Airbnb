@@ -48,7 +48,7 @@ namespace AirBNB.Models.DAL
                 string description = dr["description"].ToString();
                 string picture = dr["picture"].ToString();
                 int accommodates = Convert.ToInt16(dr["accommodates"]);
-                int price = Convert.ToInt16(dr["price"]);
+                int price = Convert.ToInt32(dr["price"]);
                 int numOfReviews = Convert.ToInt16(dr["numOfReviews"]);
                 double reviewRating = Convert.ToDouble(dr["reviewRating"]);
                 int bedrooms = Convert.ToInt16(dr["bedrooms"]);
@@ -159,7 +159,7 @@ namespace AirBNB.Models.DAL
                 string description = dr["description"].ToString();
                 string picture = dr["picture"].ToString();
                 int minNights = Convert.ToInt16(dr["minNights"]);
-                int price = Convert.ToInt16(dr["price"]);
+                int price = Convert.ToInt32(dr["price"]);
                 int numOfReviews = Convert.ToInt16(dr["numOfReviews"]);
                 double reviewRating = Convert.ToDouble(dr["reviewRating"]);
                 int bedrooms = Convert.ToInt16(dr["bedrooms"]);
@@ -254,7 +254,7 @@ namespace AirBNB.Models.DAL
         }
 
         // Get apartments by search.
-        public List<Apartment> getAllApartmentsBySearch(string keyword, string from, string to, int minP, int maxP, double minD, double maxD, int beds, int rating)
+        public List<Apartment> getAllApartmentsBySearch(string keyword, string from, string to, int minP, int maxP, double minD, double maxD, int beds, double rating)
         {
             SqlConnection con = Connect();
 
@@ -273,7 +273,7 @@ namespace AirBNB.Models.DAL
                 string description = dr["description"].ToString();
                 string picture = dr["picture"].ToString();
                 int accommodates = Convert.ToInt16(dr["accommodates"]);
-                int price = Convert.ToInt16(dr["price"]);
+                int price = Convert.ToInt32(dr["price"]);
                 int numOfReviews = Convert.ToInt16(dr["numOfReviews"]);
                 double reviewRating = Convert.ToDouble(dr["reviewRating"]);
                 int bedrooms = Convert.ToInt16(dr["bedrooms"]);
@@ -284,16 +284,17 @@ namespace AirBNB.Models.DAL
             return apartmentsList;
         }
 
-        private SqlCommand CreateSelectCommandBySearch(SqlConnection con,string keyword, string from, string to, int minP, int maxP, double minD, double maxD, int beds, int rating)
+        private SqlCommand CreateSelectCommandBySearch(SqlConnection con, string keyword, string from, string to, int minP, int maxP, double minD, double maxD, int beds, double rating)
         {
 
             SqlCommand command = new SqlCommand();
-            command.CommandText = "PSPgetApartmentsBySearch";
+            command.CommandText = "PSPget";
+            Console.WriteLine(minP);
             command.Parameters.AddWithValue("@keyWord", keyword);
-            command.Parameters.AddWithValue("@dateFrom", from);
-            command.Parameters.AddWithValue("@dateTo", to);
             command.Parameters.AddWithValue("@pTo", minP);
             command.Parameters.AddWithValue("@pFrom", maxP);
+            command.Parameters.AddWithValue("@dateFrom", from);
+            command.Parameters.AddWithValue("@dateTo", to);
             command.Parameters.AddWithValue("@disFrom", minD);
             command.Parameters.AddWithValue("@disTo", maxD);
             command.Parameters.AddWithValue("@beds", beds);
@@ -304,6 +305,8 @@ namespace AirBNB.Models.DAL
 
             return command;
         }
+
+
 
 
     }

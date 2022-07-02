@@ -21,9 +21,9 @@ namespace AirBNB.Controllers
 
         [HttpGet]
         [Route("api/Apartments/search/{keyword}/{from}/{to}/{minP}/{maxP}/{minD}/{maxD}/{beds}/{rating}")]
-        public List<Apartment> getListBySearch(string keyword, string from, string to, int minP, int maxP, double minD, double maxD, int beds,int rating)
+        public List<Apartment> getListBySearch(string keyword, string from, string to, int minP, int maxP, double minD, double maxD, int beds, double rating)
         {
-            if (keyword == "Any") keyword = "Washer";
+            if (keyword == "Any") keyword = "";
             Apartment apartment = new Apartment();
             return apartment.getAllApartmentsBySearch(keyword, from, to, minP, maxP, minD, maxD, beds, rating);
         }
