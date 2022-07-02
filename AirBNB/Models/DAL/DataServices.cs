@@ -262,7 +262,7 @@ namespace AirBNB.Models.DAL
 
             SqlDataReader dr = command.ExecuteReader(CommandBehavior.CloseConnection);
 
-            List<Apartment> keyWordList = new List<Apartment>();
+            List<Apartment> apartmentsList = new List<Apartment>();
 
 
             while (dr.Read())
@@ -276,11 +276,11 @@ namespace AirBNB.Models.DAL
                 int numOfReviews = Convert.ToInt16(dr["numOfReviews"]);
                 double reviewRating = Convert.ToDouble(dr["reviewRating"]);
                 int bedrooms = Convert.ToInt16(dr["bedrooms"]);
-                keyWordList.Add(new Apartment(id, name, description, picture, price, numOfReviews, reviewRating, bedrooms, accommodates));
+                apartmentsList.Add(new Apartment(id, name, description, picture, price, numOfReviews, reviewRating, bedrooms, accommodates));
             }
 
             con.Close();
-            return keyWordList;
+            return apartmentsList;
         }
 
         private SqlCommand CreateSelectCommandBySearch(SqlConnection con,string keyword, DateTime from, DateTime to, int minP, int maxP, int minD, int maxD, int beds, int rating)
