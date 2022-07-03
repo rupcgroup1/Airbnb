@@ -306,6 +306,40 @@ namespace AirBNB.Models.DAL
             return command;
         }
 
+        //Insert User to the database.
+        public int insertUser(User u)
+        {
+            // Connect
+            SqlConnection con = Connect();
+
+            // Create Command
+            SqlCommand command = CreateInsertCommand(con, u);
+
+            // Execute
+            int numAffected = command.ExecuteNonQuery();
+
+            // Close Connection
+
+            con.Close();
+
+            return numAffected;
+        }
+
+        //Creating insert command for insert a new company.
+        private SqlCommand CreateInsertCommand(SqlConnection con, User u)
+        {
+            SqlCommand command = new SqlCommand();
+
+            command.Parameters.AddWithValue("@username", u.Username);
+            command.Parameters.AddWithValue("@password", u.Password);
+            command.Parameters.AddWithValue("@email", u.Email);
+            command.CommandText = "PSPInsertUser";
+            command.Connection = con;
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.CommandTimeout = 10; // in seconds
+
+            return command;
+        }
 
 
 
