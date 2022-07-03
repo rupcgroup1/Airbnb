@@ -1,10 +1,8 @@
 ﻿<!DOCTYPE html>
 <html class="wide wow-animation" lang="en">
-  <head>
-      <style>
-
-
-      </style>
+<head>
+    <style>
+    </style>
     <!-- Site Title-->
     <title>Property Catalog Grid</title>
     <meta name="format-detection" content="telephone=no">
@@ -17,7 +15,77 @@
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/fonts.css">
     <link rel="stylesheet" href="css/style.css">
-  </head>
+
+    <script src="../Scripts/ajaxCalls.js"></script>
+    <script src="../Scripts/jquery-3.3.1.min.js"></script>
+
+    <script>
+
+        $(document).ready(function () {
+
+            if (localStorage.getItem("searchApartments") != undefined)
+                apartments = localStorage.getItem("searchApartments");
+            render(apartments);
+        });
+
+
+        function render(apartments) {
+
+            arrImgs = $('.thumbnail-3.thumbnail img');      // catch all apartments imgs.
+            arrDivs = $('.thumbnail-3.thumbnail .caption'); // catch all apartments description divs.
+
+            for (var i = 0; i < 6; i++) {
+
+                let img = arrImgs.eq(i);
+                img.attr("src", apartments[i].Picture);
+                img.parent().attr('id', apartments[i].Id);  // catch a tag and insert him aprtmend id as element id
+
+                let div = arrDivs.eq(i);
+                let str = apartments[i].Price + '$/<span class="mon text-regular">night</span>';
+                div.find('span').first().html(str);
+                div.find('a').html(apartments[i].Name);
+                div.find('a').attr('id', apartments[i].Id); // catch a tag and insert him aprtmend id as element id
+                //div.find('p').html(renderDescription(apartments[i].Description, 38));
+                //div.find('li').first().parent().html(renderStars(apartments[i].ReviewRating, apartments[i].NumOfReviews));
+                div.find('.describe-2 li').first().html(apartments[i].Bedrooms + ' bedrooms');
+                div.find('.describe-2 li').last().html(renderPersons(apartments[i].Accommodates));
+            }
+        }
+
+        function renderDescription(des, size) {
+            let words = des.split(' ');
+            if (size > words.length)
+                size = words.length;
+            let str = "";
+            for (var i = 0; i < size; i++)
+                str += words[i] + " ";
+            str += "...";
+            return str;
+        }
+
+
+        function renderPersons(num) { // need to put in js file.
+            let str = "";
+            for (var i = num; i >= 1; i--)
+                str += '<span class="mdi mdi-odnoklassniki"></span>';
+            return str;
+        }
+
+        function renderStars(score, reviews) { // need to put in js file.
+            if (reviews > 0)
+                str = "<p style='text-align:center'>" + score.toFixed(1) + ' (' + reviews + ')</p>';
+            else str = "<p>" + score.toFixed(1) + '</p>';
+            for (var i = score; i >= 1; i--) {
+                str += '<span class="fa-star"></span>';
+            }
+            if (i > 0.5)
+                str += '<span class="fa-star-half"></span>';
+            return str;
+        }
+
+    </script>
+
+</head>
   <body>
     <div class="preloader">
       <div class="preloader-body">
@@ -237,457 +305,382 @@
       </header>
       <!-- Page Content-->
       <main class="page-content text-start">
-        <!-- Section Title Breadcrumbs-->
-        <section class="section-full section-full-mod-1">
-          <div class="container">
-            <div class="row">
-              <div class="col-12">
-                <h1>Property Catalog </h1>
-                <p></p>
-                <ol class="breadcrumb">
-                  <li><a href="index.html">Home</a></li>
-                  <li><a href="#">Property Catalog</a></li>
-                  <li class="active">Property Catalog Grid</li>
-                </ol>
+          <!-- Section Title Breadcrumbs-->
+          <section class="section-full section-full-mod-1">
+              <div class="container">
+                  <div class="row">
+                      <div class="col-12">
+                          <h1>Property Catalog </h1>
+                          <p></p>
+                          <ol class="breadcrumb">
+                              <li><a href="index.html">Home</a></li>
+                              <li><a href="#">Property Catalog</a></li>
+                              <li class="active">Property Catalog Grid</li>
+                          </ol>
+                      </div>
+                  </div>
               </div>
-            </div>
-          </div>
-        </section>
-        <!--Section Find your home-->
-        <section class="section-md section-bottom-0">
-          <div class="container position-margin-top position-margin-top-mod-1">
-            <div class="search-form-wrap bg-default container-shadow">
-              <h3>Find Your Home</h3>
-              <form class="form-variant-1" action="#" name="search-form">
-                <div class="form-wrap">
-                  <label class="form-label" for="keyword">Keyword</label>
-                  <input class="form-input" id="keyword" type="text" name="keyword" placeholder="Any">
-                </div>
-                <div class="form-wrap">
-                  <label class="form-label" for="select-search-1">Location</label>
-                  <select class="form-input select-filter" id="select-search-1" data-minimum-results-for-search="Infinity">
-                    <option value="Any" selected>Any</option>
-                    <option value="Denver">Denver</option>
-                    <option value="Houston">Houston</option>
-                    <option value="Las Vegas">Las Vegas</option>
-                    <option value="Orlando">Orlando</option>
-                    <option value="Phoenix">Phoenix</option>
-                    <option value="San Diego">San Diego</option>
-                    <option value="Miami">Miami</option>
-                    <option value="Atlanta">Atlanta</option>
-                  </select>
-                </div>
-                <div class="form-wrap">
-                  <label class="form-label" for="select-search-2">Property Status</label>
-                  <select class="form-input select-filter" id="select-search-2" data-minimum-results-for-search="Infinity">
-                    <option value="Any" selected>Any</option>
-                    <option value="Vacant land">Vacant land</option>
-                    <option value="Commercial">Commercial</option>
-                    <option value="Residential">Residential</option>
-                    <option value="Homes">Homes</option>
-                    <option value="Condos">Condos</option>
-                    <option value="Townhouses">Townhouses</option>
-                    <option value="Foreclosures">Foreclosures</option>
-                  </select>
-                </div>
-                <div class="form-wrap">
-                  <label class="form-label" for="select-search-3">Property Type</label>
-                  <select class="form-input select-filter" id="select-search-3" data-minimum-results-for-search="Infinity">
-                    <option value="Any" selected>Any</option>
-                    <option value="Under Construction">Under Construction</option>
-                    <option value="Ready to Move">Ready to Move</option>
-                  </select>
-                </div>
-                <div class="form-wrap width-1"><span>Price (USD)<br></span>
-                  <div class="form-inline-flex-xs">
-                    <input class="rd-range-input-value rd-range-input-value-1 form-input" id="range-1" type="text" name="range-2"><span class="text-abbey dash">&mdash;</span>
-                    <input class="rd-range-input-value rd-range-input-value-2 form-input" id="range-2" type="text" name="range-3">
+          </section>
+          <!--Section Find your home-->
+          <section class="section-md section-bottom-0 bg-gray-dark">
+              <div class="container position-margin-top">
+                  <div class="search-form-wrap bg-default container-shadow">
+                      <h3>Find Your Apartment</h3>
+                      <form class="form-variant-1" action="#" id="frmSubmit" name="search-form">
+                          <div class="form-wrap">
+                              <label class="form-label" for="keyword">Keyword</label>
+                              <input class="form-input" id="keyword" value="Any" type="text" name="keyword" placeholder="Any">
+                          </div>
+
+                          <div class="form-wrap">
+                              <label class="form-label" for="from">From</label>
+                              <br />
+                              <input type="date" class="form-input" id="from" required />
+                          </div>
+                          <div class="form-wrap">
+                              <label class="form-label" for="to">To</label>
+                              <br />
+                              <input type="date" class="form-input" id="to" required />
+                          </div>
+                          <div class="form-wrap width-1">
+                              <span>Price (USD)<br></span>
+                              <div class="form-inline-flex-xs">
+                                  <input class="rd-range-input-value rd-range-input-value-1 form-input" id="range-1" type="text" name="range-2"><span class="text-abbey dash">&mdash;</span>
+                                  <input class="rd-range-input-value rd-range-input-value-2 form-input" id="range-2" type="text" name="range-3">
+                              </div>
+                              <div class="rd-range" data-min="10" data-max="1000" data-start="[10, 1000]" data-step="10" data-tooltip="true" data-min-diff="100" data-input=".rd-range-input-value-1" data-input-2=".rd-range-input-value-2"></div>
+                          </div>
+                          <div class="form-wrap width-1">
+                              <span>Distance from center(Meters)<br></span>
+                              <div class="form-inline-flex-xs">
+                                  <input class="rd-range-input-value rd-range-input-value-3 form-input" id="range-3" type="text" name="range-2"><span class="text-abbey dash">&mdash;</span>
+                                  <input class="rd-range-input-value rd-range-input-value-4 form-input" id="range-4" type="text" name="range-3">
+                              </div>
+
+                              <div class="rd-range" data-min="0" data-max="10000" data-start="[0, 10000]" data-step="50" data-tooltip="true" data-min-diff="500" data-input=".rd-range-input-value-3" data-input-2=".rd-range-input-value-4"></div>
+                          </div>
+                          <div class="form-wrap width-2">
+                              <label class="form-label" for="select-search-7">Min Bedrooms</label>
+                              <select class="form-input select-filter" id="select-search-7" data-minimum-results-for-search="Infinity">
+                                  <option value="Any" selected>Any</option>
+                                  <option value="1">1</option>
+                                  <option value="2">2</option>
+                                  <option value="3">3</option>
+                                  <option value="4">4</option>
+                                  <option value="5">5</option>
+                                  <option value="6">6</option>
+                              </select>
+                          </div>
+                          <div class="form-wrap width-2">
+                              <label class="form-label" for="select-search-8">Review rating</label>
+                              <select class="form-input select-filter" id="select-search-8" data-minimum-results-for-search="Infinity">
+                                  <option value="Any" selected>Any</option>
+                                  <option value="1">1+</option>
+                                  <option value="2">2+</option>
+                                  <option value="3">3+</option>
+                                  <option value="4">4+</option>
+                                  <option value="5">5</option>
+                              </select>
+                          </div>
+                          <input type="submit" class="btn btn-sm btn-sushi btn-min-width-sm" value="Search" />
+                      </form>
                   </div>
-                  <div class="rd-range" data-min="100" data-max="10000" data-start="[600, 9500]" data-step="50" data-tooltip="true" data-min-diff="100" data-input=".rd-range-input-value-1" data-input-2=".rd-range-input-value-2"></div>
-                </div>
-                <div class="form-wrap width-1"><span>Area (Sq Ft)<br></span>
-                  <div class="form-inline-flex-xs">
-                    <input class="rd-range-input-value rd-range-input-value-3 form-input" id="range-3" type="text" name="range-2"><span class="text-abbey dash">&mdash;</span>
-                    <input class="rd-range-input-value rd-range-input-value-4 form-input" id="range-4" type="text" name="range-3">
-                  </div>
-                  <div class="rd-range" data-min="500" data-max="22000" data-start="[2000, 20000]" data-step="50" data-tooltip="true" data-min-diff="500" data-input=".rd-range-input-value-3" data-input-2=".rd-range-input-value-4"></div>
-                </div>
-                <div class="form-wrap width-2">
-                  <label class="form-label" for="select-search-7">Min Beds</label>
-                  <select class="form-input select-filter" id="select-search-7" data-minimum-results-for-search="Infinity">
-                    <option value="Any" selected>Any</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                  </select>
-                </div>
-                <div class="form-wrap width-2">
-                  <label class="form-label" for="select-search-8">Min Baths</label>
-                  <select class="form-input select-filter" id="select-search-8" data-minimum-results-for-search="Infinity">
-                    <option value="Any" selected>Any</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                  </select>
-                </div>
-                <button class="btn btn-sm btn-sushi btn-min-width-sm">Search</button>
-                <div class="features"><a class="btn-features" href="" onclick="return false"><span></span>Look for certain features</a>
-                  <ul class="checkbox-list list-inline">
-                    <li>
-                      <label class="checkbox-inline">
-                        <input name="input-group-radio" value="checkbox-1" type="checkbox" checked><span>Central Heating (7)</span>
-                      </label>
-                    </li>
-                    <li>
-                      <label class="checkbox-inline">
-                        <input name="input-group-radio" value="checkbox-2" type="checkbox"><span>Lawn (6)</span>
-                      </label>
-                    </li>
-                    <li>
-                      <label class="checkbox-inline">
-                        <input name="input-group-radio" value="checkbox-3" type="checkbox"><span>Marble Floors (8)</span>
-                      </label>
-                    </li>
-                    <li>
-                      <label class="checkbox-inline">
-                        <input name="input-group-radio" value="checkbox-4" type="checkbox"><span>Fire Alarm (5)</span>
-                      </label>
-                    </li>
-                    <li>
-                      <label class="checkbox-inline">
-                        <input name="input-group-radio" value="checkbox-5" type="checkbox"><span>Home Theater (3)</span>
-                      </label>
-                    </li>
-                    <li>
-                      <label class="checkbox-inline">
-                        <input name="input-group-radio" value="checkbox-6" type="checkbox"><span>Hurricane Shutters (1)</span>
-                      </label>
-                    </li>
-                  </ul>
-                </div>
-              </form>
-            </div>
-          </div>
-        </section>
-        <!-- Section Catalog-->
-        <section class="section-lg">
-          <div class="container">
-            <div class="row justify-content-xs-between">
-              <div class="col-12 col-md-3 text-center text-md-start">
-                <!-- RD SelectMenu-->
-                <div class="sort-input">
-                  <div class="form-wrap form-wrap-mod-1">
-                    <label class="form-label" for="sort-1">Sorting</label>
-                    <!--Select 2-->
-                    <select class="form-input select-filter" id="sort-1" data-minimum-results-for-search="Infinity">
-                      <option value="By Price" selected>By Price</option>
-                      <option value="By Date">By Date</option>
-                      <option value="By Square">By Square</option>
-                      <option value="By Location">By Location</option>
-                    </select>
-                  </div>
-                </div>
               </div>
-              <div class="col-12 col-md-4 text-center text-md-end">
-                <div class="btn-group-mod-3 sorting"><a class="btn btn-primary-transparent btn-sm" href="property-catalog-list.html">List</a><a class="btn btn-primary-transparent btn-sm active" href="property-catalog-grid.html">Grid</a></div>
+          </section>
+          <!-- Section Catalog-->
+          <section class="section-lg">
+              <div class="container">
+                  <div class="row justify-content-xs-between">
+                      <div class="col-12 col-md-3 text-center text-md-start">
+                          <!-- RD SelectMenu-->
+                          <div class="sort-input">
+                              <div class="form-wrap form-wrap-mod-1">
+                                  <label class="form-label" for="sort-1">Sorting</label>
+                                  <!--Select 2-->
+                                  <select class="form-input select-filter" id="sort-1" data-minimum-results-for-search="Infinity">
+                                      <option value="By Price" selected>By Price</option>
+                                      <option value="By Date">By Date</option>
+                                      <option value="By Square">By Square</option>
+                                      <option value="By Location">By Location</option>
+                                  </select>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-12 col-md-4 text-center text-md-end">
+                          <div class="btn-group-mod-3 sorting"><a class="btn btn-primary-transparent btn-sm" href="property-catalog-list.html">List</a><a class="btn btn-primary-transparent btn-sm active" href="property-catalog-grid.html">Grid</a></div>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-12 col-xl-12">
+                          <div class="row clearleft-custom-5">
+                              <div class="col-12 col-md-6">
+                                  <div class="thumbnail thumbnail-3">
+                                      <a class="img-link" href="property-catalog-single.html"><img src="images/index-6.jpg" alt="" width="370" height="250" /></a>
+                                      <div class="caption">
+                                          <h4><a class="text-sushi" href="property-catalog-single.html">Building: 123 on the Park</a></h4><span class="thumbnail-price h5">$4,339.00/<span class="mon text-regular">month</span></span>
+                                          <ul class="describe-1">
+                                              <li>
+                                                  <span class="icon-square icon-sm">
+                                                      <svg x="0px" y="0px" viewbox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">
+                                                      <g>
+                                                      <path d="M3.6,75.7h3.6V7.3l85.7-0.1v85.3l-16.7-0.1l0-16.7c0-0.9-0.4-1.9-1-2.5c-0.7-0.7-1.6-1-2.5-1h-69V75.7h3.6                          H3.6v3.6H69L69,96c0,2,1.6,3.6,3.6,3.6l23.8,0.1c1,0,1.9-0.4,2.5-1c0.7-0.7,1-1.6,1-2.5V3.6c0-1-0.4-1.9-1-2.5                          c-0.7-0.7-1.6-1-2.5-1L3.6,0.1C1.6,0.2,0,1.7,0,3.7v72c0,0.9,0.4,1.9,1,2.5c0.7,0.7,1.6,1,2.5,1V75.7z"></path>
+                                                      <path d="M38.1,76.9v-9.5c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v9.5c0,1.3,1.1,2.4,2.4,2.4                          C37,79.3,38.1,78.2,38.1,76.9"></path>
+                                                      <path d="M38.1,50.7V15c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v35.7c0,1.3,1.1,2.4,2.4,2.4                          C37,53.1,38.1,52.1,38.1,50.7"></path>
+                                                      <path d="M2.4,38.8h33.3c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4H2.4c-1.3,0-2.4,1.1-2.4,2.4                          C0,37.8,1.1,38.8,2.4,38.8"></path>
+                                                      <path d="M35.7,46h31c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4h-31c-1.3,0-2.4,1.1-2.4,2.4                          C33.3,44.9,34.4,46,35.7,46"></path>
+                                                      <path d="M78.6,46h16.7c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4H78.6c-1.3,0-2.4,1.1-2.4,2.4                          C76.2,44.9,77.3,46,78.6,46"></path>
+                                                      <path d="M78.6,46h16.7c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4H78.6c-1.3,0-2.4,1.1-2.4,2.4                          C76.2,44.9,77.3,46,78.6,46"></path>
+                                                      <path d="M81,43.6v-7.1c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v7.1c0,1.3,1.1,2.4,2.4,2.4                          C79.9,46,81,44.9,81,43.6"></path>
+                                                      <path d="M81,43.6v-7.1c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v7.1c0,1.3,1.1,2.4,2.4,2.4                            C79.9,46,81,44.9,81,43.6"></path>
+                                </g>
+                              </svg>
+                                                  </span>1200 sq ft
+                                              </li>
+                                              <li><span class="icon icon-sm icon-primary hotel-icon-10"></span>2 bathrooms</li>
+                                          </ul>
+                                          <ul class="describe-2">
+                                              <li><span class="icon icon-sm icon-primary hotel-icon-05"></span>4 bedrooms</li>
+                                              <li><span class="icon icon-sm icon-primary hotel-icon-26"></span>2 garages</li>
+                                          </ul>
+                                          <p class="text-abbey">Introducing Brooklyn's most unique and genteel address: 123 on the Park. A stately, one-of-a-kind rental residence directly overlooking Brooklyn's famed Prospect Park.</p>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-12 col-md-6">
+                                  <div class="thumbnail thumbnail-3">
+                                      <a class="img-link" href="property-catalog-single.html"><img src="images/index-7.jpg" alt="" width="370" height="250" /></a>
+                                      <div class="caption">
+                                          <h4><a class="text-sushi" href="property-catalog-single.html">225 Maywood Dr, San Francisco, CA 94127</a></h4><span class="thumbnail-price h5">$2,229.00/<span class="mon text-regular">month</span></span>
+                                          <ul class="describe-1">
+                                              <li>
+                                                  <span class="icon-square icon-sm">
+                                                      <svg x="0px" y="0px" viewbox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">
+                                                      <g>
+                                                      <path d="M3.6,75.7h3.6V7.3l85.7-0.1v85.3l-16.7-0.1l0-16.7c0-0.9-0.4-1.9-1-2.5c-0.7-0.7-1.6-1-2.5-1h-69V75.7h3.6                          H3.6v3.6H69L69,96c0,2,1.6,3.6,3.6,3.6l23.8,0.1c1,0,1.9-0.4,2.5-1c0.7-0.7,1-1.6,1-2.5V3.6c0-1-0.4-1.9-1-2.5                          c-0.7-0.7-1.6-1-2.5-1L3.6,0.1C1.6,0.2,0,1.7,0,3.7v72c0,0.9,0.4,1.9,1,2.5c0.7,0.7,1.6,1,2.5,1V75.7z"></path>
+                                                      <path d="M38.1,76.9v-9.5c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v9.5c0,1.3,1.1,2.4,2.4,2.4                          C37,79.3,38.1,78.2,38.1,76.9"></path>
+                                                      <path d="M38.1,50.7V15c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v35.7c0,1.3,1.1,2.4,2.4,2.4                          C37,53.1,38.1,52.1,38.1,50.7"></path>
+                                                      <path d="M2.4,38.8h33.3c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4H2.4c-1.3,0-2.4,1.1-2.4,2.4                          C0,37.8,1.1,38.8,2.4,38.8"></path>
+                                                      <path d="M35.7,46h31c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4h-31c-1.3,0-2.4,1.1-2.4,2.4                          C33.3,44.9,34.4,46,35.7,46"></path>
+                                                      <path d="M78.6,46h16.7c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4H78.6c-1.3,0-2.4,1.1-2.4,2.4                          C76.2,44.9,77.3,46,78.6,46"></path>
+                                                      <path d="M78.6,46h16.7c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4H78.6c-1.3,0-2.4,1.1-2.4,2.4                          C76.2,44.9,77.3,46,78.6,46"></path>
+                                                      <path d="M81,43.6v-7.1c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v7.1c0,1.3,1.1,2.4,2.4,2.4                          C79.9,46,81,44.9,81,43.6"></path>
+                                                      <path d="M81,43.6v-7.1c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v7.1c0,1.3,1.1,2.4,2.4,2.4                            C79.9,46,81,44.9,81,43.6"></path>
+                                </g>
+                              </svg>
+                                                  </span>1200 sq ft
+                                              </li>
+                                              <li><span class="icon icon-sm icon-primary hotel-icon-10"></span>2 bathrooms</li>
+                                          </ul>
+                                          <ul class="describe-2">
+                                              <li><span class="icon icon-sm icon-primary hotel-icon-05"></span>4 bedrooms</li>
+                                              <li><span class="icon icon-sm icon-primary hotel-icon-26"></span>2 garages</li>
+                                          </ul>
+                                          <p class="text-abbey">One of the original homes built at Ocean Beach.</p>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-12 col-md-6">
+                                  <div class="thumbnail thumbnail-3">
+                                      <a class="img-link" href="property-catalog-single.html"><img src="images/index-8.jpg" alt="" width="370" height="250" /></a>
+                                      <div class="caption">
+                                          <h4><a class="text-sushi" href="property-catalog-single.html">2266 48th Ave</a></h4><span class="thumbnail-price h5">$1,339.00/<span class="mon text-regular">month</span></span>
+                                          <ul class="describe-1">
+                                              <li>
+                                                  <span class="icon-square icon-sm">
+                                                      <svg x="0px" y="0px" viewbox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">
+                                                      <g>
+                                                      <path d="M3.6,75.7h3.6V7.3l85.7-0.1v85.3l-16.7-0.1l0-16.7c0-0.9-0.4-1.9-1-2.5c-0.7-0.7-1.6-1-2.5-1h-69V75.7h3.6                          H3.6v3.6H69L69,96c0,2,1.6,3.6,3.6,3.6l23.8,0.1c1,0,1.9-0.4,2.5-1c0.7-0.7,1-1.6,1-2.5V3.6c0-1-0.4-1.9-1-2.5                          c-0.7-0.7-1.6-1-2.5-1L3.6,0.1C1.6,0.2,0,1.7,0,3.7v72c0,0.9,0.4,1.9,1,2.5c0.7,0.7,1.6,1,2.5,1V75.7z"></path>
+                                                      <path d="M38.1,76.9v-9.5c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v9.5c0,1.3,1.1,2.4,2.4,2.4                          C37,79.3,38.1,78.2,38.1,76.9"></path>
+                                                      <path d="M38.1,50.7V15c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v35.7c0,1.3,1.1,2.4,2.4,2.4                          C37,53.1,38.1,52.1,38.1,50.7"></path>
+                                                      <path d="M2.4,38.8h33.3c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4H2.4c-1.3,0-2.4,1.1-2.4,2.4                          C0,37.8,1.1,38.8,2.4,38.8"></path>
+                                                      <path d="M35.7,46h31c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4h-31c-1.3,0-2.4,1.1-2.4,2.4                          C33.3,44.9,34.4,46,35.7,46"></path>
+                                                      <path d="M78.6,46h16.7c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4H78.6c-1.3,0-2.4,1.1-2.4,2.4                          C76.2,44.9,77.3,46,78.6,46"></path>
+                                                      <path d="M78.6,46h16.7c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4H78.6c-1.3,0-2.4,1.1-2.4,2.4                          C76.2,44.9,77.3,46,78.6,46"></path>
+                                                      <path d="M81,43.6v-7.1c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v7.1c0,1.3,1.1,2.4,2.4,2.4                          C79.9,46,81,44.9,81,43.6"></path>
+                                                      <path d="M81,43.6v-7.1c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v7.1c0,1.3,1.1,2.4,2.4,2.4                            C79.9,46,81,44.9,81,43.6"></path>
+                                </g>
+                              </svg>
+                                                  </span>1200 sq ft
+                                              </li>
+                                              <li><span class="icon icon-sm icon-primary hotel-icon-10"></span>2 bathrooms</li>
+                                          </ul>
+                                          <ul class="describe-2">
+                                              <li><span class="icon icon-sm icon-primary hotel-icon-05"></span>4 bedrooms</li>
+                                              <li><span class="icon icon-sm icon-primary hotel-icon-26"></span>2 garages</li>
+                                          </ul>
+                                          <p class="text-abbey">Classic architectural detail, truly superb floor plan &amp; strong upside potential for the next steward to restore this forever home to greatness.</p>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-12 col-md-6">
+                                  <div class="thumbnail thumbnail-3">
+                                      <a class="img-link" href="property-catalog-single.html"><img src="images/index-9.jpg" alt="" width="370" height="250" /></a>
+                                      <div class="caption">
+                                          <h4><a class="text-sushi" href="property-catalog-single.html">1336 N Occidental Blvd</a></h4><span class="thumbnail-price h5">$4,339.00/<span class="mon text-regular">month</span></span>
+                                          <ul class="describe-1">
+                                              <li>
+                                                  <span class="icon-square icon-sm">
+                                                      <svg x="0px" y="0px" viewbox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">
+                                                      <g>
+                                                      <path d="M3.6,75.7h3.6V7.3l85.7-0.1v85.3l-16.7-0.1l0-16.7c0-0.9-0.4-1.9-1-2.5c-0.7-0.7-1.6-1-2.5-1h-69V75.7h3.6                          H3.6v3.6H69L69,96c0,2,1.6,3.6,3.6,3.6l23.8,0.1c1,0,1.9-0.4,2.5-1c0.7-0.7,1-1.6,1-2.5V3.6c0-1-0.4-1.9-1-2.5                          c-0.7-0.7-1.6-1-2.5-1L3.6,0.1C1.6,0.2,0,1.7,0,3.7v72c0,0.9,0.4,1.9,1,2.5c0.7,0.7,1.6,1,2.5,1V75.7z"></path>
+                                                      <path d="M38.1,76.9v-9.5c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v9.5c0,1.3,1.1,2.4,2.4,2.4                          C37,79.3,38.1,78.2,38.1,76.9"></path>
+                                                      <path d="M38.1,50.7V15c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v35.7c0,1.3,1.1,2.4,2.4,2.4                          C37,53.1,38.1,52.1,38.1,50.7"></path>
+                                                      <path d="M2.4,38.8h33.3c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4H2.4c-1.3,0-2.4,1.1-2.4,2.4                          C0,37.8,1.1,38.8,2.4,38.8"></path>
+                                                      <path d="M35.7,46h31c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4h-31c-1.3,0-2.4,1.1-2.4,2.4                          C33.3,44.9,34.4,46,35.7,46"></path>
+                                                      <path d="M78.6,46h16.7c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4H78.6c-1.3,0-2.4,1.1-2.4,2.4                          C76.2,44.9,77.3,46,78.6,46"></path>
+                                                      <path d="M78.6,46h16.7c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4H78.6c-1.3,0-2.4,1.1-2.4,2.4                          C76.2,44.9,77.3,46,78.6,46"></path>
+                                                      <path d="M81,43.6v-7.1c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v7.1c0,1.3,1.1,2.4,2.4,2.4                          C79.9,46,81,44.9,81,43.6"></path>
+                                                      <path d="M81,43.6v-7.1c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v7.1c0,1.3,1.1,2.4,2.4,2.4                            C79.9,46,81,44.9,81,43.6"></path>
+                                </g>
+                              </svg>
+                                                  </span>1200 sq ft
+                                              </li>
+                                              <li><span class="icon icon-sm icon-primary hotel-icon-10"></span>2 bathrooms</li>
+                                          </ul>
+                                          <ul class="describe-2">
+                                              <li><span class="icon icon-sm icon-primary hotel-icon-05"></span>4 bedrooms</li>
+                                              <li><span class="icon icon-sm icon-primary hotel-icon-26"></span>2 garages</li>
+                                          </ul>
+                                          <p class="text-abbey">Located in the heart of Silver Lake, this magnificently re-imagined Spanish bungalow is not to be missed.</p>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-12 col-md-6">
+                                  <div class="thumbnail thumbnail-3">
+                                      <a class="img-link" href="property-catalog-single.html"><img src="images/index-10.jpg" alt="" width="370" height="250" /></a>
+                                      <div class="caption">
+                                          <h4><a class="text-sushi" href="property-catalog-single.html">650 Kelton Ave #201</a></h4><span class="thumbnail-price h5">$2,229.00/<span class="mon text-regular">month</span></span>
+                                          <ul class="describe-1">
+                                              <li>
+                                                  <span class="icon-square icon-sm">
+                                                      <svg x="0px" y="0px" viewbox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">
+                                                      <g>
+                                                      <path d="M3.6,75.7h3.6V7.3l85.7-0.1v85.3l-16.7-0.1l0-16.7c0-0.9-0.4-1.9-1-2.5c-0.7-0.7-1.6-1-2.5-1h-69V75.7h3.6                          H3.6v3.6H69L69,96c0,2,1.6,3.6,3.6,3.6l23.8,0.1c1,0,1.9-0.4,2.5-1c0.7-0.7,1-1.6,1-2.5V3.6c0-1-0.4-1.9-1-2.5                          c-0.7-0.7-1.6-1-2.5-1L3.6,0.1C1.6,0.2,0,1.7,0,3.7v72c0,0.9,0.4,1.9,1,2.5c0.7,0.7,1.6,1,2.5,1V75.7z"></path>
+                                                      <path d="M38.1,76.9v-9.5c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v9.5c0,1.3,1.1,2.4,2.4,2.4                          C37,79.3,38.1,78.2,38.1,76.9"></path>
+                                                      <path d="M38.1,50.7V15c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v35.7c0,1.3,1.1,2.4,2.4,2.4                          C37,53.1,38.1,52.1,38.1,50.7"></path>
+                                                      <path d="M2.4,38.8h33.3c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4H2.4c-1.3,0-2.4,1.1-2.4,2.4                          C0,37.8,1.1,38.8,2.4,38.8"></path>
+                                                      <path d="M35.7,46h31c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4h-31c-1.3,0-2.4,1.1-2.4,2.4                          C33.3,44.9,34.4,46,35.7,46"></path>
+                                                      <path d="M78.6,46h16.7c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4H78.6c-1.3,0-2.4,1.1-2.4,2.4                          C76.2,44.9,77.3,46,78.6,46"></path>
+                                                      <path d="M78.6,46h16.7c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4H78.6c-1.3,0-2.4,1.1-2.4,2.4                          C76.2,44.9,77.3,46,78.6,46"></path>
+                                                      <path d="M81,43.6v-7.1c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v7.1c0,1.3,1.1,2.4,2.4,2.4                          C79.9,46,81,44.9,81,43.6"></path>
+                                                      <path d="M81,43.6v-7.1c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v7.1c0,1.3,1.1,2.4,2.4,2.4                            C79.9,46,81,44.9,81,43.6"></path>
+                                </g>
+                              </svg>
+                                                  </span>1200 sq ft
+                                              </li>
+                                              <li><span class="icon icon-sm icon-primary hotel-icon-10"></span>2 bathrooms</li>
+                                          </ul>
+                                          <ul class="describe-2">
+                                              <li><span class="icon icon-sm icon-primary hotel-icon-05"></span>4 bedrooms</li>
+                                              <li><span class="icon icon-sm icon-primary hotel-icon-26"></span>2 garages</li>
+                                          </ul>
+                                          <p class="text-abbey">Front-facing, single level, well-designed floor plan. Secure building in a highly DESIRABLE location!</p>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-12 col-md-6">
+                                  <div class="thumbnail thumbnail-3">
+                                      <a class="img-link" href="property-catalog-single.html"><img src="images/index-11.jpg" alt="" width="370" height="250" /></a>
+                                      <div class="caption">
+                                          <h4><a class="text-sushi" href="property-catalog-single.html">1735 N Fuller Ave #124</a></h4><span class="thumbnail-price h5">$1,339.00/<span class="mon text-regular">month</span></span>
+                                          <ul class="describe-1">
+                                              <li>
+                                                  <span class="icon-square icon-sm">
+                                                      <svg x="0px" y="0px" viewbox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">
+                                                      <g>
+                                                      <path d="M3.6,75.7h3.6V7.3l85.7-0.1v85.3l-16.7-0.1l0-16.7c0-0.9-0.4-1.9-1-2.5c-0.7-0.7-1.6-1-2.5-1h-69V75.7h3.6                          H3.6v3.6H69L69,96c0,2,1.6,3.6,3.6,3.6l23.8,0.1c1,0,1.9-0.4,2.5-1c0.7-0.7,1-1.6,1-2.5V3.6c0-1-0.4-1.9-1-2.5                          c-0.7-0.7-1.6-1-2.5-1L3.6,0.1C1.6,0.2,0,1.7,0,3.7v72c0,0.9,0.4,1.9,1,2.5c0.7,0.7,1.6,1,2.5,1V75.7z"></path>
+                                                      <path d="M38.1,76.9v-9.5c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v9.5c0,1.3,1.1,2.4,2.4,2.4                          C37,79.3,38.1,78.2,38.1,76.9"></path>
+                                                      <path d="M38.1,50.7V15c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v35.7c0,1.3,1.1,2.4,2.4,2.4                          C37,53.1,38.1,52.1,38.1,50.7"></path>
+                                                      <path d="M2.4,38.8h33.3c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4H2.4c-1.3,0-2.4,1.1-2.4,2.4                          C0,37.8,1.1,38.8,2.4,38.8"></path>
+                                                      <path d="M35.7,46h31c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4h-31c-1.3,0-2.4,1.1-2.4,2.4                          C33.3,44.9,34.4,46,35.7,46"></path>
+                                                      <path d="M78.6,46h16.7c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4H78.6c-1.3,0-2.4,1.1-2.4,2.4                          C76.2,44.9,77.3,46,78.6,46"></path>
+                                                      <path d="M78.6,46h16.7c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4H78.6c-1.3,0-2.4,1.1-2.4,2.4                          C76.2,44.9,77.3,46,78.6,46"></path>
+                                                      <path d="M81,43.6v-7.1c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v7.1c0,1.3,1.1,2.4,2.4,2.4                          C79.9,46,81,44.9,81,43.6"></path>
+                                                      <path d="M81,43.6v-7.1c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v7.1c0,1.3,1.1,2.4,2.4,2.4                            C79.9,46,81,44.9,81,43.6"></path>
+                                </g>
+                              </svg>
+                                                  </span>1200 sq ft
+                                              </li>
+                                              <li><span class="icon icon-sm icon-primary hotel-icon-10"></span>2 bathrooms</li>
+                                          </ul>
+                                          <ul class="describe-2">
+                                              <li><span class="icon icon-sm icon-primary hotel-icon-05"></span>4 bedrooms</li>
+                                              <li><span class="icon icon-sm icon-primary hotel-icon-26"></span>2 garages</li>
+                                          </ul>
+                                          <p class="text-abbey">This charming 2 bed and 2 bath townhome has been beautifully renovated and ready for its next owners.</p>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="col-12 text-center text-md-start offset-custom-11">
+                                  <ul class="pagination">
+                                      <li class="disabled"><span class="fa-chevron-left"></span></li>
+                                      <li class="active"><span>1</span></li>
+                                      <li><a href="#">2</a></li>
+                                      <li><a href="#">3</a></li>
+                                      <li><a href="#">4</a></li>
+                                      <li><a class="fa-chevron-right" href="#"></a></li>
+                                  </ul>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
               </div>
-            </div>
-            <div class="row">
-              <div class="col-12 col-xl-12">
-                <div class="row clearleft-custom-5">
-                  <div class="col-12 col-md-6">
-                    <div class="thumbnail thumbnail-3"><a class="img-link" href="property-catalog-single.html"><img src="images/index-6.jpg" alt="" width="370" height="250"/></a>
-                      <div class="caption">
-                        <h4><a class="text-sushi" href="property-catalog-single.html">Building: 123 on the Park</a></h4><span class="thumbnail-price h5">$4,339.00/<span class="mon text-regular">month</span></span>
-                        <ul class="describe-1">
-                          <li><span class="icon-square icon-sm">
-                              <svg x="0px" y="0px" viewbox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">
-                                <g>
-                                  <path d="M3.6,75.7h3.6V7.3l85.7-0.1v85.3l-16.7-0.1l0-16.7c0-0.9-0.4-1.9-1-2.5c-0.7-0.7-1.6-1-2.5-1h-69V75.7h3.6                          H3.6v3.6H69L69,96c0,2,1.6,3.6,3.6,3.6l23.8,0.1c1,0,1.9-0.4,2.5-1c0.7-0.7,1-1.6,1-2.5V3.6c0-1-0.4-1.9-1-2.5                          c-0.7-0.7-1.6-1-2.5-1L3.6,0.1C1.6,0.2,0,1.7,0,3.7v72c0,0.9,0.4,1.9,1,2.5c0.7,0.7,1.6,1,2.5,1V75.7z"></path>
-                                  <path d="M38.1,76.9v-9.5c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v9.5c0,1.3,1.1,2.4,2.4,2.4                          C37,79.3,38.1,78.2,38.1,76.9"></path>
-                                  <path d="M38.1,50.7V15c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v35.7c0,1.3,1.1,2.4,2.4,2.4                          C37,53.1,38.1,52.1,38.1,50.7"></path>
-                                  <path d="M2.4,38.8h33.3c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4H2.4c-1.3,0-2.4,1.1-2.4,2.4                          C0,37.8,1.1,38.8,2.4,38.8"></path>
-                                  <path d="M35.7,46h31c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4h-31c-1.3,0-2.4,1.1-2.4,2.4                          C33.3,44.9,34.4,46,35.7,46"></path>
-                                  <path d="M78.6,46h16.7c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4H78.6c-1.3,0-2.4,1.1-2.4,2.4                          C76.2,44.9,77.3,46,78.6,46"></path>
-                                  <path d="M78.6,46h16.7c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4H78.6c-1.3,0-2.4,1.1-2.4,2.4                          C76.2,44.9,77.3,46,78.6,46"></path>
-                                  <path d="M81,43.6v-7.1c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v7.1c0,1.3,1.1,2.4,2.4,2.4                          C79.9,46,81,44.9,81,43.6"></path>
-                                  <path d="M81,43.6v-7.1c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v7.1c0,1.3,1.1,2.4,2.4,2.4                            C79.9,46,81,44.9,81,43.6"></path>
-                                </g>
-                              </svg></span>1200 sq ft</li>
-                          <li><span class="icon icon-sm icon-primary hotel-icon-10"></span>2 bathrooms</li>
-                        </ul>
-                        <ul class="describe-2">
-                          <li><span class="icon icon-sm icon-primary hotel-icon-05"></span>4 bedrooms</li>
-                          <li><span class="icon icon-sm icon-primary hotel-icon-26"></span>2 garages</li>
-                        </ul>
-                        <p class="text-abbey">Introducing Brooklyn's most unique and genteel address: 123 on the Park. A stately, one-of-a-kind rental residence directly overlooking Brooklyn's famed Prospect Park.</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-6">
-                    <div class="thumbnail thumbnail-3"><a class="img-link" href="property-catalog-single.html"><img src="images/index-7.jpg" alt="" width="370" height="250"/></a>
-                      <div class="caption">
-                        <h4><a class="text-sushi" href="property-catalog-single.html">225 Maywood Dr, San Francisco, CA 94127</a></h4><span class="thumbnail-price h5">$2,229.00/<span class="mon text-regular">month</span></span>
-                        <ul class="describe-1">
-                          <li><span class="icon-square icon-sm">
-                              <svg x="0px" y="0px" viewbox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">
-                                <g>
-                                  <path d="M3.6,75.7h3.6V7.3l85.7-0.1v85.3l-16.7-0.1l0-16.7c0-0.9-0.4-1.9-1-2.5c-0.7-0.7-1.6-1-2.5-1h-69V75.7h3.6                          H3.6v3.6H69L69,96c0,2,1.6,3.6,3.6,3.6l23.8,0.1c1,0,1.9-0.4,2.5-1c0.7-0.7,1-1.6,1-2.5V3.6c0-1-0.4-1.9-1-2.5                          c-0.7-0.7-1.6-1-2.5-1L3.6,0.1C1.6,0.2,0,1.7,0,3.7v72c0,0.9,0.4,1.9,1,2.5c0.7,0.7,1.6,1,2.5,1V75.7z"></path>
-                                  <path d="M38.1,76.9v-9.5c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v9.5c0,1.3,1.1,2.4,2.4,2.4                          C37,79.3,38.1,78.2,38.1,76.9"></path>
-                                  <path d="M38.1,50.7V15c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v35.7c0,1.3,1.1,2.4,2.4,2.4                          C37,53.1,38.1,52.1,38.1,50.7"></path>
-                                  <path d="M2.4,38.8h33.3c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4H2.4c-1.3,0-2.4,1.1-2.4,2.4                          C0,37.8,1.1,38.8,2.4,38.8"></path>
-                                  <path d="M35.7,46h31c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4h-31c-1.3,0-2.4,1.1-2.4,2.4                          C33.3,44.9,34.4,46,35.7,46"></path>
-                                  <path d="M78.6,46h16.7c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4H78.6c-1.3,0-2.4,1.1-2.4,2.4                          C76.2,44.9,77.3,46,78.6,46"></path>
-                                  <path d="M78.6,46h16.7c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4H78.6c-1.3,0-2.4,1.1-2.4,2.4                          C76.2,44.9,77.3,46,78.6,46"></path>
-                                  <path d="M81,43.6v-7.1c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v7.1c0,1.3,1.1,2.4,2.4,2.4                          C79.9,46,81,44.9,81,43.6"></path>
-                                  <path d="M81,43.6v-7.1c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v7.1c0,1.3,1.1,2.4,2.4,2.4                            C79.9,46,81,44.9,81,43.6"></path>
-                                </g>
-                              </svg></span>1200 sq ft</li>
-                          <li><span class="icon icon-sm icon-primary hotel-icon-10"></span>2 bathrooms</li>
-                        </ul>
-                        <ul class="describe-2">
-                          <li><span class="icon icon-sm icon-primary hotel-icon-05"></span>4 bedrooms</li>
-                          <li><span class="icon icon-sm icon-primary hotel-icon-26"></span>2 garages</li>
-                        </ul>
-                        <p class="text-abbey">One of the original homes built at Ocean Beach.</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-6">
-                    <div class="thumbnail thumbnail-3"><a class="img-link" href="property-catalog-single.html"><img src="images/index-8.jpg" alt="" width="370" height="250"/></a>
-                      <div class="caption">
-                        <h4><a class="text-sushi" href="property-catalog-single.html">2266 48th Ave</a></h4><span class="thumbnail-price h5">$1,339.00/<span class="mon text-regular">month</span></span>
-                        <ul class="describe-1">
-                          <li><span class="icon-square icon-sm">
-                              <svg x="0px" y="0px" viewbox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">
-                                <g>
-                                  <path d="M3.6,75.7h3.6V7.3l85.7-0.1v85.3l-16.7-0.1l0-16.7c0-0.9-0.4-1.9-1-2.5c-0.7-0.7-1.6-1-2.5-1h-69V75.7h3.6                          H3.6v3.6H69L69,96c0,2,1.6,3.6,3.6,3.6l23.8,0.1c1,0,1.9-0.4,2.5-1c0.7-0.7,1-1.6,1-2.5V3.6c0-1-0.4-1.9-1-2.5                          c-0.7-0.7-1.6-1-2.5-1L3.6,0.1C1.6,0.2,0,1.7,0,3.7v72c0,0.9,0.4,1.9,1,2.5c0.7,0.7,1.6,1,2.5,1V75.7z"></path>
-                                  <path d="M38.1,76.9v-9.5c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v9.5c0,1.3,1.1,2.4,2.4,2.4                          C37,79.3,38.1,78.2,38.1,76.9"></path>
-                                  <path d="M38.1,50.7V15c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v35.7c0,1.3,1.1,2.4,2.4,2.4                          C37,53.1,38.1,52.1,38.1,50.7"></path>
-                                  <path d="M2.4,38.8h33.3c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4H2.4c-1.3,0-2.4,1.1-2.4,2.4                          C0,37.8,1.1,38.8,2.4,38.8"></path>
-                                  <path d="M35.7,46h31c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4h-31c-1.3,0-2.4,1.1-2.4,2.4                          C33.3,44.9,34.4,46,35.7,46"></path>
-                                  <path d="M78.6,46h16.7c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4H78.6c-1.3,0-2.4,1.1-2.4,2.4                          C76.2,44.9,77.3,46,78.6,46"></path>
-                                  <path d="M78.6,46h16.7c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4H78.6c-1.3,0-2.4,1.1-2.4,2.4                          C76.2,44.9,77.3,46,78.6,46"></path>
-                                  <path d="M81,43.6v-7.1c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v7.1c0,1.3,1.1,2.4,2.4,2.4                          C79.9,46,81,44.9,81,43.6"></path>
-                                  <path d="M81,43.6v-7.1c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v7.1c0,1.3,1.1,2.4,2.4,2.4                            C79.9,46,81,44.9,81,43.6"></path>
-                                </g>
-                              </svg></span>1200 sq ft</li>
-                          <li><span class="icon icon-sm icon-primary hotel-icon-10"></span>2 bathrooms</li>
-                        </ul>
-                        <ul class="describe-2">
-                          <li><span class="icon icon-sm icon-primary hotel-icon-05"></span>4 bedrooms</li>
-                          <li><span class="icon icon-sm icon-primary hotel-icon-26"></span>2 garages</li>
-                        </ul>
-                        <p class="text-abbey">Classic architectural detail, truly superb floor plan &amp; strong upside potential for the next steward to restore this forever home to greatness.</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-6">
-                    <div class="thumbnail thumbnail-3"><a class="img-link" href="property-catalog-single.html"><img src="images/index-9.jpg" alt="" width="370" height="250"/></a>
-                      <div class="caption">
-                        <h4><a class="text-sushi" href="property-catalog-single.html">1336 N Occidental Blvd</a></h4><span class="thumbnail-price h5">$4,339.00/<span class="mon text-regular">month</span></span>
-                        <ul class="describe-1">
-                          <li><span class="icon-square icon-sm">
-                              <svg x="0px" y="0px" viewbox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">
-                                <g>
-                                  <path d="M3.6,75.7h3.6V7.3l85.7-0.1v85.3l-16.7-0.1l0-16.7c0-0.9-0.4-1.9-1-2.5c-0.7-0.7-1.6-1-2.5-1h-69V75.7h3.6                          H3.6v3.6H69L69,96c0,2,1.6,3.6,3.6,3.6l23.8,0.1c1,0,1.9-0.4,2.5-1c0.7-0.7,1-1.6,1-2.5V3.6c0-1-0.4-1.9-1-2.5                          c-0.7-0.7-1.6-1-2.5-1L3.6,0.1C1.6,0.2,0,1.7,0,3.7v72c0,0.9,0.4,1.9,1,2.5c0.7,0.7,1.6,1,2.5,1V75.7z"></path>
-                                  <path d="M38.1,76.9v-9.5c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v9.5c0,1.3,1.1,2.4,2.4,2.4                          C37,79.3,38.1,78.2,38.1,76.9"></path>
-                                  <path d="M38.1,50.7V15c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v35.7c0,1.3,1.1,2.4,2.4,2.4                          C37,53.1,38.1,52.1,38.1,50.7"></path>
-                                  <path d="M2.4,38.8h33.3c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4H2.4c-1.3,0-2.4,1.1-2.4,2.4                          C0,37.8,1.1,38.8,2.4,38.8"></path>
-                                  <path d="M35.7,46h31c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4h-31c-1.3,0-2.4,1.1-2.4,2.4                          C33.3,44.9,34.4,46,35.7,46"></path>
-                                  <path d="M78.6,46h16.7c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4H78.6c-1.3,0-2.4,1.1-2.4,2.4                          C76.2,44.9,77.3,46,78.6,46"></path>
-                                  <path d="M78.6,46h16.7c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4H78.6c-1.3,0-2.4,1.1-2.4,2.4                          C76.2,44.9,77.3,46,78.6,46"></path>
-                                  <path d="M81,43.6v-7.1c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v7.1c0,1.3,1.1,2.4,2.4,2.4                          C79.9,46,81,44.9,81,43.6"></path>
-                                  <path d="M81,43.6v-7.1c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v7.1c0,1.3,1.1,2.4,2.4,2.4                            C79.9,46,81,44.9,81,43.6"></path>
-                                </g>
-                              </svg></span>1200 sq ft</li>
-                          <li><span class="icon icon-sm icon-primary hotel-icon-10"></span>2 bathrooms</li>
-                        </ul>
-                        <ul class="describe-2">
-                          <li><span class="icon icon-sm icon-primary hotel-icon-05"></span>4 bedrooms</li>
-                          <li><span class="icon icon-sm icon-primary hotel-icon-26"></span>2 garages</li>
-                        </ul>
-                        <p class="text-abbey">Located in the heart of Silver Lake, this magnificently re-imagined Spanish bungalow is not to be missed.</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-6">
-                    <div class="thumbnail thumbnail-3"><a class="img-link" href="property-catalog-single.html"><img src="images/index-10.jpg" alt="" width="370" height="250"/></a>
-                      <div class="caption">
-                        <h4><a class="text-sushi" href="property-catalog-single.html">650 Kelton Ave #201</a></h4><span class="thumbnail-price h5">$2,229.00/<span class="mon text-regular">month</span></span>
-                        <ul class="describe-1">
-                          <li><span class="icon-square icon-sm">
-                              <svg x="0px" y="0px" viewbox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">
-                                <g>
-                                  <path d="M3.6,75.7h3.6V7.3l85.7-0.1v85.3l-16.7-0.1l0-16.7c0-0.9-0.4-1.9-1-2.5c-0.7-0.7-1.6-1-2.5-1h-69V75.7h3.6                          H3.6v3.6H69L69,96c0,2,1.6,3.6,3.6,3.6l23.8,0.1c1,0,1.9-0.4,2.5-1c0.7-0.7,1-1.6,1-2.5V3.6c0-1-0.4-1.9-1-2.5                          c-0.7-0.7-1.6-1-2.5-1L3.6,0.1C1.6,0.2,0,1.7,0,3.7v72c0,0.9,0.4,1.9,1,2.5c0.7,0.7,1.6,1,2.5,1V75.7z"></path>
-                                  <path d="M38.1,76.9v-9.5c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v9.5c0,1.3,1.1,2.4,2.4,2.4                          C37,79.3,38.1,78.2,38.1,76.9"></path>
-                                  <path d="M38.1,50.7V15c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v35.7c0,1.3,1.1,2.4,2.4,2.4                          C37,53.1,38.1,52.1,38.1,50.7"></path>
-                                  <path d="M2.4,38.8h33.3c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4H2.4c-1.3,0-2.4,1.1-2.4,2.4                          C0,37.8,1.1,38.8,2.4,38.8"></path>
-                                  <path d="M35.7,46h31c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4h-31c-1.3,0-2.4,1.1-2.4,2.4                          C33.3,44.9,34.4,46,35.7,46"></path>
-                                  <path d="M78.6,46h16.7c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4H78.6c-1.3,0-2.4,1.1-2.4,2.4                          C76.2,44.9,77.3,46,78.6,46"></path>
-                                  <path d="M78.6,46h16.7c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4H78.6c-1.3,0-2.4,1.1-2.4,2.4                          C76.2,44.9,77.3,46,78.6,46"></path>
-                                  <path d="M81,43.6v-7.1c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v7.1c0,1.3,1.1,2.4,2.4,2.4                          C79.9,46,81,44.9,81,43.6"></path>
-                                  <path d="M81,43.6v-7.1c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v7.1c0,1.3,1.1,2.4,2.4,2.4                            C79.9,46,81,44.9,81,43.6"></path>
-                                </g>
-                              </svg></span>1200 sq ft</li>
-                          <li><span class="icon icon-sm icon-primary hotel-icon-10"></span>2 bathrooms</li>
-                        </ul>
-                        <ul class="describe-2">
-                          <li><span class="icon icon-sm icon-primary hotel-icon-05"></span>4 bedrooms</li>
-                          <li><span class="icon icon-sm icon-primary hotel-icon-26"></span>2 garages</li>
-                        </ul>
-                        <p class="text-abbey">Front-facing, single level, well-designed floor plan. Secure building in a highly DESIRABLE location!</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-12 col-md-6">
-                    <div class="thumbnail thumbnail-3"><a class="img-link" href="property-catalog-single.html"><img src="images/index-11.jpg" alt="" width="370" height="250"/></a>
-                      <div class="caption">
-                        <h4><a class="text-sushi" href="property-catalog-single.html">1735 N Fuller Ave #124</a></h4><span class="thumbnail-price h5">$1,339.00/<span class="mon text-regular">month</span></span>
-                        <ul class="describe-1">
-                          <li><span class="icon-square icon-sm">
-                              <svg x="0px" y="0px" viewbox="0 0 100 100" style="enable-background:new 0 0 100 100;" xml:space="preserve">
-                                <g>
-                                  <path d="M3.6,75.7h3.6V7.3l85.7-0.1v85.3l-16.7-0.1l0-16.7c0-0.9-0.4-1.9-1-2.5c-0.7-0.7-1.6-1-2.5-1h-69V75.7h3.6                          H3.6v3.6H69L69,96c0,2,1.6,3.6,3.6,3.6l23.8,0.1c1,0,1.9-0.4,2.5-1c0.7-0.7,1-1.6,1-2.5V3.6c0-1-0.4-1.9-1-2.5                          c-0.7-0.7-1.6-1-2.5-1L3.6,0.1C1.6,0.2,0,1.7,0,3.7v72c0,0.9,0.4,1.9,1,2.5c0.7,0.7,1.6,1,2.5,1V75.7z"></path>
-                                  <path d="M38.1,76.9v-9.5c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v9.5c0,1.3,1.1,2.4,2.4,2.4                          C37,79.3,38.1,78.2,38.1,76.9"></path>
-                                  <path d="M38.1,50.7V15c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v35.7c0,1.3,1.1,2.4,2.4,2.4                          C37,53.1,38.1,52.1,38.1,50.7"></path>
-                                  <path d="M2.4,38.8h33.3c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4H2.4c-1.3,0-2.4,1.1-2.4,2.4                          C0,37.8,1.1,38.8,2.4,38.8"></path>
-                                  <path d="M35.7,46h31c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4h-31c-1.3,0-2.4,1.1-2.4,2.4                          C33.3,44.9,34.4,46,35.7,46"></path>
-                                  <path d="M78.6,46h16.7c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4H78.6c-1.3,0-2.4,1.1-2.4,2.4                          C76.2,44.9,77.3,46,78.6,46"></path>
-                                  <path d="M78.6,46h16.7c1.3,0,2.4-1.1,2.4-2.4c0-1.3-1.1-2.4-2.4-2.4H78.6c-1.3,0-2.4,1.1-2.4,2.4                          C76.2,44.9,77.3,46,78.6,46"></path>
-                                  <path d="M81,43.6v-7.1c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v7.1c0,1.3,1.1,2.4,2.4,2.4                          C79.9,46,81,44.9,81,43.6"></path>
-                                  <path d="M81,43.6v-7.1c0-1.3-1.1-2.4-2.4-2.4c-1.3,0-2.4,1.1-2.4,2.4v7.1c0,1.3,1.1,2.4,2.4,2.4                            C79.9,46,81,44.9,81,43.6"></path>
-                                </g>
-                              </svg></span>1200 sq ft</li>
-                          <li><span class="icon icon-sm icon-primary hotel-icon-10"></span>2 bathrooms</li>
-                        </ul>
-                        <ul class="describe-2">
-                          <li><span class="icon icon-sm icon-primary hotel-icon-05"></span>4 bedrooms</li>
-                          <li><span class="icon icon-sm icon-primary hotel-icon-26"></span>2 garages</li>
-                        </ul>
-                        <p class="text-abbey">This charming 2 bed and 2 bath townhome has been beautifully renovated and ready for its next owners.</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-12 text-center text-md-start offset-custom-11">
-                    <ul class="pagination">
-                      <li class="disabled"><span class="fa-chevron-left"></span></li>
-                      <li class="active"><span>1</span></li>
-                      <li><a href="#">2</a></li>
-                      <li><a href="#">3</a></li>
-                      <li><a href="#">4</a></li>
-                      <li><a class="fa-chevron-right" href="#"></a></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+          </section>
       </main>
       <!-- Page Footer-->
-      <footer class="page-foot text-start bg-gray">
-        <section class="footer-content">
+      <section class="section-lg bg-gray text-center text-lg-start">
           <div class="container">
-            <div class="row flow-offset-3">
-              <div class="col-12 col-md-6 col-xl-3">
-                <div class="rd-navbar-brand"><a class="brand-name" href="index.html"><img src="images/logo-2.png" alt=""></a></div>
-                <p>We believe in Simple, Creative & Flexible Design Standards.</p>
-                <address class="address">
-                  <dl>
-                    <dt>Headquarters:</dt>
-                    <dd>795 Folsom Ave, Suite 600 San Francisco, CA 94107</dd>
-                  </dl>
-                  <dl class="dl-horizontal-mod-1">
-                    <dt>Phone</dt>
-                    <dd><a class="text-primary" href="callto:#">(91) 8547 632521</a></dd>
-                  </dl>
-                  <dl class="dl-horizontal-mod-1">
-                    <dt>Fax</dt>
-                    <dd><a class="text-primary" href="callto:#">(91) 11 4752 1433</a></dd>
-                  </dl>
-                  <dl class="dl-horizontal-mod-1">
-                    <dt>Email</dt>
-                    <dd><a class="text-primary" href="mailto:#">info@canvas.com</a></dd>
-                  </dl>
-                </address>
-              </div>
-              <div class="col-12 col-md-6 col-xl-3">
-                <h6 class="text-ubold">Blogroll</h6>
-                <ul class="list-marked well6 text-start">
-                  <li><a href="#">Documentation</a></li>
-                  <li><a href="#">Feedback</a></li>
-                  <li><a href="#">Plugins</a></li>
-                  <li><a href="#">Support Forums</a></li>
-                  <li><a href="#">Themes</a></li>
-                  <li><a href="#">WordPress Blog</a></li>
-                  <li><a href="#">WordPress Planet</a></li>
-                </ul>
-              </div>
-              <div class="col-12 col-md-6 col-xl-3">
-                <h6 class="text-ubold">Recent posts</h6>
-                <div class="blog-post text-start">
-                  <div class="blog-post-title"><a class="text-primary" href="blog_post.html">Believe in the Business of Your Dreams</a></div>
-                  <div class="blog-post-time">
-                    <time class="small" datetime="2016">December 28, 2016</time>
+              <h2>Our Advantages</h2>
+              <hr>
+              <div class="row flow-offset-8">
+                  <div class="col-md-6 col-lg-3">
+                      <div class="media media-mod-6">
+                          <div class="media-left"><span class="linecons-location4 icon icon-lg bg-accent"></span></div>
+                          <div class="media-body">
+                              <h4>Various Locations</h4>
+                              <p>Search by state then by city to find an apartment  overlooking the lake in Chicago, within walking distance of the beach in Los Angeles or in the heart of Atlanta.</p>
+                          </div>
+                      </div>
                   </div>
-                </div>
-                <div class="blog-post text-start">
-                  <div class="blog-post-title"><a class="text-primary" href="blog_post.html">Establishing Your Brand on College Campuses</a></div>
-                  <div class="blog-post-time">
-                    <time class="small" datetime="2016">December 28, 2016</time>
+                  <div class="col-md-6 col-lg-3">
+                      <div class="media media-mod-6">
+                          <div class="media-left"><span class="linecons-camera7 icon icon-lg bg-accent"></span></div>
+                          <div class="media-body">
+                              <h4>View Apartments</h4>
+                              <p>View apartment listings with photos, HD videos, InsideView virtual tours, 3D floor plans, and more, while also choosing the apartment and community features that you want.</p>
+                          </div>
+                      </div>
                   </div>
-                </div>
-                <div class="blog-post text-start">
-                  <div class="blog-post-title"><a class="text-primary" href="blog_post.html">Beautiful Rumi Quotes that are Worth Reading</a></div>
-                  <div class="blog-post-time">
-                    <time class="small" datetime="2016">December 28, 2016</time>
+                  <div class="col-md-6 col-lg-3">
+                      <div class="media media-mod-6">
+                          <div class="media-left"><span class="linecons-blockade icon icon-lg bg-accent"></span></div>
+                          <div class="media-body">
+                              <h4>Privacy and Security</h4>
+                              <p>Renters insurance helps keep your belongings secure, whether they're on your desk, under your couch, or in some cases, even in your car's glove box.</p>
+                          </div>
+                      </div>
                   </div>
-                </div>
+                  <div class="col-md-6 col-lg-3">
+                      <div class="media media-mod-6">
+                          <div class="media-left"><span class="linecons-banknote icon icon-lg bg-accent"></span></div>
+                          <div class="media-body">
+                              <h4>No Commission</h4>
+                              <p>You will therefore appreciate this opportunity to acquire a high-quality apartment for rent without having to pay any commission to our real estate agency.</p>
+                          </div>
+                      </div>
+                  </div>
               </div>
-              <div class="col-12 col-md-6 col-xl-3">
-                <h6 class="text-ubold">Newsletter</h6>
-                <p class="text-gray">Enter your email address to receive all news, updates on new arrivals, special offers and other information.</p>
-                <!-- RD Mailform-->
-                <form class="rd-mailform text-start subscribe" data-form-output="form-output-global" data-form-type="subscribe" method="post" action="bat/rd-mailform.php">
-                  <div class="form-wrap">
-                    <label class="form-label" for="email-sub"></label>
-                    <input class="form-input" id="email-sub" type="email" name="email" data-constraints="@Required @Email" placeholder="Enter e-mail">
-                  </div>
-                  <button class="btn btn-sushi btn-sm">subscribe</button>
-                </form>
-              </div>
-            </div>
           </div>
-        </section>
-        <section class="copyright">
-          <div class="container">
-            <div class="row row-30 justify-content-between">
-              <div class="col-md-auto">
-                <p>&#169;<span class="copyright-year">All Rights Reserved</span><a href="terms.html">Terms of Use and Privacy Policy</a></p>
-              </div>
-              <div class="col-md-auto">
-                <ul class="list-inline">
-                  <li><a class="fa-facebook" href="#"></a></li>
-                  <li><a class="fa-twitter" href="#"></a></li>
-                  <li><a class="fa-pinterest-p" href="#"></a></li>
-                  <li><a class="fa-vimeo" href="#"></a></li>
-                  <li><a class="fa-google" href="#"></a></li>
-                  <li><a class="fa-rss" href="#"></a></li>
-                </ul>
-              </div>
-            </div>
+          <br />
+          <div class="container" style="text-align:center">
+              <ul class="list-inline">
+                  <li><a class="fa-facebook" href="https://www.facebook.com/airbnb/"></a></li>
+                  <li><a class="fa-twitter" href="https://twitter.com/airbnb"></a></li>
+                  <li><a class="mdi mdi-instagram" href="https://www.instagram.com/airbnb/"></a></li>
+                  <li><a class="fa-google" href="https://www.google.com/search?q=airbnb&hl=iw&source=hp&ei=JJmXYpbLLJ2Vxc8Pq9q3mA4&iflsig=AJiK0e8AAAAAYpenNDXx8_Ad_y2dMZ3THoR2Ts333B_l&ved=0ahUKEwiW7aKk24z4AhWdSvEDHSvtDeMQ4dUDCAc&uact=5&oq=airbnb&gs_lcp=Cgdnd3Mtd2l6EAMyBAgAEEMyFAguEIAEELEDEIMBEMcBENEDEMkDMgUIABCSAzIFCAAQkgMyBQgAEIAEMgUIABCABDIFCAAQgAQyBQgAEIAEMgUIABCABDIFCAAQgAQ6EAguELEDEIMBEMcBENEDEEM6EQguEIAEELEDEIMBEMcBENEDOgsILhCABBDHARDRAzoICAAQgAQQsQM6CwgAEIAEELEDEIMBOg4ILhCABBCxAxDHARCjAjoRCC4QgAQQsQMQgwEQxwEQrwFQiANYog1g8g5oAXAAeACAAZ4BiAGfBpIBAzAuNpgBAKABAbABAA&sclient=gws-wiz"></a></li>
+              </ul>
           </div>
-        </section>
-        <!-- Rd Mailform result field-->
-        <div class="rd-mailform-validate"></div>
-      </footer>
+      </section>
     </div>
     <!-- Global Mailform Output-->
     <div class="snackbars" id="form-output-global"></div>

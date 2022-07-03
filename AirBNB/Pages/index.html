@@ -96,7 +96,7 @@
         function searchSCB(apartments) {
             console.log(apartments);
             localStorage.setItem('searchApartments', JSON.stringify(apartments));
-            //window.location = ''; 
+            window.location = 'property-catalog-grid.html'; 
         }
 
         function successPopularCB(apartmentCatgeories) {
@@ -107,6 +107,7 @@
             console.error(error);
         }
 
+        // Rener apartments (Tiny-list)
         function render(apartments) {
 
             arrImgs = $('.thumbnail-3.thumbnail img');      // catch all apartments imgs.
@@ -173,7 +174,7 @@
             let arrDivs = $('.img-thumbnail-variant-1 .caption'); // catch all apartments description divs.
             let count = 0;
             let size = 0;
-            for (var i = 0; i < 3; i++) {
+            for (var i = 0; i < 3; i++) { // 3 - Number of categories.
 
                 let img = arr_aTags.eq(i).find('img');
                 img.attr("src", apartmentCatgeories[i].Picture);
