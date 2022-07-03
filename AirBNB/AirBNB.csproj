@@ -465,7 +465,6 @@
     <Content Include="Pages\pricing.html" />
     <Content Include="Pages\progress-bars.html" />
     <Content Include="Pages\property-catalog-grid.html" />
-    <Content Include="Pages\property-catalog-list.html" />
     <Content Include="Pages\property-catalog-single.html" />
     <Content Include="Pages\right_sidebar_blog.html" />
     <Content Include="Pages\services-2.html" />

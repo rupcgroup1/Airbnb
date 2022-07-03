@@ -392,7 +392,7 @@ namespace AirBNB.Models.DAL
 
         
         // Get apartments by property type.
-        public List<Apartment> getAllApartmentsByPropertyType()
+        public List<Apartment> getAllApartmentsByPropertyType(string propertyType)
         {
             SqlConnection con = Connect();
 
