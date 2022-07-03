@@ -18,6 +18,13 @@ namespace AirBNB.Controllers
             return apartment.getTinyList();
         }
 
+        [HttpGet]
+        [Route("api/Apartments/search/{keyword}")]
+        public List<Apartment> getListByPropertyType(string propertyType)
+        {
+            Apartment apartment = new Apartment();
+            return apartment.getAllApartmentsByPropertyType(propertyType);
+        }
 
         [HttpGet]
         [Route("api/Apartments/search/{keyword}/{from}/{to}/{minP}/{maxP}/{minD}/{maxD}/{beds}/{rating}")]

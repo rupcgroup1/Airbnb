@@ -390,5 +390,50 @@ namespace AirBNB.Models.DAL
         }
 
 
+        
+        // Get apartments by property type.
+        public List<Apartment> getAllApartmentsByPropertyType()
+        {
+            SqlConnection con = Connect();
+
+            // Create Command
+            SqlCommand command = CreateSelectCommand(con, propertyType);
+
+            SqlDataReader dr = command.ExecuteReader(CommandBehavior.CloseConnection);
+
+            List<Apartment> list = new List<Apartment>();
+
+            while (dr.Read())
+            {
+                int id = Convert.ToInt32(dr["id"]);
+                string name = dr["name"].ToString();
+                string description = dr["description"].ToString();
+                string picture = dr["picture"].ToString();
+                int accommodates = Convert.ToInt16(dr["accommodates"]);
+                int price = Convert.ToInt32(dr["price"]);
+                int numOfReviews = Convert.ToInt16(dr["numOfReviews"]);
+                double reviewRating = Convert.ToDouble(dr["reviewRating"]);
+                int bedrooms = Convert.ToInt16(dr["bedrooms"]);
+                list.Add(new Apartment(id, name, description, picture, price, numOfReviews, reviewRating, bedrooms, accommodates));
+
+            }
+
+            con.Close();
+            return list;
+        }
+
+        //Creating get command for apartments by property type.
+        private SqlCommand CreateSelectCommand(SqlConnection con, string propertyType)
+        {
+            SqlCommand command = new SqlCommand();
+            command.Parameters.AddWithValue("@propType", propertyType);
+            command.CommandText = "PSPcheckUserExist";
+            command.Connection = con;
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.CommandTimeout = 10; // in seconds
+
+            return command;
+        }
+
     }
 }

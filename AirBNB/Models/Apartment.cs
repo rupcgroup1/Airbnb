@@ -171,5 +171,11 @@ namespace AirBNB.Models
             return ds.getAllApartmentsBySearch(keyword, from, to, minP, maxP, minD, maxD, beds, rating);
         }
 
+        public List<Apartment> getAllApartmentsByPropertyType(string propertyType)
+        {
+            DataServices ds = new DataServices();
+            return ds.getAllApartmentsByPropertyType(propertyType);
+        }
+
     }
 }
