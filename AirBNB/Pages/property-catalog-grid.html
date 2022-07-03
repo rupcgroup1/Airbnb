@@ -39,7 +39,9 @@
                 location.reload();
             });
             $('#previous').click(function () { // using trhe global variable min.
-                localStorage.setItem("index", JSON.stringify(min-6));
+                if (localStorage.getItem("index") != undefined)
+                    index1 = JSON.parse(localStorage.getItem("index"));
+                localStorage.setItem("index", JSON.stringify(index1-6));
                 location.reload();
             });
             $('.showPage').click(function () { // using trhe global variable min.
@@ -53,11 +55,15 @@
             if ((apartment.length - index) / 6 <= 4) {
                 tmp = index / 6;
                 tmp++;
-                str = "<li><span id='previous' class=''fa-chevron-left'></span></li>";
+                str = "<li><a id='previous' class='fa-chevron-left'></a></li>";
                 for (let i = 2; i < ((apartment.length - index) / 6) + 2; i++) {
-                    str += "<li><a class='showPage' id='" + tmp + "'>" + tmp++ + "</a></li>";
+                    if (i == 2) str += "<li class ='active'><a class='showPage' id='" + tmp + "'>" + tmp++ + "</a></li>";
+                    else str += "<li><a class='showPage' id='" + tmp + "'>" + tmp++ + "</a></li>";
                 }
-                str += "<li><a id='next' class='fa-chevron-right'></a></li>";
+                console.log(Math.floor((apartment.length - index) / 6));
+                if (Math.floor((apartment.length - index) / 6) == 0)
+                    str += "<li class='disabled'><a id='next' class='fa-chevron-right'></a></li>";
+                else str += "<li><a id='next' class='fa-chevron-right'></a></li>";
                 $('.pagination').html(str);
             }
             else {
@@ -79,14 +85,20 @@
             if (apartments.length < min)
                 min = apartments.length;
 
+            $(".col-12 .col-md-6").hide();
+
+            size = 6;
+            if ((apartments.length - index) < 6)
+                size = (apartments.length - index);
             // render 6 apartments for each page. 
-            for (let i = 0; i < 6; i++) { 
+            for (let i = 0; i < size; i++) { 
 
                 let img = arrImgs.eq(i);
                 img.attr("src", apartments[j].Picture);
                 img.parent().attr('id', apartments[j].Id);  // catch a tag and insert him aprtmend id as element id
                 
                 let div = arrDivs.eq(i);
+                div.parent().parent().show();
                 let str = apartments[j].Price + '$/<span class="mon text-regular">night</span>';
                 div.find('span').first().html(str);
                 div.find('a').html(apartments[j].Name);
@@ -97,6 +109,7 @@
                 div.find('.describe-2 li').last().html(renderPersons(apartments[j].Accommodates));
                 j++;
             }
+
             //localStorage.setItem("index", JSON.stringify(min));
             
         }
