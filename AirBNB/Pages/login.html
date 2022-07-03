@@ -65,9 +65,9 @@
         }
 
         function login() {
-            let email = $('#name-2').val();
-            let password = $('#password-2').val();
-            let name = $('#name-2').val();
+            let email = $('#name-1').val();
+            let password = $('#password-1').val();
+            let name = $('#name-1').val();
 
             let user = {
                 Username: name,
@@ -76,13 +76,14 @@
             }
 
             let api = `../api/Users/checkUser`;
-            ajaxCall("GET", api, JSON.stringify(user), userExistSCB, userErrorCB);
+            ajaxCall("POST", api, JSON.stringify(user), userExistSCB, userErrorCB);
 
             return false;
         }
 
         function userExistSCB(user) {
             alert("user exist");
+            console.log(user);
             localStorage.setItem("userLogged", JSON.stringify(user));
             location.replace("index.html");
         }

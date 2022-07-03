@@ -17,10 +17,10 @@ namespace AirBNB.Controllers
             return new string[] { "value1", "value2" };
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("api/Users/checkUser")]
-        // GET api/<controller>/5
-        public User Get([FromBody]User u)
+        // POST api/<controller>/5
+        public User checkExist([FromBody]User u)
         {
             return u.checkUser();
         }

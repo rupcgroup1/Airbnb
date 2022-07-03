@@ -359,11 +359,11 @@ namespace AirBNB.Models.DAL
                 string username = dr["username"].ToString();
                 string password = dr["password"].ToString();
                 string email = dr["email"].ToString();
-                string registeredFrom = dr["emregisteredFromail"].ToString();
+                string registeredFrom = dr["registeredFrom"].ToString();
                 int numOfRentals = Convert.ToInt32(dr["numOfRentals"]);
                 int totalIncome = Convert.ToInt16(dr["totalIncome"]);
                 int numOfCancelation = Convert.ToInt16(dr["numOfCancelation"]);
-                u1 = new User(id, email, password, username, numOfRentals, totalIncome, numOfRentals, registeredFrom);
+                u1 = new User(id, email, password, username, numOfRentals, totalIncome, numOfCancelation, registeredFrom);
             }
 
             
@@ -379,7 +379,7 @@ namespace AirBNB.Models.DAL
             command.Parameters.AddWithValue("@username", u.Username);
             command.Parameters.AddWithValue("@password", u.Password);
             command.Parameters.AddWithValue("@email", u.Email);
-            command.CommandText = "PSPcheckUser";
+            command.CommandText = "PSPcheckUserExist";
             command.Connection = con;
             command.CommandType = System.Data.CommandType.StoredProcedure;
             command.CommandTimeout = 10; // in seconds
