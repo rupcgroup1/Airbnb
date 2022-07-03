@@ -37,7 +37,8 @@
     <!-- Script-->
     <script>
         $(document).ready(function () {
-
+            if (localStorage.getItem("user") != undefined)
+                user = JSON.parse(localStorage.getItem("user"));
             api = `../api/Apartments/tinyGet`;
             ajaxCall("GET", api, "", successCB, errorCB);
 
