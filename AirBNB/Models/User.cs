@@ -24,7 +24,14 @@ namespace AirBNB.Models
             this.username = username;
             this.registeredFrom = registeredFrom;
         }
-        
+
+        public User(string email, string password, string username)
+        {
+            this.email = email;
+            this.password = password;
+            this.username = username;
+        }
+
         public User()
         {
 

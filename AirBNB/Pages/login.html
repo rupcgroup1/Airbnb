@@ -1,6 +1,6 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html class="wide wow-animation" lang="en">
-  <head>
+<head>
     <!-- Site Title-->
     <title>Login</title>
     <meta name="format-detection" content="telephone=no">
@@ -13,7 +13,58 @@
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/fonts.css">
     <link rel="stylesheet" href="css/style.css">
-  </head>
+
+    <script src="../Scripts/ajaxCalls.js"></script>
+    <script src="../Scripts/jquery-3.3.1.min.js"></script>
+    <script>
+
+        $(document).ready(function () {
+
+            //$('#loginSubmit').submit(login);
+            $('#registerSubmit').submit(register);
+            $('#email').on('blur', validateEmail);
+        });
+
+
+        function validateEmail() {
+            let email = $('#email').val();
+            var re = /\S+@\S+\.\S+/;
+            if (re.test(email))
+                this.validity.valid = true;
+            else {
+                this.validity.valid = false;
+                this.setCustomValidity('email is not valid, please enter again');
+                alert("email is not valid, please enter again");
+            }
+
+        }
+
+        function register() {
+            let username = $('#name-2').val();
+            let password = $('#password-2').val();
+            let email = $('#email').val();
+
+            let user = {
+                Username: username,
+                Password: password,
+                Email: email
+            };
+
+            ajaxCall("POST", api, JSON.stringify(user), insertSCB, insertECB);
+
+            return false;
+        }
+
+        function insertSCB() {
+            alert("added successfuly!");
+        }
+
+        function insertECB(error) {
+            console.log(error);
+        }
+
+    </script>
+</head>
   <body>
     <div class="preloader">
       <div class="preloader-body">
@@ -264,14 +315,14 @@
                   <div class="tab-content">
                     <div class="tab-pane fade" id="tabs-login-1">
                       <!-- Login form-->
-                      <form>
+                      <form id="login">
                         <div class="form-wrap">
                           <label class="form-label" for="name-1">Username or e-mail</label>
-                          <input class="form-input" id="name-1" type="text" name="name">
+                          <input class="form-input" id="name-1" type="text" name="name" required>
                         </div>
                         <div class="form-wrap">
                           <label class="form-label" for="password-1">Password</label>
-                          <input class="form-input" id="password-1" type="password" name="password">
+                          <input class="form-input" id="password-1" type="password" name="password" required>
                         </div>
                         <div class="form-wrap-btn">
                           <button class="btn btn-sushi btn-sm btn-min-width-xs" type="submit">Enter</button>
@@ -281,19 +332,19 @@
                       </form>
                     </div>
                     <div class="tab-pane fade" id="tabs-login-2">
-                      <!-- Login form-->
-                      <form>
+                      <!-- Register form-->
+                      <form id="register">
                         <div class="form-wrap">
                           <label class="form-label" for="name-2">Username</label>
-                          <input class="form-input" id="name-2" type="text" name="name">
+                          <input class="form-input" id="name-2" type="text" name="name" required>
                         </div>
                         <div class="form-wrap">
                           <label class="form-label" for="email">E-mail</label>
-                          <input class="form-input" id="email" type="text" name="name">
+                          <input class="form-input" id="email" type="text" name="name" required>
                         </div>
                         <div class="form-wrap">
                           <label class="form-label" for="password-2">Password</label>
-                          <input class="form-input" id="password-2" type="password" name="password">
+                          <input class="form-input" id="password-2" type="password" name="password" required>
                         </div>
                         <div class="form-wrap-btn">
                           <button class="btn btn-sushi btn-sm btn-min-width-xs" type="submit">Enter</button>

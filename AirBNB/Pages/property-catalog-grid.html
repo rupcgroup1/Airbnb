@@ -95,14 +95,14 @@
 
                 let img = arrImgs.eq(i);
                 img.attr("src", apartments[j].Picture);
-                img.parent().attr('id', apartments[j].Id);  // catch a tag and insert him aprtmend id as element id
+                img.parent().attr('id', apartments[j].Id);  // catch a tag and insert him aprtment id as element id
                 
                 let div = arrDivs.eq(i);
                 div.parent().parent().show();
                 let str = apartments[j].Price + '$/<span class="mon text-regular">night</span>';
                 div.find('span').first().html(str);
                 div.find('a').html(apartments[j].Name);
-                div.find('a').attr('id', apartments[j].Id); // catch a tag and insert him aprtmend id as element id
+                div.find('a').attr('id', apartments[j].Id); // catch a tag and insert him aprtment id as element id
                 div.find('p').html(renderDescription(apartments[j].Description, 38));
                 div.find('li').first().parent().html(renderStars(apartments[j].ReviewRating, apartments[j].NumOfReviews));
                 div.find('.describe-2 li').first().html(apartments[j].Bedrooms + ' bedrooms');
