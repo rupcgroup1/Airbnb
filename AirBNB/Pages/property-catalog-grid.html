@@ -31,7 +31,7 @@
                 apartments1 = JSON.parse(localStorage.getItem("searchApartments"));
             if (localStorage.getItem("index") != undefined)
                 index1 = JSON.parse(localStorage.getItem("index"));
-            renderNumbers(index1);
+            renderNumbers(index1, apartment1);
             render(apartments1,index1);
 
             $('#next').click(function () { // using trhe global variable min.
@@ -43,16 +43,22 @@
                 location.reload();
             });
             $('.showPage').click(function () { // using trhe global variable min.
-                let id = this.id;
+                let id = this.id - 1;
                 localStorage.setItem("index", JSON.stringify(id*6));
                 location.reload();
             });
         });
 
-        function renderNumbers(index) {
+        function renderNumbers(index, apartment) {
+            if ((index + 18) >= apartment.length) {
+                let sub = (index + 18) - apartment.length;
+                let btns = sub/6
+            }
+
             tmp = index / 6;
+            tmp++;
             for (let i = 2; i < 6; i++) {
-                $(".pagination li:nth-child(" + i + ")").html("<a class='showPage' id='" + ++tmp + "'>" + tmp + "</a>");
+                $(".pagination li:nth-child(" + i + ")").html("<a class='showPage' id='" + tmp + "'>" + tmp++ + "</a>");
             }
             
         }
