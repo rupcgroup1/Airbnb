@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AirBNB.Models.DAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -45,5 +46,11 @@ namespace AirBNB.Models
         public static int NumOfRentals { get => numOfRentals; set => numOfRentals = value; }
         public static int TotalIncome { get => totalIncome; set => totalIncome = value; }
         public static int NumOfCancelation { get => numOfCancelation; set => numOfCancelation = value; }
+
+        public int insertUser(User u)
+        {
+            DataServices ds = new DataServices();
+            return ds.insertUser(this);
+        }
     }
 }
