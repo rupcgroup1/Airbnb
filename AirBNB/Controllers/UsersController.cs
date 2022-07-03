@@ -17,10 +17,12 @@ namespace AirBNB.Controllers
             return new string[] { "value1", "value2" };
         }
 
+        [HttpGet]
+        [Route("api/Users/checkUser")]
         // GET api/<controller>/5
-        public string Get(int id)
+        public User Get([FromBody]User u)
         {
-            return "value";
+            return u.checkUser();
         }
 
         // POST api/<controller>
@@ -28,7 +30,7 @@ namespace AirBNB.Controllers
         [Route("api/Users/insertUser")]
         public int Post([FromBody]User u)
         {
-            return u.insertUser(u);
+            return u.insertUser();
         }
 
         // PUT api/<controller>/5

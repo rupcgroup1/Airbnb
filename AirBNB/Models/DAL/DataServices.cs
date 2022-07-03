@@ -342,6 +342,51 @@ namespace AirBNB.Models.DAL
         }
 
 
+        // Get user and search if exist.
+        public User checkUser(User u)
+        {
+            SqlConnection con = Connect();
+
+            // Create Command
+            SqlCommand command = CreateSelectCommand(con, u);
+
+            SqlDataReader dr = command.ExecuteReader(CommandBehavior.CloseConnection);
+
+            User u1 = null;
+            while (dr.Read())
+            {
+                int id = Convert.ToInt32(dr["id"]);
+                string username = dr["username"].ToString();
+                string password = dr["password"].ToString();
+                string email = dr["email"].ToString();
+                string registeredFrom = dr["emregisteredFromail"].ToString();
+                int numOfRentals = Convert.ToInt32(dr["numOfRentals"]);
+                int totalIncome = Convert.ToInt16(dr["totalIncome"]);
+                int numOfCancelation = Convert.ToInt16(dr["numOfCancelation"]);
+                u1 = new User(id, email, password, username, numOfRentals, totalIncome, numOfRentals, registeredFrom);
+            }
+
+            
+            con.Close();
+            return u1;
+        }
+
+        //Creating get command for search exist user.
+        private SqlCommand CreateSelectCommand(SqlConnection con, User u)
+        {
+            SqlCommand command = new SqlCommand();
+
+            command.Parameters.AddWithValue("@username", u.Username);
+            command.Parameters.AddWithValue("@password", u.Password);
+            command.Parameters.AddWithValue("@email", u.Email);
+            command.CommandText = "PSPcheckUser";
+            command.Connection = con;
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.CommandTimeout = 10; // in seconds
+
+            return command;
+        }
+
 
     }
 }
