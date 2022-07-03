@@ -14,18 +14,20 @@
     <link rel="stylesheet" href="css/fonts.css">
     <link rel="stylesheet" href="css/style.css">
 
+    <script src="../Scripts/renderFunction.js"></script>
     <script src="../Scripts/ajaxCalls.js"></script>
     <script src="../Scripts/jquery-3.3.1.min.js"></script>
+
     <style>
         #map {
             width: 100%;
             height: 200px;
         }
+
         .airlogobnb {
             width: 300px;
             height: 100px;
         }
-
     </style>
     <script>
 
@@ -44,12 +46,12 @@
 
             if (localStorage.getItem("apartmentId") == undefined)  // change it!!!!!!!!!!!!!!!
                 return;
-            
+
             let id = JSON.parse(localStorage.getItem("apartmentId"));
             let api = `../api/Apartments/${id}`;
             ajaxCall("GET", api, "", successApartmentCB, errorCB);
 
-            
+
             var flag = 0;
             $('#showReviews').on('click', () => {
                 let btn = $('#showReviews');
@@ -64,7 +66,7 @@
                     flag = 0;
                 }
             });
-            
+
 
         });
 
@@ -101,7 +103,7 @@
             $('#reviewCommunication').html(renderStars(apartment.ReviewCommunication, 0));
             $('#reviewLocation').html(renderStars(apartment.ReviewLocation, 0));
             $('#accommodates').html(renderPersons(apartment.Accommodates));
-            $('#distance').html(apartment.Distance.toFixed(2)+' km');
+            $('#distance').html(apartment.Distance.toFixed(2) + ' km');
 
             // Description
             $('#description').html((apartment.Description)/*.split('License number')[0]*/);
@@ -163,24 +165,6 @@
             return str;
         }
 
-        function renderPersons(num) { // need to put in js file.
-            let str = "<p'>" + num + ' People </p>';
-            for (var i = num; i >= 1; i--)
-                str += '<span class="mdi mdi-odnoklassniki"></span>';
-            return str;
-        }
-
-        function renderStars(score, reviews) { // need to put in js file.
-            if (reviews > 0)
-                str = "<p style='text-align:center'>" + score.toFixed(1) + ' (' + reviews + ')</p>';
-            else str = "<p>" + score.toFixed(1) + '</p>';
-            for (var i = score; i >= 1; i--) {
-                str += '<span class="fa-star"></span>';
-            }
-            if (i > 0.5)
-                str += '<span class="fa-star-half"></span>';
-            return str;
-        }
 
         function renderReviews(id) {
             api = `../api/Reviews/apartment/${id}`;
@@ -195,13 +179,13 @@
 
             for (let i = 0; i < reviews.length; i++) {
                 str += "<div class='media media-mod-2 comment";
-                if (i > size-1) // add to all other reviews class.
+                if (i > size - 1) // add to all other reviews class.
                     str += " hide-review";
-                str+="'><div class='media-body'><p class='h6 text-sushi text-ubold'>" + reviews[i].ReviewerName;
+                str += "'><div class='media-body'><p class='h6 text-sushi text-ubold'>" + reviews[i].ReviewerName;
                 str += "</p><time class='fa-calendar'>" + reviews[i].Date.split(' ')[0] + "</time><p class='text-light-custom'>" + reviews[i].RevComment + "</p></div></div>";
             }
             div.html(str);
-            
+
             $('.hide-review').hide(); // hide all the other reviews.
         }
 
@@ -394,7 +378,7 @@
                                         <li><a href="gallery-4.html">Grid Cobbles</a></li>
                                     </ul>
                                 </li>
-                                <li class="link-group"><a class="btn btn-sm btn-primary userLogin" Hello Guest</a></li>
+                                <li class="link-group"><a class="btn btn-sm btn-primary userLogin">Hello Guest</a></li>
                                 <li class="rd-navbar-bottom-panel">
                                     <div class="rd-navbar-bottom-panel-wrap">
                                         <dl class="dl-horizontal-mod-1 login">
@@ -453,16 +437,21 @@
             <section class="bg-gray-dark section-md section-md-mod-1">
                 <div class="container">
                     <div class="row flow-offset-7">
-                        <div class="col-12 col-md-8 col-lg-4">
+                        <div class="col-12 col-md-8 col-lg-3">
                             <p>Name</p><p id="name" class="h5 text-sushi text-regular">Heather Turner</p>
                         </div>
-                        <div class="col-12 col-md-8 col-lg-4 col-xl-3">
+                        <div class="col-12 col-md-8 col-lg-3 col-xl-3">
                             <p>Location</p>
                             <p id="location" class="h5 text-sushi text-regular">7758 Laguna heights Court, San Francisco, MA 02127</p>
                         </div>
-                        <div class="col-12 col-md-8 col-lg-4 col-xl-2 offset-xl-1">
+                        <div class="col-12 col-md-8 col-lg-3 col-xl-2 offset-xl-1">
                             <p>Price</p>
                             <p id="price" class=" text-sushi thumbnail-price h5">$2490.00<span class="mon text-regular">/night</span></p>
+                        </div>
+                        
+                        <div class="col-12 col-md-8 col-lg-3 col-xl-2 offset-xl-1">
+                            <p></p>
+                            <p><button id="book" class="btn btn-sushi">Book Now</button></p>
                         </div>
                     </div>
                 </div>

@@ -15,7 +15,6 @@
             width: 570px;
             height: 380px;
         }
-
     </style>
 
     <!-- Site Title-->
@@ -31,8 +30,10 @@
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/fonts.css">
     <link rel="stylesheet" href="css/style.css">
+
     <script src="../Scripts/ajaxCalls.js"></script>
     <script src="../Scripts/jquery-3.3.1.min.js"></script>
+    <script src="../Scripts/renderFunction.js"></script>
 
     <!-- Script-->
     <script>
@@ -54,21 +55,21 @@
             apiPopular = `../api/Apartments/propertyTypeGet`;
             ajaxCall("GET", apiPopular, "", successPopularCB, errorPopularCB);
 
-            routeSingleApratmentHTML();
+            routeSingleApartmentHTML();
 
             $('#frmSubmit').submit(searchApartments);
-            
+
         });
 
-        function routeSingleApratmentHTML() {
-            $('.img-link, .text-sushi').click(function (event) {
+        function routeSingleApartmentHTML() {
+            $('.img-link, .apartment').click(function (event) {
                 // Remember the link href
                 let href = 'property-catalog-single.html';
                 let id = this.id;
                 // Save apartment id in local storage
                 localStorage.setItem("apartmentId", JSON.stringify(id));
                 // Go to the link
-                 window.location = href;
+                window.location = href;
             });
 
         }
@@ -107,7 +108,7 @@
             console.log(apartments);
             localStorage.setItem('searchApartments', JSON.stringify(apartments)); // Send apartments results.
             localStorage.setItem('index', JSON.stringify(0));                     // Send starting index.
-            window.location = 'property-catalog-grid.html'; 
+            window.location = 'property-catalog-grid.html';
         }
 
         function successPopularCB(apartmentCatgeories) {
@@ -126,59 +127,29 @@
 
             for (var i = 0; i < 6; i++) {
 
-                let img = arrImgs.eq(i);                   
+                let img = arrImgs.eq(i);
                 img.attr("src", apartments[i].Picture);
                 img.parent().attr('id', apartments[i].Id);  // catch a tag and insert him aprtmend id as element id
 
-                let div = arrDivs.eq(i);                   
+                let div = arrDivs.eq(i);
                 let str = apartments[i].Price + '$/<span class="mon text-regular">night</span>';
                 div.find('span').first().html(str);
                 div.find('a').html(apartments[i].Name);
                 div.find('a').attr('id', apartments[i].Id); // catch a tag and insert him aprtmend id as element id
-                div.find('p').html(renderDescription(apartments[i].Description,38));
+                div.find('p').html(renderDescription(apartments[i].Description, 38));
                 div.find('li').first().parent().html(renderStars(apartments[i].ReviewRating, apartments[i].NumOfReviews));
-                div.find('.describe-2 li').first().html( apartments[i].Bedrooms + ' bedrooms');
+                div.find('.describe-2 li').first().html(apartments[i].Bedrooms + ' bedrooms');
                 div.find('.describe-2 li').last().html(renderPersons(apartments[i].Accommodates));
             }
         }
         function renderTopPage(apartments) {
             $('.price').html(apartments[6].Price + '$<span>/night</span>');
             $('.h3').html(apartments[6].Name);
-            $('.swiper-caption-wrap').find('p').last().html(renderDescription(apartments[6].Description, 10)); 
-            $("#desc").html(renderDescription(apartments[6].Description, 10)); 
-            $('.swiper-slide').css("background-image", 'url("'+apartments[6].Picture+'")');
+            $('.swiper-caption-wrap').find('p').last().html(renderDescription(apartments[6].Description, 10));
+            $("#desc").html(renderDescription(apartments[6].Description, 10));
+            $('.swiper-slide').css("background-image", 'url("' + apartments[6].Picture + '")');
         }
 
-        function renderDescription(des,size) {
-            let words = des.split(' ');
-            if (size > words.length)
-                size = words.length;
-            let str = "";
-            for (var i = 0; i < size; i++) 
-                str += words[i] + " ";
-            str += "...";
-            return str;
-        }
-
-         
-        function renderPersons(num) { // need to put in js file.
-            let str = "";
-            for (var i = num; i >= 1; i--) 
-                str += '<span class="mdi mdi-odnoklassniki"></span>';
-            return str;
-        }
-
-        function renderStars(score, reviews) { // need to put in js file.
-            if (reviews > 0)
-                str = "<p style='text-align:center'>" + score.toFixed(1) + ' (' + reviews + ')</p>';
-            else str = "<p>" + score.toFixed(1) + '</p>';
-            for (var i = score; i >= 1; i--) {
-                str += '<span class="fa-star"></span>';
-            }
-            if (i > 0.5)
-                str += '<span class="fa-star-half"></span>';
-            return str;
-        }
 
         function renderPropertyType(apartmentCatgeories) {
             let arr_aTags = $('.img-thumbnail-variant-1');      // catch all categories imgs.
@@ -195,12 +166,12 @@
                 count += apartmentCatgeories[i].Count;
                 size += apartmentCatgeories[i].Count;
             }
-            for (var i = 3; i < apartmentCatgeories.length; i++) 
+            for (var i = 3; i < apartmentCatgeories.length; i++)
                 size += apartmentCatgeories[i].Count;
             let img = arr_aTags.eq(3).find('img');
             img.attr("src", apartmentCatgeories[3].Picture);
             let div = arrDivs.eq(3);
-            div.find('h4').html("Other" );
+            div.find('h4').html("Other");
             div.find('p').html((size - count) + " Properties");
         }
 
@@ -571,7 +542,7 @@
                             <div class="thumbnail thumbnail-3">
                                 <a class="img-link"><img src="images/index-6.jpg" alt="" width="370" height="250" /></a>
                                 <div class="caption">
-                                    <h4><a class="text-sushi">Building: 123 on the Park</a></h4><span class="thumbnail-price h5">$4,339.00/<span class="mon text-regular">month</span></span>
+                                    <h4><a class="text-sushi apartment">Building: 123 on the Park</a></h4><span class="thumbnail-price h5">$4,339.00/<span class="mon text-regular">month</span></span>
                                     <ul class="describe-1">
                                         <li>
                                             <span class="icon-square icon-sm">
@@ -604,7 +575,7 @@
                             <div class="thumbnail thumbnail-3">
                                 <a class="img-link"><img src="images/index-7.jpg" alt="" width="370" height="250" /></a>
                                 <div class="caption">
-                                    <h4><a class="text-sushi">225 Maywood Dr, San Francisco, CA 94127</a></h4><span class="thumbnail-price h5">$2,229.00/<span class="mon text-regular">month</span></span>
+                                    <h4><a class="text-sushi apartment">225 Maywood Dr, San Francisco, CA 94127</a></h4><span class="thumbnail-price h5">$2,229.00/<span class="mon text-regular">month</span></span>
                                     <ul class="describe-1">
                                         <li>
                                             <span class="icon-square icon-sm">
@@ -637,7 +608,7 @@
                             <div class="thumbnail thumbnail-3">
                                 <a class="img-link"><img src="images/index-8.jpg" alt="" width="370" height="250" /></a>
                                 <div class="caption">
-                                    <h4><a class="text-sushi">2266 48th Ave</a></h4><span class="thumbnail-price h5">$1,339.00/<span class="mon text-regular">month</span></span>
+                                    <h4><a class="text-sushi apartment">2266 48th Ave</a></h4><span class="thumbnail-price h5">$1,339.00/<span class="mon text-regular">month</span></span>
                                     <ul class="describe-1">
                                         <li>
                                             <span class="icon-square icon-sm">
@@ -670,7 +641,7 @@
                             <div class="thumbnail thumbnail-3">
                                 <a class="img-link"><img src="images/index-9.jpg" alt="" width="370" height="250" /></a>
                                 <div class="caption">
-                                    <h4><a class="text-sushi">1336 N Occidental Blvd</a></h4><span class="thumbnail-price h5">$4,339.00/<span class="mon text-regular">month</span></span>
+                                    <h4><a class="text-sushi apartment">1336 N Occidental Blvd</a></h4><span class="thumbnail-price h5">$4,339.00/<span class="mon text-regular">month</span></span>
                                     <ul class="describe-1">
                                         <li>
                                             <span class="icon-square icon-sm">
@@ -703,7 +674,7 @@
                             <div class="thumbnail thumbnail-3">
                                 <a class="img-link"><img src="images/index-10.jpg" alt="" width="370" height="250" /></a>
                                 <div class="caption">
-                                    <h4><a class="text-sushi">650 Kelton Ave #201</a></h4><span class="thumbnail-price h5">$2,229.00/<span class="mon text-regular">month</span></span>
+                                    <h4><a class="text-sushi apartment">650 Kelton Ave #201</a></h4><span class="thumbnail-price h5">$2,229.00/<span class="mon text-regular">month</span></span>
                                     <ul class="describe-1">
                                         <li>
                                             <span class="icon-square icon-sm">
@@ -736,7 +707,7 @@
                             <div class="thumbnail thumbnail-3">
                                 <a class="img-link"><img src="images/index-11.jpg" alt="" width="370" height="250" /></a>
                                 <div class="caption">
-                                    <h4><a class="text-sushi">1735 N Fuller Ave #124</a></h4><span class="thumbnail-price h5">$1,339.00/<span class="mon text-regular">month</span></span>
+                                    <h4><a class="text-sushi apartment">1735 N Fuller Ave #124</a></h4><span class="thumbnail-price h5">$1,339.00/<span class="mon text-regular">month</span></span>
                                     <ul class="describe-1">
                                         <li>
                                             <span class="icon-square icon-sm">

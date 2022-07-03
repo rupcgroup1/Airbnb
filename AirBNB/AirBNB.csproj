@@ -476,6 +476,7 @@
     <Content Include="Pages\terms.html" />
     <Content Include="Pages\timeline.html" />
     <Content Include="Pages\typography.html" />
+    <Content Include="Scripts\renderFunction.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

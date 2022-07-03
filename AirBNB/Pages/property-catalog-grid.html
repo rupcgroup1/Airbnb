@@ -22,6 +22,7 @@
 
     <script src="../Scripts/ajaxCalls.js"></script>
     <script src="../Scripts/jquery-3.3.1.min.js"></script>
+    <script src="../Scripts/renderFunction.js"></script>
 
     <script>
 
@@ -44,7 +45,7 @@
             if (localStorage.getItem("index") != undefined)
                 index1 = JSON.parse(localStorage.getItem("index"));
             renderNumbers(index1, apartments1);
-            render(apartments1,index1);
+            render(apartments1, index1);
 
             $('#next').click(function () { // using trhe global variable min.
                 localStorage.setItem("index", JSON.stringify(min));
@@ -53,15 +54,17 @@
             $('#previous').click(function () { // using trhe global variable min.
                 if (localStorage.getItem("index") != undefined)
                     index1 = JSON.parse(localStorage.getItem("index"));
-                localStorage.setItem("index", JSON.stringify(index1-6));
+                localStorage.setItem("index", JSON.stringify(index1 - 6));
                 location.reload();
             });
             $('.showPage').click(function () { // using trhe global variable min.
                 let id = this.id - 1;
-                localStorage.setItem("index", JSON.stringify(id*6));
+                localStorage.setItem("index", JSON.stringify(id * 6));
                 location.reload();
             });
         });
+
+
 
         function renderNumbers(index, apartment) {
             if ((apartment.length - index) / 6 <= 4) {
@@ -85,10 +88,9 @@
                     $(".pagination li:nth-child(" + i + ")").html("<a class='showPage' id='" + tmp + "'>" + tmp++ + "</a>");
                 }
             }
-            
         }
 
-        function render(apartments,index) {
+        function render(apartments, index) {
 
             arrImgs = $('.thumbnail-3.thumbnail img');      // catch all apartments imgs.
             arrDivs = $('.thumbnail-3.thumbnail .caption'); // catch all apartments description divs.
@@ -102,13 +104,13 @@
             size = 6;
             if ((apartments.length - index) < 6)
                 size = (apartments.length - index);
-            // render 6 apartments for each page. 
-            for (let i = 0; i < size; i++) { 
+            // render 6 apartments for each page.
+            for (let i = 0; i < size; i++) {
 
                 let img = arrImgs.eq(i);
                 img.attr("src", apartments[j].Picture);
                 img.parent().attr('id', apartments[j].Id);  // catch a tag and insert him aprtment id as element id
-                
+
                 let div = arrDivs.eq(i);
                 div.parent().parent().show();
                 let str = apartments[j].Price + '$/<span class="mon text-regular">night</span>';
@@ -122,40 +124,9 @@
                 j++;
             }
 
-            //localStorage.setItem("index", JSON.stringify(min));
-            
-        }
-
-        function renderDescription(des, size) {
-            let words = des.split(' ');
-            if (size > words.length)
-                size = words.length;
-            let str = "";
-            for (var i = 0; i < size; i++)
-                str += words[i] + " ";
-            str += "...";
-            return str;
         }
 
 
-        function renderPersons(num) { // need to put in js file.
-            let str = "";
-            for (var i = num; i >= 1; i--)
-                str += '<span class="mdi mdi-odnoklassniki"></span>';
-            return str;
-        }
-
-        function renderStars(score, reviews) { // need to put in js file.
-            if (reviews > 0)
-                str = "<p style='text-align:center'>" + score.toFixed(1) + ' (' + reviews + ')</p>';
-            else str = "<p>" + score.toFixed(1) + '</p>';
-            for (var i = score; i >= 1; i--) {
-                str += '<span class="fa-star"></span>';
-            }
-            if (i > 0.5)
-                str += '<span class="fa-star-half"></span>';
-            return str;
-        }
 
     </script>
 
@@ -479,9 +450,7 @@
                               </div>
                           </div>
                       </div>
-                      <div class="col-12 col-md-4 text-center text-md-end">
-                          <div class="btn-group-mod-3 sorting"><a class="btn btn-primary-transparent btn-sm" href="property-catalog-list.html">List</a><a class="btn btn-primary-transparent btn-sm active" href="property-catalog-grid.html">Grid</a></div>
-                      </div>
+                      
                   </div>
                   <div class="row">
                       <div class="col-12 col-xl-12">

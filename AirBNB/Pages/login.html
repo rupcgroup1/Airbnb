@@ -19,16 +19,7 @@
     <script>
 
         $(document).ready(function () {
-            // need to put in js file.
-            if (localStorage.getItem("userLogged") != undefined) {
-                user = JSON.parse(localStorage.getItem("userLogged"));
-                $('.userLogin').html("Hello " + user.Username);
-                $('.sign').html("Logout");
-            }
-            else {
-                $('.userLogin').html("Hello Guest");
-                $('.sign').html("Login/Registration");
-            }
+            localStorage.removeItem("userLogged");
 
             $('#login').submit(login);
             $('#register').submit(register);
