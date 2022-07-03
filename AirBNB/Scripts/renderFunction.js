@@ -33,11 +33,14 @@ function checkLogin() {
         user = JSON.parse(localStorage.getItem("userLogged"));
         $('.userLogin').html("Hello " + user.Username);
         $('.sign').html("Logout");
+        return true;
     }
     else {
         $('.userLogin').html("Hello Guest");
         $('.sign').html("Login/Registration");
+        return false;
     }
+
 }
 
 //Rendering whether the host is verified.

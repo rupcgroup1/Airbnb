@@ -28,12 +28,18 @@
             width: 300px;
             height: 100px;
         }
+        #aroundBorder {
+            border: solid #689029 2px !important;
+            border-radius: 10px;
+            text-align: center;
+            padding: 10px;
+        }
     </style>
     <script>
 
         $(document).ready(function () {
 
-            checkLogin();
+            var loggedIn = checkLogin();
             //If apartment ID isnt at local storage so page not found.
             if (localStorage.getItem("apartmentId") == undefined) {
                 location.replace("404.html");
@@ -60,7 +66,17 @@
                 }
             });
 
+            $("#book").click(function () {
+                if (!loggedIn) {
+                    alert("You need to log in first.");
+                    return;
+                }
+                else {
 
+                } 
+            });
+
+            $("#submitBook").submit(bookApartment);
         });
 
         // Render apartment details.
@@ -169,6 +185,36 @@
             console.log(error);
         }
 
+        //Booking an apartment
+        function bookApartment() {
+            let apartmentID = 0;
+            let id = 0;
+            if (localStorage.getItem("apartmentId") != undefined)
+                apartmentID = JSON.parse(localStorage.getItem("apartmentId"));
+            if (localStorage.getItem("userLogged") != undefined)
+                id = JSON.parse(localStorage.getItem("userLogged")).Id;
+            if (apartmentID == 0 || id == 0)
+                return;
+            let reservation = {
+                ApartmentID: apartmentID,
+                UserID: id,
+                From: $("#from").val(),
+                To: $("#to").val()
+            }
+
+            let api = `../api/Users/bookApartment`;
+            ajaxCall("POST", api, JSON.stringify(reservation), bookSuccessCB, bookErrorCB);
+
+            return false;
+        }
+
+        function bookSuccessCB(success) {
+            alert("succeed");
+        }
+
+        function bookErrorCB(error) {
+            alert("error");
+        }
     </script>
 </head>
 <body>
@@ -412,21 +458,16 @@
             <section class="bg-gray-dark section-md section-md-mod-1">
                 <div class="container">
                     <div class="row flow-offset-7">
-                        <div class="col-12 col-md-8 col-lg-3">
+                        <div class="col-12 col-md-8 col-lg-4">
                             <p>Name</p><p id="name" class="h5 text-sushi text-regular">Heather Turner</p>
                         </div>
-                        <div class="col-12 col-md-8 col-lg-3 col-xl-3">
+                        <div class="col-12 col-md-8 col-lg-4 col-xl-3">
                             <p>Location</p>
                             <p id="location" class="h5 text-sushi text-regular">7758 Laguna heights Court, San Francisco, MA 02127</p>
                         </div>
-                        <div class="col-12 col-md-8 col-lg-3 col-xl-2 offset-xl-1">
+                        <div class="col-12 col-md-8 col-lg-4 col-xl-2 offset-xl-1">
                             <p>Price</p>
                             <p id="price" class=" text-sushi thumbnail-price h5">$2490.00<span class="mon text-regular">/night</span></p>
-                        </div>
-                        
-                        <div class="col-12 col-md-8 col-lg-3 col-xl-2 offset-xl-1">
-                            <p></p>
-                            <p><button id="book" class="btn btn-sushi">Book Now</button></p>
                         </div>
                     </div>
                 </div>
@@ -600,6 +641,20 @@
                                     </div>
 
                                     <div class="sidebar-module">
+                                        <h4>Make Reservation</h4>
+                                        <form action="" id="submitBook">
+                                            <div id="aroundBorder" class="thumbnail-3 border">
+                                                <div class="caption">
+                                                    <input type="date" class="form-input" id="from" required />
+                                                    <br />
+                                                    <input type="date" class="form-input" id="to" required />
+                                                    <br />
+                                                    <p><button id="book" class="btn btn-sushi">Book Now</button></p>
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <br /><br />
+                                        <br /><br />
                                         <h4>Recent Properties</h4>
                                         <div class="thumbnail-3">
                                             <img src="images/left_sidebar_blog-1.jpg" alt="" width="340" height="230" />

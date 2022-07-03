@@ -33,6 +33,13 @@ namespace AirBNB.Controllers
             return u.insertUser();
         }
 
+        [HttpPost]
+        [Route("api/Users/bookApartment")]
+        public int Post([FromBody]Reservation r)
+        {
+            return r.reserveApartment();
+        }
+
         // PUT api/<controller>/5
         public void Put(int id, [FromBody]string value)
         {

@@ -427,7 +427,43 @@ namespace AirBNB.Models.DAL
         {
             SqlCommand command = new SqlCommand();
             command.Parameters.AddWithValue("@propType", propertyType);
-            command.CommandText = "PSPcheckUserExist";
+            command.CommandText = "PSPgetApartmentsByPropType";
+            command.Connection = con;
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.CommandTimeout = 10; // in seconds
+
+            return command;
+        }
+
+        //Make reservation
+        public int makeReservation(Reservation r)
+        {
+            // Connect
+            SqlConnection con = Connect();
+
+            // Create Command
+            SqlCommand command = CreateReservationCommand(con, r);
+
+            // Execute
+            int numAffected = command.ExecuteNonQuery();
+
+            // Close Connection
+
+            con.Close();
+
+            return numAffected;
+        }
+
+        //Creating insert command for insert a new company.
+        private SqlCommand CreateReservationCommand(SqlConnection con, Reservation r)
+        {
+            SqlCommand command = new SqlCommand();
+
+            command.Parameters.AddWithValue("@apartmentID", r.ApartmentID);
+            command.Parameters.AddWithValue("@userID", r.UserID);
+            command.Parameters.AddWithValue("@fromDate", r.From);
+            command.Parameters.AddWithValue("@toDate", r.To);
+            command.CommandText = "PSPreserveApartment";
             command.Connection = con;
             command.CommandType = System.Data.CommandType.StoredProcedure;
             command.CommandTimeout = 10; // in seconds
