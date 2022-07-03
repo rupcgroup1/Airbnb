@@ -27,45 +27,45 @@
     <script>
 
         $(document).ready(function () {
+            
+            checkLogin();
 
-            // need to put in js file.
-            if (localStorage.getItem("userLogged") != undefined) {
-                user = JSON.parse(localStorage.getItem("userLogged"));
-                $('.userLogin').html("Hello " + user.Username);
-                $('.sign').html("Logout");
-            }
-            else {
-                $('.userLogin').html("Hello Guest");
-                $('.sign').html("Login/Registration");
-            }
-
-
+            //Checking if apartments exist in localStorage by filter.
             if (localStorage.getItem("searchApartments") != undefined)
                 apartments1 = JSON.parse(localStorage.getItem("searchApartments"));
+            //Index is used for paging, array contains all apartments, index describes the amount of apartments the guest paged so far.
             if (localStorage.getItem("index") != undefined)
                 index1 = JSON.parse(localStorage.getItem("index"));
-            renderNumbers(index1, apartments1);
-            render(apartments1, index1);
 
-            $('#next').click(function () { // using trhe global variable min.
-                localStorage.setItem("index", JSON.stringify(min));
+            //Rendering the page's number.
+            renderNumbers(index1, apartments1);
+
+            //Rendering the apartments of current page.
+            renderApartments(apartments1, index1);
+
+            //Getting the next page, by reloading we re-rendering the apartments of the specific page we need.
+            $('#next').click(function () { // using the global variable apartmentCount to count apartment seen so far.
+                localStorage.setItem("index", JSON.stringify(apartmentCount));
                 location.reload();
             });
-            $('#previous').click(function () { // using trhe global variable min.
+
+            //Getting the previous page, by reloading we re-rendering the apartments of the specific page we need.
+            $('#previous').click(function () { // using the global variable apartmentCount.
                 if (localStorage.getItem("index") != undefined)
                     index1 = JSON.parse(localStorage.getItem("index"));
                 localStorage.setItem("index", JSON.stringify(index1 - 6));
                 location.reload();
             });
-            $('.showPage').click(function () { // using trhe global variable min.
+
+            //Getting the current page if the user skip pages / clicking specific num.
+            $('.showPage').click(function () { // using the global variable apartmentCount.
                 let id = this.id - 1;
                 localStorage.setItem("index", JSON.stringify(id * 6));
                 location.reload();
             });
         });
 
-
-
+        //Rendering the page's number.
         function renderNumbers(index, apartment) {
             if ((apartment.length - index) / 6 <= 4) {
                 tmp = index / 6;
@@ -90,14 +90,15 @@
             }
         }
 
-        function render(apartments, index) {
+        //Rendering the apartments of current page.
+        function renderApartments(apartments, index) {
 
             arrImgs = $('.thumbnail-3.thumbnail img');      // catch all apartments imgs.
             arrDivs = $('.thumbnail-3.thumbnail .caption'); // catch all apartments description divs.
             let j = index;
-            min = index + 6; // global variable.
-            if (apartments.length < min)
-                min = apartments.length;
+            apartmentCount = index + 6; // global variable.
+            if (apartments.length < apartmentCount)
+                apartmentCount = apartments.length;
 
             $(".col-12 .col-md-6").hide();
 
@@ -123,10 +124,7 @@
                 div.find('.describe-2 li').last().html(renderPersons(apartments[j].Accommodates));
                 j++;
             }
-
         }
-
-
 
     </script>
 

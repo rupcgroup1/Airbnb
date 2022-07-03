@@ -19,14 +19,20 @@
     <script>
 
         $(document).ready(function () {
+            //Removing the users that exist in localStorage.
             localStorage.removeItem("userLogged");
 
+            //Routing the submit login button.
             $('#login').submit(login);
+
+            //Routing the submit register button.
             $('#register').submit(register);
+
+            //Validating the email
             $('#email').on('blur', validateEmail);
         });
 
-
+         //Validating the email
         function validateEmail() {
             let email = $('#email').val();
             var re = /\S+@\S+\.\S+/;
@@ -40,6 +46,7 @@
 
         }
 
+        //Form function, here we register the user.
         function register() {
             let username = $('#name-2').val();
             let password = $('#password-2').val();
@@ -56,15 +63,17 @@
 
             return false;
         }
-
+        //The registration has completed successfully
         function insertSCB() {
             alert("added successfuly!");
         }
 
+        //The registration has failed.
         function insertECB(error) {
             console.log(error);
         }
 
+        //Form function, the user log in if he exist in DB.
         function login() {
             let email = $('#name-1').val();
             let password = $('#password-1').val();
@@ -82,6 +91,7 @@
             return false;
         }
 
+        //Success User exist function, if the user exist we relocate him to index.html.
         function userExistSCB(user) {
             alert("user exist");
             console.log(user);
@@ -89,6 +99,7 @@
             location.replace("index.html");
         }
 
+        //Error User exist function, if the user exist we relocate him to index.html.
         function userErrorCB(error) {
             alert("user not exist");
         }
