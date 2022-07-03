@@ -30,43 +30,53 @@
             if (localStorage.getItem("searchApartments") != undefined)
                 apartments1 = JSON.parse(localStorage.getItem("searchApartments"));
             if (localStorage.getItem("index") != undefined)
-                index = JSON.parse(localStorage.getItem("index"));
-            renderNumbers();
-            render(apartments1);
-            console.log(apartments1);
+                index1 = JSON.parse(localStorage.getItem("index"));
+            renderNumbers(index1);
+            render(apartments1,index1);
+
+            $('#next').click(function () {
+                localStorage.setItem("index", JSON.stringify(min));
+                location.reload();
+            })
         });
 
-        function renderNumbers() {
-
+        function renderNumbers(index) {
+            tmp = index / 6;
+            for (let i = 2; i < 6; i++) {
+                $(".pagination li:nth-child(" + i + ")").html("<a>" + ++tmp + "</a>");
+            }
+            
         }
 
-        function render(apartments) {
+        function render(apartments,index) {
 
             arrImgs = $('.thumbnail-3.thumbnail img');      // catch all apartments imgs.
             arrDivs = $('.thumbnail-3.thumbnail .caption'); // catch all apartments description divs.
-
+            let j = index;
             min = index + 6;
-            if (apartments.length < index + 6)
+            if (apartments.length < min)
                 min = apartments.length;
 
             // render 6 apartments for each page. 
-            for (var i = index; i < min; i++) { 
+            for (let i = 0; i < 6; i++) { 
 
                 let img = arrImgs.eq(i);
-                img.attr("src", apartments[i].Picture);
-                img.parent().attr('id', apartments[i].Id);  // catch a tag and insert him aprtmend id as element id
-
+                img.attr("src", apartments[j].Picture);
+                img.parent().attr('id', apartments[j].Id);  // catch a tag and insert him aprtmend id as element id
+                
                 let div = arrDivs.eq(i);
-                let str = apartments[i].Price + '$/<span class="mon text-regular">night</span>';
+                let str = apartments[j].Price + '$/<span class="mon text-regular">night</span>';
                 div.find('span').first().html(str);
-                div.find('a').html(apartments[i].Name);
-                div.find('a').attr('id', apartments[i].Id); // catch a tag and insert him aprtmend id as element id
-                div.find('p').html(renderDescription(apartments[i].Description, 38));
-                div.find('li').first().parent().html(renderStars(apartments[i].ReviewRating, apartments[i].NumOfReviews));
-                div.find('.describe-2 li').first().html(apartments[i].Bedrooms + ' bedrooms');
-                div.find('.describe-2 li').last().html(renderPersons(apartments[i].Accommodates));
+                div.find('a').html(apartments[j].Name);
+                div.find('a').attr('id', apartments[j].Id); // catch a tag and insert him aprtmend id as element id
+                div.find('p').html(renderDescription(apartments[j].Description, 38));
+                div.find('li').first().parent().html(renderStars(apartments[j].ReviewRating, apartments[j].NumOfReviews));
+                div.find('.describe-2 li').first().html(apartments[j].Bedrooms + ' bedrooms');
+                div.find('.describe-2 li').last().html(renderPersons(apartments[j].Accommodates));
+                j++;
             }
-            localStorage.setItem("index", JSON.stringify(min));
+            //localStorage.setItem("index", JSON.stringify(min));
+            
         }
 
         function renderDescription(des, size) {
@@ -635,7 +645,7 @@
                                       <li><a href="#">2</a></li>
                                       <li><a href="#">3</a></li>
                                       <li><a href="#">4</a></li>
-                                      <li><a class="fa-chevron-right" href="#"></a></li>
+                                      <li><a id="next" class="fa-chevron-right"></a></li>
                                   </ul>
                               </div>
                           </div>
