@@ -2,6 +2,10 @@
 <html class="wide wow-animation" lang="en">
 <head>
     <style>
+        .img-link {
+            width: 370px;
+            height: 250px;
+        }
     </style>
     <!-- Site Title-->
     <title>Property Catalog Grid</title>
@@ -24,17 +28,29 @@
         $(document).ready(function () {
 
             if (localStorage.getItem("searchApartments") != undefined)
-                apartments = localStorage.getItem("searchApartments");
-            render(apartments);
+                apartments1 = JSON.parse(localStorage.getItem("searchApartments"));
+            if (localStorage.getItem("index") != undefined)
+                index = JSON.parse(localStorage.getItem("index"));
+            renderNumbers();
+            render(apartments1);
+            console.log(apartments1);
         });
 
+        function renderNumbers() {
+
+        }
 
         function render(apartments) {
 
             arrImgs = $('.thumbnail-3.thumbnail img');      // catch all apartments imgs.
             arrDivs = $('.thumbnail-3.thumbnail .caption'); // catch all apartments description divs.
 
-            for (var i = 0; i < 6; i++) {
+            min = index + 6;
+            if (apartments.length < index + 6)
+                min = apartments.length;
+
+            // render 6 apartments for each page. 
+            for (var i = index; i < min; i++) { 
 
                 let img = arrImgs.eq(i);
                 img.attr("src", apartments[i].Picture);
@@ -45,11 +61,12 @@
                 div.find('span').first().html(str);
                 div.find('a').html(apartments[i].Name);
                 div.find('a').attr('id', apartments[i].Id); // catch a tag and insert him aprtmend id as element id
-                //div.find('p').html(renderDescription(apartments[i].Description, 38));
-                //div.find('li').first().parent().html(renderStars(apartments[i].ReviewRating, apartments[i].NumOfReviews));
+                div.find('p').html(renderDescription(apartments[i].Description, 38));
+                div.find('li').first().parent().html(renderStars(apartments[i].ReviewRating, apartments[i].NumOfReviews));
                 div.find('.describe-2 li').first().html(apartments[i].Bedrooms + ' bedrooms');
                 div.find('.describe-2 li').last().html(renderPersons(apartments[i].Accommodates));
             }
+            localStorage.setItem("index", JSON.stringify(min));
         }
 
         function renderDescription(des, size) {

@@ -95,7 +95,8 @@
 
         function searchSCB(apartments) {
             console.log(apartments);
-            localStorage.setItem('searchApartments', JSON.stringify(apartments));
+            localStorage.setItem('searchApartments', JSON.stringify(apartments)); // Send apartments results.
+            localStorage.setItem('index', JSON.stringify(0));                     // Send starting index.
             window.location = 'property-catalog-grid.html'; 
         }
 
