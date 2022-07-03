@@ -25,7 +25,7 @@ namespace AirBNB.Controllers
 
         // POST api/<controller>
         [HttpPost]
-        Route[("api/Users/insertUser")]
+        [Route("api/Users/insertUser")]
         public int Post([FromBody]User u)
         {
             return u.insertUser(u);
