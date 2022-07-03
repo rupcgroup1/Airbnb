@@ -38,29 +38,45 @@
     <!-- Script-->
     <script>
         $(document).ready(function () {
-            // need to put in js file.
-            if (localStorage.getItem("userLogged") != undefined) {
-                user = JSON.parse(localStorage.getItem("userLogged"));
-                $('.userLogin').html("Hello " + user.Username);
-                $('.sign').html("Logout");
-            }
-            else {
-                $('.userLogin').html("Hello Guest");
-                $('.sign').html("Login/Registration");
-            }
 
+            checkLogin();
+            //Getting the homepage tiny list apartments which contains 6 apartments.
             api = `../api/Apartments/tinyGet`;
             ajaxCall("GET", api, "", successCB, errorCB);
 
-            apiPopular = `../api/Apartments/propertyTypeGet`;
-            ajaxCall("GET", apiPopular, "", successPopularCB, errorPopularCB);
+            //Getting the popular apartment types.
+            apiPopularType = `../api/Apartments/propertyTypeGet`;
+            ajaxCall("GET", apiPopularType, "", successPopularCB, errorPopularCB);
 
+            //Routing to single catalog page if guest clicks on apartment to view more details.
             routeSingleApartmentHTML();
 
+            //Routing the submit button for filter search.
             $('#frmSubmit').submit(searchApartments);
+
+            //If the user clicks on the property type, we will show him all the apartments with this type.
+            $(".propertyType").click(function () {
+                let propType = $(".propertyType").find("h4").html();
+                let api = `../api/Apartments/getByProp/${propType}`
+                ajaxCall("GET", api, "", successByProp, errorByProp);
+            });
 
         });
 
+        //Getting all apartments by this specific property type.
+        function successByProp(apartments) {
+            console.log(apartments);
+            localStorage.setItem('searchApartments', JSON.stringify(apartments)); // Send apartments results.
+            localStorage.setItem('index', JSON.stringify(0));                     // Send starting index.
+            window.location = 'property-catalog-grid.html';
+        }
+
+        //Error function for the propertyType apartments.
+        function errorByProp(error) {
+            console.log(error);
+        }
+
+        //Routing to single catalog page if guest clicks on apartment to view more details.
         function routeSingleApartmentHTML() {
             $('.img-link, .apartment').click(function (event) {
                 // Remember the link href
@@ -74,15 +90,17 @@
 
         }
 
+        //Success CB function for tiny list apartments.
         function successCB(apartments) {
             render(apartments);
             renderTopPage(apartments);
         }
-
+        //Error CB for tinylist apartments or searchApartments function.
         function errorCB(error) {
             console.error(error);
         }
 
+        //Search apartments by filter.
         function searchApartments() {
             let keyword = $('#keyword').val();
             let from = $('#from').val();
@@ -100,10 +118,9 @@
             ajaxCall('GET', api, "", searchSCB, errorCB);
 
             return false;
-
-
         }
 
+        //Success CB function, the apartments that was found by filter will be shown in the grid catalog.
         function searchSCB(apartments) {
             console.log(apartments);
             localStorage.setItem('searchApartments', JSON.stringify(apartments)); // Send apartments results.
@@ -111,10 +128,12 @@
             window.location = 'property-catalog-grid.html';
         }
 
+        //Success CB function for apartment catagories.
         function successPopularCB(apartmentCatgeories) {
             renderPropertyType(apartmentCatgeories);
         }
 
+        //Error CB function for apartment catagories.
         function errorPopularCB(error) {
             console.error(error);
         }
@@ -142,6 +161,8 @@
                 div.find('.describe-2 li').last().html(renderPersons(apartments[i].Accommodates));
             }
         }
+
+        //Rendering top page.
         function renderTopPage(apartments) {
             $('.price').html(apartments[6].Price + '$<span>/night</span>');
             $('.h3').html(apartments[6].Name);
@@ -150,7 +171,7 @@
             $('.swiper-slide').css("background-image", 'url("' + apartments[6].Picture + '")');
         }
 
-
+        //Rendering the property types.
         function renderPropertyType(apartmentCatgeories) {
             let arr_aTags = $('.img-thumbnail-variant-1');      // catch all categories imgs.
             let arrDivs = $('.img-thumbnail-variant-1 .caption'); // catch all apartments description divs.
@@ -174,9 +195,6 @@
             div.find('h4').html("Other");
             div.find('p').html((size - count) + " Properties");
         }
-
-
-
     </script>
 </head>
 <body>
@@ -493,8 +511,8 @@
                     <h2>Popular categories</h2>
                     <hr>
                     <div class="row offset-custom-11">
-                        <div class="col-12 col-md-6">
-                            <a class="img-thumbnail-variant-1" href="property-catalog-single.html">
+                        <div class="col-12 col-md-6 propertyType">
+                            <a class="img-thumbnail-variant-1">
                                 <img src="" alt="" width="570" height="380">
                                 <div class="caption">
                                     <h4 class="text-white"></h4>
@@ -502,8 +520,8 @@
                                 </div>
                             </a>
                         </div>
-                        <div class="col-12 col-md-6">
-                            <a class="img-thumbnail-variant-1" href="property-catalog-single.html">
+                        <div class="col-12 col-md-6 propertyType">
+                            <a class="img-thumbnail-variant-1">
                                 <img src="" alt="" width="570" height="380">
                                 <div class="caption">
                                     <h4 class="text-white"></h4>
@@ -511,8 +529,8 @@
                                 </div>
                             </a>
                         </div>
-                        <div class="col-12 col-md-6">
-                            <a class="img-thumbnail-variant-1" href="property-catalog-single.html">
+                        <div class="col-12 col-md-6 propertyType">
+                            <a class="img-thumbnail-variant-1" >
                                 <img src="" alt="" width="570" height="380">
                                 <div class="caption">
                                     <h4 class="text-white"></h4>
@@ -520,8 +538,8 @@
                                 </div>
                             </a>
                         </div>
-                        <div class="col-12 col-md-6">
-                            <a class="img-thumbnail-variant-1" href="property-catalog-single.html">
+                        <div class="col-12 col-md-6 propertyType">
+                            <a class="img-thumbnail-variant-1">
                                 <img src="" alt="" width="570" height="380">
                                 <div class="caption">
                                     <h4 class="text-white"></h4>

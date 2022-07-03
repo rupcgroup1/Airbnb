@@ -33,25 +33,18 @@
 
         $(document).ready(function () {
 
-            // need to put in js file.
-            if (localStorage.getItem("userLogged") != undefined) {
-                user = JSON.parse(localStorage.getItem("userLogged"));
-                $('.userLogin').html("Hello " + user.Username);
-                $('.sign').html("Logout");
-            }
-            else {
-                $('.userLogin').html("Hello Guest");
-                $('.sign').html("Login/Registration");
+            checkLogin();
+            //If apartment ID isnt at local storage so page not found.
+            if (localStorage.getItem("apartmentId") == undefined) {
+                location.replace("404.html");
             }
 
-            if (localStorage.getItem("apartmentId") == undefined)  // change it!!!!!!!!!!!!!!!
-                return;
-
+            //Getting the choosen apartment id.
             let id = JSON.parse(localStorage.getItem("apartmentId"));
             let api = `../api/Apartments/${id}`;
             ajaxCall("GET", api, "", successApartmentCB, errorCB);
 
-
+            //Flag represents whether the guest wants to see all reviews or partial.
             var flag = 0;
             $('#showReviews').on('click', () => {
                 let btn = $('#showReviews');
@@ -70,9 +63,8 @@
 
         });
 
+        // Render apartment details.
         function successApartmentCB(apartment) {
-            // Render aparetment details.
-
             // Header
             $('#price').html(apartment.Price + '$<span class="mon text-regular">/night</span>');
             $('#name').html(apartment.Name);
@@ -112,18 +104,19 @@
             renderReviews(apartment.Id);
 
             // Initialize and add the map
-            console.log(apartment.X, apartment.Y);
-
             initMap(apartment.X, apartment.Y);
             //window.initMap = initMap;
 
         }
 
-        function initMap(x, y) {
-            //Map options
+        //Error callback for getting the apartment
+        function errorCB() {
+            alert("error");
+        }
 
-            console.log(x);
-            console.log(y);
+
+        //Map options, showing the google maps, if you zoom in and drag the person on a street, you can view the street.
+        function initMap(x, y) {
 
             var options = {
                 zoom: 8,
@@ -152,25 +145,7 @@
             return str;
         }
 
-
-        function errorCB() {
-            alert("error");
-        }
-
-        function renderVerified(verified) { // need to put in js file.
-            console.log(verified);
-            let str = "";
-            if (verified) str += '<span class="fa-check"></span>';
-            else str += '<span class="fa-times"></span>';
-            return str;
-        }
-
-
-        function renderReviews(id) {
-            api = `../api/Reviews/apartment/${id}`;
-            ajaxCall("GET", api, "", reviewSCB, reviewECB);
-        }
-
+        //Getting all the reviews for a apartment by apartment ID.
         function reviewSCB(reviews) {
             console.log(reviews);
             let div = $("#mainReviews");
@@ -189,10 +164,10 @@
             $('.hide-review').hide(); // hide all the other reviews.
         }
 
+        //Error cb function for getting reviews.
         function reviewECB(error) {
             console.log(error);
         }
-
 
     </script>
 </head>

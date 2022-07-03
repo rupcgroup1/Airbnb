@@ -28,4 +28,30 @@ function renderStars(score, reviews) {
         str += '<span class="fa-star-half"></span>';
     return str;
 }
+function checkLogin() {
+    if (localStorage.getItem("userLogged") != undefined) {
+        user = JSON.parse(localStorage.getItem("userLogged"));
+        $('.userLogin').html("Hello " + user.Username);
+        $('.sign').html("Logout");
+    }
+    else {
+        $('.userLogin').html("Hello Guest");
+        $('.sign').html("Login/Registration");
+    }
+}
+
+//Rendering whether the host is verified.
+function renderVerified(verified) {
+    console.log(verified);
+    let str = "";
+    if (verified) str += '<span class="fa-check"></span>';
+    else str += '<span class="fa-times"></span>';
+    return str;
+}
+
+//Rendering the reviews by apartment ID.
+function renderReviews(id) {
+    api = `../api/Reviews/apartment/${id}`;
+    ajaxCall("GET", api, "", reviewSCB, reviewECB);
+}
 
