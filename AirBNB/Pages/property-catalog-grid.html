@@ -31,7 +31,7 @@
                 apartments1 = JSON.parse(localStorage.getItem("searchApartments"));
             if (localStorage.getItem("index") != undefined)
                 index1 = JSON.parse(localStorage.getItem("index"));
-            renderNumbers(index1, apartment1);
+            renderNumbers(index1, apartments1);
             render(apartments1,index1);
 
             $('#next').click(function () { // using trhe global variable min.
@@ -50,15 +50,22 @@
         });
 
         function renderNumbers(index, apartment) {
-            if ((index + 18) >= apartment.length) {
-                let sub = (index + 18) - apartment.length;
-                let btns = sub/6
+            if ((apartment.length - index) / 6 <= 4) {
+                tmp = index / 6;
+                tmp++;
+                str = "<li><span id='previous' class=''fa-chevron-left'></span></li>";
+                for (let i = 2; i < ((apartment.length - index) / 6) + 2; i++) {
+                    str += "<li><a class='showPage' id='" + tmp + "'>" + tmp++ + "</a></li>";
+                }
+                str += "<li><a id='next' class='fa-chevron-right'></a></li>";
+                $('.pagination').html(str);
             }
-
-            tmp = index / 6;
-            tmp++;
-            for (let i = 2; i < 6; i++) {
-                $(".pagination li:nth-child(" + i + ")").html("<a class='showPage' id='" + tmp + "'>" + tmp++ + "</a>");
+            else {
+                tmp = index / 6;
+                tmp++;
+                for (let i = 2; i < 6; i++) {
+                    $(".pagination li:nth-child(" + i + ")").html("<a class='showPage' id='" + tmp + "'>" + tmp++ + "</a>");
+                }
             }
             
         }
@@ -655,7 +662,7 @@
                               </div>
                               <div class="col-12 text-center text-md-start offset-custom-11">
                                   <ul class="pagination">
-                                      <li class="disabled"><span id="previous" class="fa-chevron-left"></span></li>
+                                      <li><span id="previous" class="fa-chevron-left"></span></li>
                                       <li class="active"><span class="showPage">1</span></li>
                                       <li><a class="showPage">2</a></li>
                                       <li><a class="showPage">3</a></li>
