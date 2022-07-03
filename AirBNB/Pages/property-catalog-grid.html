@@ -27,6 +27,18 @@
 
         $(document).ready(function () {
 
+            // need to put in js file.
+            if (localStorage.getItem("userLogged") != undefined) {
+                user = JSON.parse(localStorage.getItem("userLogged"));
+                $('.userLogin').html("Hello " + user.Username);
+                $('.sign').html("Logout");
+            }
+            else {
+                $('.userLogin').html("Hello Guest");
+                $('.sign').html("Login/Registration");
+            }
+
+
             if (localStorage.getItem("searchApartments") != undefined)
                 apartments1 = JSON.parse(localStorage.getItem("searchApartments"));
             if (localStorage.getItem("index") != undefined)
@@ -168,7 +180,7 @@
               <div class="rd-navbar-top-panel-wrap">
                 <dl class="dl-horizontal-mod-1 login">
                   <dt><span class="mdi mdi-login icon-xxs-mod-2"></span></dt>
-                  <dd><a class="text-sushi" href="login.html"> Login/Registration</a></dd>
+                  <dd><a class="text-sushi sign" href="login.html"> Login/Registration</a></dd>
                 </dl>
                 <div class="top-panel-inner">
                   <dl class="dl-horizontal-mod-1">
@@ -194,7 +206,6 @@
                   <li><a class="fa-google" href="#"></a></li>
                   <li><a class="fa-rss" href="#"></a></li>
                 </ul>
-                <div class="btn-group"><a class="btn btn-sm btn-primary" href="submit-property.html">Submit Property</a></div>
               </div>
             </div>
             <div class="rd-navbar-inner inner-wrap">
@@ -204,7 +215,7 @@
                 <!-- RD Navbar Brand-->
                 <div class="rd-navbar-brand"><a class="brand-name" href="index.html"><img src="images/logo-1.png" alt=""></a></div>
               </div>
-              <div class="btn-group"><a class="btn btn-sm btn-primary" href="submit-property.html">Submit Property</a></div>
+              <div class="btn-group"><a class="btn btn-sm btn-primary userLogin">Hello Guest</a></div>
               <div class="rd-navbar-nav-wrap">
                 <!-- RD Navbar Nav-->
                 <ul class="rd-navbar-nav">
@@ -326,12 +337,12 @@
                       <li><a href="gallery-4.html">Grid Cobbles</a></li>
                     </ul>
                   </li>
-                  <li class="link-group"><a class="btn btn-sm btn-primary" href="submit-property.html">Submit Property</a></li>
+                  <li class="link-group"><a class="btn btn-sm btn-primary userLogin">Hello Guest</a></li>
                   <li class="rd-navbar-bottom-panel">
                     <div class="rd-navbar-bottom-panel-wrap">
                       <dl class="dl-horizontal-mod-1 login">
                         <dt><span class="mdi mdi-login icon-xxs-mod-2"></span></dt>
-                        <dd><a class="text-sushi" href="login.html"> Login/Registration</a></dd>
+                        <dd><a class="text-sushi sign" href="login.html"> Login/Registration</a></dd>
                       </dl>
                       <div class="top-panel-inner">
                         <dl class="dl-horizontal-mod-1">

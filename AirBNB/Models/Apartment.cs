@@ -41,6 +41,7 @@ namespace AirBNB.Models
         private int numOfCancel;
         private int count;
         private double distance;
+        private int hostVerified;
         //private Review[] reviews;
 
 
@@ -49,7 +50,7 @@ namespace AirBNB.Models
 
         }
 
-        public Apartment(int id, string name, string description, string neighborhoodOverview, string picture, int hostID, string since, string hostResponseTime, string hostNeighbourhood, string location, double x, double y, string propertyType, int accommodates, string roomType, string bathroomsText, int bedrooms, int beds, List<string> amenities, int price, int minNights, int maxNights, int availability365, int numOfReviews, string lastReview, double reviewRating, double reviewCleanliness, double reviewCommunication, double reviewLocation, double distance)
+        public Apartment(int id, string name, string description, string neighborhoodOverview, string picture, int hostID, string since, string hostResponseTime, string hostNeighbourhood, string location, double x, double y, string propertyType, int accommodates, string roomType, string bathroomsText, int bedrooms, int beds, List<string> amenities, int price, int minNights, int maxNights, int availability365, int numOfReviews, string lastReview, double reviewRating, double reviewCleanliness, double reviewCommunication, double reviewLocation, double distance, int hostVerified)
         {
             this.id = id;
             this.name = name;
@@ -83,6 +84,7 @@ namespace AirBNB.Models
             this.numOfRentals = 0;
             this.numOfCancel = 0;
             this.distance = distance;
+            this.HostVerified = hostVerified;
             Count = -1; //not from used apartment
         }
 
@@ -140,6 +142,7 @@ namespace AirBNB.Models
         public List<string> Amenities { get => amenities; set => amenities = value; }
         public int Accommodates { get => accommodates; set => accommodates = value; }
         public double Distance { get => distance; set => distance = value; }
+        public int HostVerified { get => hostVerified; set => hostVerified = value; }
 
 
         //Getting a tiny apartments list to show in home page.

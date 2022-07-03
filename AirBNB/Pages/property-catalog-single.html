@@ -31,6 +31,17 @@
 
         $(document).ready(function () {
 
+            // need to put in js file.
+            if (localStorage.getItem("userLogged") != undefined) {
+                user = JSON.parse(localStorage.getItem("userLogged"));
+                $('.userLogin').html("Hello " + user.Username);
+                $('.sign').html("Logout");
+            }
+            else {
+                $('.userLogin').html("Hello Guest");
+                $('.sign').html("Login/Registration");
+            }
+
             if (localStorage.getItem("apartmentId") == undefined)  // change it!!!!!!!!!!!!!!!
                 return;
             
@@ -83,6 +94,7 @@
             $('#maxNights').html(apartment.MaxNights);
             $('#availability365').html(apartment.Availability365);
             $('#lastReview').html((apartment.LastReview).split(' ')[0]);
+            $('#verified').html(renderVerified(apartment.HostVerified));
             $('#numOfReviews').html(apartment.NumOfReviews);
             $('#reviewRating').html(renderStars(apartment.ReviewRating, 0));
             $('#reviewCleanliness').html(renderStars(apartment.ReviewCleanliness, 0));
@@ -141,6 +153,14 @@
 
         function errorCB() {
             alert("error");
+        }
+
+        function renderVerified(verified) { // need to put in js file.
+            console.log(verified);
+            let str = "";
+            if (verified) str += '<span class="fa-check"></span>';
+            else str += '<span class="fa-times"></span>';
+            return str;
         }
 
         function renderPersons(num) { // need to put in js file.
@@ -212,7 +232,7 @@
                         <div class="rd-navbar-top-panel-wrap">
                             <dl class="dl-horizontal-mod-1 login">
                                 <dt><span class="mdi mdi-login icon-xxs-mod-2"></span></dt>
-                                <dd><a class="text-sushi" href="login.html"> Login/Registration</a></dd>
+                                <dd><a class="text-sushi sign" href="login.html"> Login/Registration</a></dd>
                             </dl>
                             <div class="top-panel-inner">
                                 <dl class="dl-horizontal-mod-1">
@@ -236,7 +256,6 @@
                                 <li><a class="mdi mdi-instagram" href="https://www.instagram.com/airbnb/"></a></li>
                                 <li><a class="fa-google" href="https://www.google.com/search?q=airbnb&hl=iw&source=hp&ei=JJmXYpbLLJ2Vxc8Pq9q3mA4&iflsig=AJiK0e8AAAAAYpenNDXx8_Ad_y2dMZ3THoR2Ts333B_l&ved=0ahUKEwiW7aKk24z4AhWdSvEDHSvtDeMQ4dUDCAc&uact=5&oq=airbnb&gs_lcp=Cgdnd3Mtd2l6EAMyBAgAEEMyFAguEIAEELEDEIMBEMcBENEDEMkDMgUIABCSAzIFCAAQkgMyBQgAEIAEMgUIABCABDIFCAAQgAQyBQgAEIAEMgUIABCABDIFCAAQgAQ6EAguELEDEIMBEMcBENEDEEM6EQguEIAEELEDEIMBEMcBENEDOgsILhCABBDHARDRAzoICAAQgAQQsQM6CwgAEIAEELEDEIMBOg4ILhCABBCxAxDHARCjAjoRCC4QgAQQsQMQgwEQxwEQrwFQiANYog1g8g5oAXAAeACAAZ4BiAGfBpIBAzAuNpgBAKABAbABAA&sclient=gws-wiz"></a></li>
                             </ul>
-                            <div class="btn-group"><a class="btn btn-sm btn-primary" href="submit-property.html">Submit Property</a></div>
                         </div>
                     </div>
                     <div class="rd-navbar-inner inner-wrap">
@@ -246,7 +265,7 @@
                             <!-- RD Navbar Brand-->
                             <div class="rd-navbar-brand"><a class="brand-name" href="index.html"><img src="images/logo-1.png" alt=""></a></div>
                         </div>
-                        <div class="btn-group"><a class="btn btn-sm btn-primary" href="submit-property.html">Submit Property</a></div>
+                        <div class="btn-group"><a class="btn btn-sm btn-primary userLogin">Hello Guest</a></div>
                         <div class="rd-navbar-nav-wrap">
                             <!-- RD Navbar Nav-->
                             <ul class="rd-navbar-nav">
@@ -375,12 +394,12 @@
                                         <li><a href="gallery-4.html">Grid Cobbles</a></li>
                                     </ul>
                                 </li>
-                                <li class="link-group"><a class="btn btn-sm btn-primary" href="submit-property.html">Submit Property</a></li>
+                                <li class="link-group"><a class="btn btn-sm btn-primary userLogin" Hello Guest</a></li>
                                 <li class="rd-navbar-bottom-panel">
                                     <div class="rd-navbar-bottom-panel-wrap">
                                         <dl class="dl-horizontal-mod-1 login">
                                             <dt><span class="mdi mdi-login icon-xxs-mod-2"></span></dt>
-                                            <dd><a class="text-sushi" href="login.html"> Login/Registration</a></dd>
+                                            <dd><a class="text-sushi sign" href="login.html"> Login/Registration</a></dd>
                                         </dl>
                                         <div class="top-panel-inner">
                                             <dl class="dl-horizontal-mod-1">
@@ -511,7 +530,10 @@
                                                     <td id="since"></td>
                                                 </tr>
                                                 <tr>
-
+                                                    <td>Host verified</td>
+                                                    <td id="verified"></td>
+                                                </tr>
+                                                <tr>
                                                     <td>Host response time</td>
                                                     <td id="hostResponseTime"></td>
                                                 </tr>
