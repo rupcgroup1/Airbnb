@@ -34,16 +34,25 @@
             renderNumbers(index1);
             render(apartments1,index1);
 
-            $('#next').click(function () {
+            $('#next').click(function () { // using trhe global variable min.
                 localStorage.setItem("index", JSON.stringify(min));
                 location.reload();
-            })
+            });
+            $('#previous').click(function () { // using trhe global variable min.
+                localStorage.setItem("index", JSON.stringify(min-6));
+                location.reload();
+            });
+            $('.showPage').click(function () { // using trhe global variable min.
+                let id = this.id;
+                localStorage.setItem("index", JSON.stringify(id*6));
+                location.reload();
+            });
         });
 
         function renderNumbers(index) {
             tmp = index / 6;
             for (let i = 2; i < 6; i++) {
-                $(".pagination li:nth-child(" + i + ")").html("<a>" + ++tmp + "</a>");
+                $(".pagination li:nth-child(" + i + ")").html("<a class='showPage' id='" + ++tmp + "'>" + tmp + "</a>");
             }
             
         }
@@ -53,7 +62,7 @@
             arrImgs = $('.thumbnail-3.thumbnail img');      // catch all apartments imgs.
             arrDivs = $('.thumbnail-3.thumbnail .caption'); // catch all apartments description divs.
             let j = index;
-            min = index + 6;
+            min = index + 6; // global variable.
             if (apartments.length < min)
                 min = apartments.length;
 
@@ -640,11 +649,11 @@
                               </div>
                               <div class="col-12 text-center text-md-start offset-custom-11">
                                   <ul class="pagination">
-                                      <li class="disabled"><span class="fa-chevron-left"></span></li>
-                                      <li class="active"><span>1</span></li>
-                                      <li><a href="#">2</a></li>
-                                      <li><a href="#">3</a></li>
-                                      <li><a href="#">4</a></li>
+                                      <li class="disabled"><span id="previous" class="fa-chevron-left"></span></li>
+                                      <li class="active"><span class="showPage">1</span></li>
+                                      <li><a class="showPage">2</a></li>
+                                      <li><a class="showPage">3</a></li>
+                                      <li><a class="showPage">4</a></li>
                                       <li><a id="next" class="fa-chevron-right"></a></li>
                                   </ul>
                               </div>
