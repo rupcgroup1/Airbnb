@@ -65,7 +65,7 @@
                     dangerMode: true
                 })
                     .then(function (willDelete) {
-                        if (willDelete) deleteReservation(reservationID);
+                        if (willDelete) getReservationByID(reservationID);
                         else swal("Not Deleted!");
                     });
             });
@@ -82,9 +82,9 @@
 
         // Delete a reservation from the DB, first we will get the reservation, then we will delete her.
 
-        function deleteReservation(resID) {
+        function getReservationByID(resID) {
             id = resID;
-            let api = `../api/Users/${id}`;
+            let api = `../api/Users/getResById/${id}`;
             ajaxCall("GET", api, "", getReservationByIdSCB, getReservationByIdECB);
         }
 
@@ -96,8 +96,14 @@
             let userID = reservation.UserID;
             let from = reservation.From;
             let to = reservation.To;
-            let api = `../api/Users/${id}/${price}/${hostId}/${userID}`;
-            ajaxCall("DELETE", api, "", getReservationToCancelSCB, getReservationToCancelECB);
+            let api = `../api/Users/cancelReservation`;
+            let reservation = {
+                Id: id,
+                Price: price,
+                HostId: hostId,
+                UserID: userID
+            }
+            ajaxCall("DELETE", api, JSON.stringify(reservation), getReservationToCancelSCB, getReservationToCancelECB);
         }
 
         function getReservationByIdECB(error) {
