@@ -121,7 +121,9 @@
 
             // Initialize and add the map
             initMap(apartment.X, apartment.Y);
-            //window.initMap = initMap;
+
+            // Save hostID for specific apartment reservation.
+            hostId = apartment.HostID;
 
         }
 
@@ -197,6 +199,7 @@
                 return;
             let reservation = {
                 ApartmentID: apartmentID,
+                HostID: hostId, // hostId global variable.
                 UserID: id,
                 From: $("#from").val(),
                 To: $("#to").val()

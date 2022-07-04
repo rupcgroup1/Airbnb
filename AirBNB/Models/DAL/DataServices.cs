@@ -441,6 +441,9 @@ namespace AirBNB.Models.DAL
             // Connect
             SqlConnection con = Connect();
 
+            // Check if this reservation is available.
+            checkReservation();
+
             // Create Command
             SqlCommand command = CreateReservationCommand(con, r);
 
@@ -460,7 +463,27 @@ namespace AirBNB.Models.DAL
             SqlCommand command = new SqlCommand();
 
             command.Parameters.AddWithValue("@apartmentID", r.ApartmentID);
+            command.Parameters.AddWithValue("@hostID", r.HostID);
             command.Parameters.AddWithValue("@userID", r.UserID);
+            command.Parameters.AddWithValue("@fromDate", r.From);
+            command.Parameters.AddWithValue("@toDate", r.To);
+            command.CommandText = "PSPreserveApartment";
+            command.Connection = con;
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.CommandTimeout = 10; // in seconds
+
+            return command;
+        }
+
+
+        //Creating select command for check availablty of reservation.
+        private SqlCommand CreateCheckReservationCommand(SqlConnection con, Apartment a, Reservation r)
+        {
+            SqlCommand command = new SqlCommand();
+
+            command.Parameters.AddWithValue("@apartmentID", a.Id);
+            command.Parameters.AddWithValue("@minNights", a.MinNights);
+            command.Parameters.AddWithValue("@maxNights", a.MaxNights);
             command.Parameters.AddWithValue("@fromDate", r.From);
             command.Parameters.AddWithValue("@toDate", r.To);
             command.CommandText = "PSPreserveApartment";
