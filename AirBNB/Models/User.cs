@@ -83,5 +83,11 @@ namespace AirBNB.Models
             DataServices ds = new DataServices();
             return ds.getAllUserReservations(this.id);
         }
+
+        public int cancelReservationByID(int id)
+        {
+            DataServices ds = new DataServices();
+            ds.cancelReservationByID(id);
+        }
     }
 }

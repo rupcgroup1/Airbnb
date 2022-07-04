@@ -8,7 +8,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta charset="utf-8">
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
-
+    <style>
+        .viewBtn, .cancelBtn {
+            margin: 5px;
+        }
+        table.dataTable tbody tr.selected td ,table.dataTable tbody tr.selected {
+            background-color: darkslategray !important;
+        }
+    </style>
 
     <!-- Data Table-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -46,9 +53,47 @@
             let id = user.Id;
             let api = `../api/Users/${id}`;
             ajaxCall('GET', api, "", successCB, errorCB);
-
+            $()
+            $(document).on("click", ".cancelBtn", function () {
+                markSelected(this);
+                var reservationID = this.getAttribute('id');
+                swal({ // this will open a dialouge
+                    title: "Are you sure ??",
+                    text: "",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true
+                })
+                    .then(function (willDelete) {
+                        if (willDelete) deleteReservation(reservationID);
+                        else swal("Not Deleted!");
+                    });
+            });
 
         });
+
+        // mark the selected row
+        function markSelected(btn) {
+            $("#reservationsData tr").removeClass("selected"); // remove seleced class from rows that were selected before
+            row = (btn.parentNode).parentNode; // button is in TD which is in Row
+            console.log(row);
+            row.className = 'selected'; // mark as selected
+        }
+
+        // Delete a car from the server
+        function deleteReservation(id) {
+            deletedID = id;
+            let api = `../api/Users/${deletedID}`;
+            ajaxCall("DELETE", api, "", cancelReservationSuccessCB, errorCancelCB);
+        }
+
+        function cancelReservationSuccessCB(success) {
+            console.log(succeed);
+        }
+
+        function errorCancelCB(error) {
+            console.log(error);
+        }
 
         function successCB(reservationsData) {
             console.log(reservationsData);
@@ -59,7 +104,8 @@
                 tbl = $('#reservationsData').DataTable({
                     data: reservations,
                     pageLength: 5,
-                    columns: [                        {                            render: function (data, type, row, meta) {                                editBtn = "<button class = 'editBtn' " + "> Edit </button>";                                viewBtn = "<button class = 'viewBtn' " + "> View </button>";                                deleteBtn = "<button class = 'deleteBtn' " + "> Delete </button>";                                return editBtn + viewBtn + deleteBtn;                            }                        },
+                    columns: [                        {                            render: function (data, type, row, meta) {                                let id = "id='" + row.Id + "'";
+                                viewBtn = "<button class = 'btn btn-sushi viewBtn' " + id + "> View </button>";                                cancelBtn = "<button class = 'btn btn-sushi cancelBtn' " + id +"> Cancel </button>";                                return  viewBtn + cancelBtn;                            }                        },
                         { data: "Id" },
                         { data: "ApartmentName" },
                         { data: "From" },
@@ -348,6 +394,7 @@
                                 <table id="reservationsData" class="table table-simple table-sushi display nowrap" style="width:100%">
                                     <thead>
                                         <tr class="bg-sushi text-white">
+                                            <th>Operation</th>
                                             <th>Id</th>
                                             <th>Name</th>
                                             <th>Check-in</th>
