@@ -117,6 +117,14 @@ namespace AirBNB.Models
             this.Price = price;
         }
 
+        public Apartment(int minNights, int maxNights, int price, string name)
+        {
+            this.minNights = minNights;
+            this.maxNights = maxNights;
+            this.Price = price;
+            this.Name = name;
+        }
+
         public int Id { get => id; set => id = value; }
         public string Name { get => name; set => name = value; }
         public string Description { get => description; set => description = value; }
