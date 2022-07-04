@@ -88,7 +88,7 @@
         }
 
         function cancelReservationSuccessCB(success) {
-            console.log(succeed);
+            console.log(success);
         }
 
         function errorCancelCB(error) {
@@ -112,21 +112,6 @@
                         { data: "To" },
                         { data: "Nights" },
                         { data: "Price" }
-                        /*
-                        {
-                            data: "Country",
-                            render: function (data, type, row, meta) {
-                                return '<img src="' + flags[data] + '" />';
-                            }
-                        },
-                        {
-                            data: "Amount",
-                            render: function (data, type, row, meta) {
-                                return "<button type='button' id='" + row.Id + "' class ='amountBTN' >" + data + " </button>";
-                            }
-                        },
-                        { data: "Warrenty" }
-                        */
                     ],
                 });
             }

@@ -599,13 +599,13 @@ namespace AirBNB.Models.DAL
         }
 
         // Delete reservation by userID.
-        public int CancelReservation(int id)
+        public int cancelReservation(Reservation r)
         {
             // Connect
             SqlConnection con = Connect();
 
             // Create Command
-            SqlCommand command = CreateCancelCommand(con, id);
+            SqlCommand command = CreateCancelCommand(con, r);
 
             // Execute
             int numAffected = command.ExecuteNonQuery();
@@ -617,12 +617,59 @@ namespace AirBNB.Models.DAL
         }
 
         //Creating cancel command for specific reservation.
-        private SqlCommand CreateCancelCommand(SqlConnection con, int id)
+        private SqlCommand CreateCancelCommand(SqlConnection con, Reservation r)
+        {
+            SqlCommand command = new SqlCommand();
+
+            command.Parameters.AddWithValue("@reservationId", r.Id);
+            command.Parameters.AddWithValue("@hostId", r.HostID);
+            command.Parameters.AddWithValue("@userId", r.UserID);
+            command.Parameters.AddWithValue("@price", r.Price);
+            command.CommandText = "PSPdeleteReservation";
+            command.Connection = con;
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.CommandTimeout = 10; // in seconds
+
+            return command;
+        }
+
+        // Get reservation by id.
+        public Reservation getReservationsById(int id)
+        {
+            SqlConnection con = Connect();
+
+            // Create Command
+            SqlCommand command = CreateGetReservationCommand(con, id);
+
+            SqlDataReader dr = command.ExecuteReader(CommandBehavior.CloseConnection);
+
+            Reservation r = null;
+
+            while (dr.Read())
+            {
+                //(int id,int apartmentID, int hostID, int userID, string from, string to, int price, int nights, string apartmentName)
+                int apartmentId = Convert.ToInt32(dr["apartmentId"]);
+                int userId = Convert.ToInt32(dr["userId"]);
+                int hostId = Convert.ToInt32(dr["hostId"]);
+                string from = dr["fromDate"].ToString();
+                string to = dr["toDate"].ToString();
+                int price = Convert.ToInt32(dr["price"]);
+                int nights = Convert.ToInt32(dr["nights"]);
+                string apartmentName = dr["apartmentName"].ToString();
+                r = new Reservation(id, apartmentId, hostId, userId, from, to, price, nights, apartmentName);
+            }
+
+            con.Close();
+            return r;
+        }
+
+        //Creating get command for reservation by id;
+        private SqlCommand CreateGetReservationCommand(SqlConnection con, int id)
         {
             SqlCommand command = new SqlCommand();
 
             command.Parameters.AddWithValue("@reservationId", id);
-            command.CommandText = "PSPdeleteReservation";
+            command.CommandText = "PSPgetReservationById";
             command.Connection = con;
             command.CommandType = System.Data.CommandType.StoredProcedure;
             command.CommandTimeout = 10; // in seconds

@@ -20,7 +20,7 @@ namespace AirBNB.Models
 
         public Reservation(int id,int apartmentID, int hostID, int userID, string from, string to, int price, int nights, string apartmentName)
         {
-            this.id = id;
+            this.Id = id;
             this.ApartmentID = apartmentID;
             this.HostID = hostID;
             this.UserID = userID;
