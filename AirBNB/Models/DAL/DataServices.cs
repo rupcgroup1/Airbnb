@@ -436,13 +436,14 @@ namespace AirBNB.Models.DAL
         }
 
         //Make reservation
-        public int makeReservation(Reservation r)
+        public int makeReservation(Apartment a, Reservation r)
         {
             // Connect
             SqlConnection con = Connect();
 
             // Check if this reservation is available.
-            checkReservation();
+            if (checkReservation(a,r) == 0)
+                return 0;
 
             // Create Command
             SqlCommand command = CreateReservationCommand(con, r);
@@ -475,18 +476,36 @@ namespace AirBNB.Models.DAL
             return command;
         }
 
+        // Get apartment id if the reservation is available.
+        public int checkReservation(Apartment a, Reservation r)
+        {
+            SqlConnection con = Connect();
+
+            // Create Command
+            SqlCommand command = CreateCheckReservationCommand(con, a,r);
+
+            SqlDataReader dr = command.ExecuteReader(CommandBehavior.CloseConnection);
+
+            int id = 0;
+
+            while (dr.Read())
+                id = Convert.ToInt32(dr["apartmentId"]);
+
+            con.Close();
+            return id;
+        }
 
         //Creating select command for check availablty of reservation.
         private SqlCommand CreateCheckReservationCommand(SqlConnection con, Apartment a, Reservation r)
         {
             SqlCommand command = new SqlCommand();
 
-            command.Parameters.AddWithValue("@apartmentID", a.Id);
+            command.Parameters.AddWithValue("@apartmentID", r.ApartmentID);
             command.Parameters.AddWithValue("@minNights", a.MinNights);
             command.Parameters.AddWithValue("@maxNights", a.MaxNights);
             command.Parameters.AddWithValue("@fromDate", r.From);
             command.Parameters.AddWithValue("@toDate", r.To);
-            command.CommandText = "PSPreserveApartment";
+            command.CommandText = "PSPreservationAvailable";
             command.Connection = con;
             command.CommandType = System.Data.CommandType.StoredProcedure;
             command.CommandTimeout = 10; // in seconds
