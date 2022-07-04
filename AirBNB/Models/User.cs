@@ -47,6 +47,11 @@ namespace AirBNB.Models
             this.username = username;
         }
 
+        public User(int id)
+        {
+            this.id = id;
+        }
+
         public User()
         {
 
@@ -71,6 +76,12 @@ namespace AirBNB.Models
         {
             DataServices ds = new DataServices();
             return ds.checkUser(this);
+        }
+
+        public List<Reservation> getAllUserReservations()
+        {
+            DataServices ds = new DataServices();
+            return ds.getAllUserReservations(this.id);
         }
     }
 }
