@@ -39,7 +39,7 @@
 
         $(document).ready(function () {
 
-            var loggedIn = checkLogin();
+            loggedIn = checkLogin();
             //If apartment ID isnt at local storage so page not found.
             if (localStorage.getItem("apartmentId") == undefined) {
                 location.replace("404.html");
@@ -65,16 +65,6 @@
                     flag = 0;
                 }
             });
-
-            /*
-            $("#book").click(function () {
-                if (!loggedIn) {
-                    alert("You need to log in first.");
-                    return false;
-                }
-
-            });
-            */
 
             $("#submitBook").submit(bookApartment);
         });
@@ -192,7 +182,7 @@
 
         //Booking an apartment
         function bookApartment() {
-            if (!loggedIn) {
+            if (loggedIn == false) {
                 alert("You need to log in first.");
                 return false;
             }
