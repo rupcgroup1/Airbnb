@@ -59,7 +59,7 @@
                 tbl = $('#reservationsData').DataTable({
                     data: reservations,
                     pageLength: 5,
-                    columns: [
+                    columns: [                        {                            render: function (data, type, row, meta) {                                editBtn = "<button class = 'editBtn' " + "> Edit </button>";                                viewBtn = "<button class = 'viewBtn' " + "> View </button>";                                deleteBtn = "<button class = 'deleteBtn' " + "> Delete </button>";                                return editBtn + viewBtn + deleteBtn;                            }                        },
                         { data: "Id" },
                         { data: "ApartmentName" },
                         { data: "From" },
