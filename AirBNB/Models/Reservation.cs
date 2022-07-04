@@ -57,7 +57,7 @@ namespace AirBNB.Models
         public int reserveApartment(Apartment a)
         {
             DataServices ds = new DataServices();
-            return ds.makeReservation(this);
+            return ds.makeReservation(a,this);
         }
     }
 }

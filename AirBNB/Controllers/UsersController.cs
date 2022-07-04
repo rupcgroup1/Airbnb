@@ -34,11 +34,11 @@ namespace AirBNB.Controllers
         }
 
         [HttpPost]
-        [Route("api/Users/bookApartment/${apartmentID}/${fromDate}/${toDate}/${minNights}/${maxNights}")]
-        public int Post(int apartmentID,string fromDate,string toDate,int minNights,int maxNights)
+        [Route("api/Users/bookApartment/{apartmentID}/{hostId}/{id}/{from}/{to}/{minNights}/{maxNights}/{price}")]
+        public int Post(int apartmentID, int hostId, int id ,string from,string to,int minNights,int maxNights, int price)
         {
-            Apartment a = new Apartment(minNights, maxNights);
-            Reservation r = new Reservation(apartmentID, fromDate, toDate);
+            Apartment a = new Apartment(minNights, maxNights, price);
+            Reservation r = new Reservation(apartmentID,hostId,id ,from, to);
 
             return r.reserveApartment(a);
         }

@@ -66,15 +66,15 @@
                 }
             });
 
+            /*
             $("#book").click(function () {
                 if (!loggedIn) {
                     alert("You need to log in first.");
-                    return;
+                    return false;
                 }
-                else {
 
-                } 
             });
+            */
 
             $("#submitBook").submit(bookApartment);
         });
@@ -122,8 +122,11 @@
             // Initialize and add the map
             initMap(apartment.X, apartment.Y);
 
-            // Save hostID for specific apartment reservation.
+            // Save hostID min/max Nights for specific apartment reservation.
             hostId = apartment.HostID;
+            minNights = apartment.MinNights;
+            maxNights = apartment.MaxNights;
+            price = apartment.Price;
 
         }
 
@@ -189,6 +192,10 @@
 
         //Booking an apartment
         function bookApartment() {
+            if (!loggedIn) {
+                alert("You need to log in first.");
+                return false;
+            }
             let apartmentID = 0;
             let id = 0;
             if (localStorage.getItem("apartmentId") != undefined)
@@ -196,23 +203,21 @@
             if (localStorage.getItem("userLogged") != undefined)
                 id = JSON.parse(localStorage.getItem("userLogged")).Id;
             if (apartmentID == 0 || id == 0)
-                return;
-            let reservation = {
-                ApartmentID: apartmentID,
-                HostID: hostId, // hostId global variable.
-                UserID: id,
-                From: $("#from").val(),
-                To: $("#to").val()
-            }
+                return false;
 
-            let api = `../api/Users/bookApartment`;
-            ajaxCall("POST", api, JSON.stringify(reservation), bookSuccessCB, bookErrorCB);
+            let from = $("#from").val();
+            let to = $("#to").val();
+
+            let api = `../api/Users/bookApartment/${apartmentID}/${hostId}/${id}/${from}/${to}/${minNights}/${maxNights}/${price}`;
+            ajaxCall("POST", api, "", bookSuccessCB, bookErrorCB);
 
             return false;
         }
 
         function bookSuccessCB(success) {
-            alert("succeed");
+            if (success == -1)
+                alert("making conflict");
+            else alert("succeed");
         }
 
         function bookErrorCB(error) {
@@ -648,8 +653,10 @@
                                         <form action="" id="submitBook">
                                             <div id="aroundBorder" class="thumbnail-3 border">
                                                 <div class="caption">
+                                                    <label class="form-label" for="contact-name">Check-in</label>
                                                     <input type="date" class="form-input" id="from" required />
                                                     <br />
+                                                    <label class="form-label" for="contact-name">Check-out</label>
                                                     <input type="date" class="form-input" id="to" required />
                                                     <br />
                                                     <p><button id="book" class="btn btn-sushi">Book Now</button></p>
