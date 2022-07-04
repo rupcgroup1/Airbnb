@@ -598,6 +598,39 @@ namespace AirBNB.Models.DAL
             return command;
         }
 
+        // Delete reservation by userID.
+        public int CancelReservation(int id)
+        {
+            // Connect
+            SqlConnection con = Connect();
+
+            // Create Command
+            SqlCommand command = CreateCancelCommand(con, id);
+
+            // Execute
+            int numAffected = command.ExecuteNonQuery();
+
+            // Close Connection
+            con.Close();
+
+            return numAffected;
+        }
+
+        //Creating cancel command for specific reservation.
+        private SqlCommand CreateCancelCommand(SqlConnection con, int id)
+        {
+            SqlCommand command = new SqlCommand();
+
+            command.Parameters.AddWithValue("@reservationId", id);
+            command.CommandText = "PSPdeleteReservation";
+            command.Connection = con;
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.CommandTimeout = 10; // in seconds
+
+            return command;
+        }
+
 
     }
+
 }
