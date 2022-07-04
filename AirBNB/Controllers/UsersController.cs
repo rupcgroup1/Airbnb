@@ -62,11 +62,11 @@ namespace AirBNB.Controllers
 
         // DELETE api/<controller>/5
         [HttpDelete]
-        [Route("api/Users/${deletedID}")]
-        public void Delete(int deletedID)
+        [Route("api/Users/{deletedID}")]
+        public int Delete(int deletedID)
         {
             User u = new User();
-            u.cancelReservation(deletedID);
+            return u.cancelReservation(deletedID);
         }
     }
 }

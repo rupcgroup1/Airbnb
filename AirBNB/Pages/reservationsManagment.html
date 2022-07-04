@@ -123,8 +123,16 @@
                 tbl = $('#reservationsData').DataTable({
                     data: reservations,
                     pageLength: 5,
-                    columns: [                        {                            render: function (data, type, row, meta) {                                let id = "id='" + row.Id + "'";
-                                viewBtn = "<button class = 'btn btn-sushi viewBtn' " + id + "> View </button>";                                cancelBtn = "<button class = 'btn btn-sushi cancelBtn' " + id +"> Cancel </button>";                                return  viewBtn + cancelBtn;                            }                        },
+                    columns: [
+                        {
+                            render: function (data, type, row, meta) {
+                                let id = "id='" + row.Id + "'";
+
+                                viewBtn = "<button class = 'btn btn-sushi viewBtn' " + id + "> View </button>";
+                                cancelBtn = "<button class = 'btn btn-sushi cancelBtn' " + id +"> Cancel </button>";
+                                return  viewBtn + cancelBtn;
+                            }
+                        },
                         { data: "Id" },
                         { data: "ApartmentName" },
                         { data: "From" },
