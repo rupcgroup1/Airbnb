@@ -14,6 +14,17 @@
     <link rel="stylesheet" href="css/fonts.css">
     <link rel="stylesheet" href="css/style.css">
 
+    <!-- Data Table-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
+    <script src="js/jquery.min.js" type="text/javascript"></script>
+    <script src="js/jquery.dataTables.min.js" type="text/javascript"></script>
 
     <script src="../Scripts/ajaxCalls.js"></script>
     <script src="../Scripts/jquery-3.3.1.min.js"></script>
@@ -31,30 +42,28 @@
 
             let id = user.Id;
             let api = `../api/Users/${id}`;
-            ajaxCall('GET',api,"",successCB,errorCB);
-              
-            
+            ajaxCall('GET', api, "", successCB, errorCB);
+
+
         });
 
-        function successCB(reservationsData){
+        function successCB(reservationsData) {
             console.log(reservationsData);
 
-            /*
-             * private int id;
-        private int apartmentID;
-        private int hostID;
-        private int userID;
-        private string from;
-        private string to;
+
             reservations = reservationsData; // keep the cars array in a global variable;
             try {
                 tbl = $('#reservationsData').DataTable({
                     data: reservations,
                     pageLength: 5,
                     columns: [
-                        { data: "ApartmentID" },
-                        { data: "HostID" },
-                        { data: "UserID" },
+                        { data: "Id" },
+                        { data: "ApartmentName" },
+                        { data: "From" },
+                        { data: "To" },
+                        { data: "Nights" },
+                        { data: "Price" }
+                        /*
                         {
                             data: "Country",
                             render: function (data, type, row, meta) {
@@ -68,13 +77,13 @@
                             }
                         },
                         { data: "Warrenty" }
+                        */
                     ],
                 });
             }
             catch (err) {
                 alert(err);
             }
-            */
         }
 
         function errorCB(error) {
@@ -325,6 +334,7 @@
             </section>
 
             <!--Section Tables Dark Header-->
+
             <section class="section-lg bg-gray-dark">
                 <div class="container">
                     <h2>My reservations</h2>
@@ -332,13 +342,15 @@
                     <div class="row">
                         <div class="col-xl-8">
                             <div class="table-mobile">
-                                <table class="table table-simple table-sushi">
+                                <table id="reservationsData" class="table table-simple table-sushi display nowrap" style="width:100%">
                                     <thead>
                                         <tr class="bg-sushi text-white">
-                                            <th>Column 1</th>
-                                            <th>Column 2</th>
-                                            <th>Column 3</th>
-                                            <th>Column 4</th>
+                                            <th>Id</th>
+                                            <th>Name</th>
+                                            <th>Check-in</th>
+                                            <th>Check-out</th>
+                                            <th>Nights</th>
+                                            <th>Price</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -347,30 +359,40 @@
                                             <td>Description</td>
                                             <td>Description</td>
                                             <td>$1.00</td>
+                                            <td>Description</td>
+                                            <td>$1.00</td>
                                         </tr>
                                         <tr>
                                             <td>Item #2</td>
                                             <td>Description</td>
                                             <td>Description</td>
                                             <td>$2.00</td>
+                                            <td>Description</td>
+                                            <td>$1.00</td>
                                         </tr>
                                         <tr>
                                             <td>Item #3</td>
                                             <td>Description</td>
                                             <td>Description</td>
                                             <td>$3.00</td>
+                                            <td>Description</td>
+                                            <td>$1.00</td>
                                         </tr>
                                         <tr>
                                             <td>Item #4</td>
                                             <td>Description</td>
                                             <td>Description</td>
                                             <td>$4.00</td>
+                                            <td>Description</td>
+                                            <td>$1.00</td>
                                         </tr>
                                         <tr class="text-abbey">
                                             <td>All Items</td>
                                             <td>Description</td>
                                             <td>Description</td>
                                             <td>$10.00</td>
+                                            <td>Description</td>
+                                            <td>$1.00</td>
                                         </tr>
                                     </tbody>
                                 </table>

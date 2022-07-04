@@ -472,6 +472,8 @@ namespace AirBNB.Models.DAL
             command.Parameters.AddWithValue("@userID", r.UserID);
             command.Parameters.AddWithValue("@fromDate", r.From);
             command.Parameters.AddWithValue("@toDate", r.To);
+            command.Parameters.AddWithValue("@price", r.Price);
+            command.Parameters.AddWithValue("@apartmentName", r.ApartmentName);
             command.CommandText = "PSPreserveApartment";
             command.Connection = con;
             command.CommandType = System.Data.CommandType.StoredProcedure;
@@ -587,7 +589,7 @@ namespace AirBNB.Models.DAL
         {
             SqlCommand command = new SqlCommand();
 
-            command.Parameters.AddWithValue("@id", userId);
+            command.Parameters.AddWithValue("@userId", userId);
             command.CommandText = "PSPgetAllUserReservations";
             command.Connection = con;
             command.CommandType = System.Data.CommandType.StoredProcedure;
