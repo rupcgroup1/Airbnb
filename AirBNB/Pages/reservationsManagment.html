@@ -50,8 +50,8 @@
             }
 
             //Getting all the reservations for user by user id.
-            id = user.Id;//global variable for the user.
-            let api = `../api/Users/${id}`;
+            currentUserID = user.Id;//global variable for the user.
+            let api = `../api/Users/${currentUserID}`;
             ajaxCall('GET', api, "", successCB, errorCB);
             $()
             $(document).on("click", ".cancelBtn", function () {
@@ -112,8 +112,11 @@
         //success function for canceling the reservation, in the next ajaxCall we will re-render the reservations(to make sure it succeeded).
         function cancelSCB(success) {
             console.log(success);
-            let api = `../api/Users/${id}`;
+
+            //Current user ID is global variable from document ready, we getting again all the reservations that user has and re-render.
+            let api = `../api/Users/${currentUserID}`;
             ajaxCall('GET', api, "", newDataSCB, errorCB);
+      
         }
 
         //success function for getting the new reservations after cancelation.
