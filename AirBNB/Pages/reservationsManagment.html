@@ -35,19 +35,17 @@
     <script>
 
         $(document).ready(function () {
-
+            //Checking if the user is logged in
             let bool = checkLogin();
             if (bool == false) {
                 alert("You need to log in");
                 location.replace("login.html");
             }
 
-
+            //Getting all the reservations for user by user id.
             let id = user.Id;
             let api = `../api/Users/${id}`;
             ajaxCall('GET', api, "", successCB, errorCB);
-
-            $('#reservationsData').DataTable({});
 
 
         });
