@@ -109,6 +109,13 @@ namespace AirBNB.Models
             this.Count = count;
         }
 
+
+        public Apartment(int minNights, int maxNights)
+        {
+            this.minNights = minNights;
+            this.maxNights = maxNights;
+        }
+
         public int Id { get => id; set => id = value; }
         public string Name { get => name; set => name = value; }
         public string Description { get => description; set => description = value; }
