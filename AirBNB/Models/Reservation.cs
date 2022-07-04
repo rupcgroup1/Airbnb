@@ -34,6 +34,14 @@ namespace AirBNB.Models
             this.To = to;
         }
 
+        public Reservation(int apartmentID,string from, string to)
+        {
+            this.ApartmentID = apartmentID;
+            this.UserID = userID;
+            this.From = from;
+            this.To = to;
+        }
+
         public Reservation()
         {
        
@@ -46,7 +54,7 @@ namespace AirBNB.Models
         public int Id { get => id; set => id = value; }
         public int HostID { get => hostID; set => hostID = value; }
 
-        public int reserveApartment()
+        public int reserveApartment(Apartment a)
         {
             DataServices ds = new DataServices();
             return ds.makeReservation(this);
