@@ -80,18 +80,37 @@
             row.className = 'selected'; // mark as selected
         }
 
-        // Delete a car from the server
-        function deleteReservation(id) {
-            deletedID = id;
-            let api = `../api/Users/${deletedID}`;
-            ajaxCall("DELETE", api, "", cancelReservationSuccessCB, errorCancelCB);
+        // Delete a reservation from the DB, first we will get the reservation, then we will delete her.
+
+        function deleteReservation(resID) {
+            id = resID;
+            let api = `../api/Users/${id}`;
+            ajaxCall("GET", api, "", getReservationByIdSCB, getReservationByIdECB);
         }
 
-        function cancelReservationSuccessCB(success) {
-            console.log(succeed);
+        function getReservationByIdSCB(reservation) {
+            console.log(reservation);
+            let id = reservation.Id;
+            let price = reservation.Price;
+            let hostId = reservation.HostId;
+            let userID = reservation.UserID;
+            let from = reservation.From;
+            let to = reservation.To;
+            let api = `../api/Users/${id}/${price}/${hostId}/${userID}`;
+            ajaxCall("DELETE", api, "", getReservationToCancelSCB, getReservationToCancelECB);
         }
 
-        function errorCancelCB(error) {
+        function getReservationByIdECB(error) {
+            console.log(error);
+        }
+
+
+        function getReservationToCancelSCB(success) {
+            console.log(success);
+        }
+        
+
+        function getReservationToCancelECB(error) {
             console.log(error);
         }
 
