@@ -96,6 +96,19 @@
             let userID = reservation.UserID;
             let from = reservation.From;
             let to = reservation.To;
+
+            if (isAbleToCancel(from) == false) {
+                swal({ // this will open a dialouge
+                    title: "You can't cancel your reservation.",
+                    text: "You can cancel up to 2 days before your check-in.",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true
+                })
+                return;
+            }
+
+
             let api = `../api/Users/cancelReservation`;
             let reservationToCancel = {
                 Id: id,
@@ -111,8 +124,6 @@
 
         //success function for canceling the reservation, in the next ajaxCall we will re-render the reservations(to make sure it succeeded).
         function cancelSCB(success) {
-            console.log(success);
-
             //Current user ID is global variable from document ready, we getting again all the reservations that user has and re-render.
             let api = `../api/Users/${currentUserID}`;
             ajaxCall('GET', api, "", newDataSCB, errorCB);
@@ -138,7 +149,6 @@
                         {
                             render: function (data, type, row, meta) {
                                 let id = "id='" + row.Id + "'";
-
                                 viewBtn = "<button class = 'btn btn-sushi viewBtn' " + id + "> View </button>";
                                 cancelBtn = "<button class = 'btn btn-sushi cancelBtn' " + id +"> Cancel </button>";
                                 return  viewBtn + cancelBtn;
@@ -161,6 +171,20 @@
         function errorCB(error) {
             console.log(error);
         }
+
+        function isAbleToCancel(fromDate) {
+            fromDate = fromDate.split(' ')[0];
+            fromDate = new Date(fromDate); 
+            nowDate = new Date();
+            let diffTime = Math.abs(fromDate - nowDate);
+            let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+            if (diffDays > 1)
+                return true;
+            return false;
+        }
+
+
 
     </script>
 
