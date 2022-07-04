@@ -90,10 +90,10 @@ namespace AirBNB.Models
             return ds.cancelReservation(r);
         }
 
-        public Reservation getReservationById(Reservation r)
+        public Reservation getReservationById(int id)
         {
             DataServices ds = new DataServices();
-            return ds.getReservationById(r);
+            return ds.getReservationById(id);
         }
     }
 }

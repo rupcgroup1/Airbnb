@@ -50,7 +50,7 @@
             }
 
             //Getting all the reservations for user by user id.
-            let id = user.Id;
+            id = user.Id;//global variable for the user.
             let api = `../api/Users/${id}`;
             ajaxCall('GET', api, "", successCB, errorCB);
             $()
@@ -81,48 +81,50 @@
         }
 
         // Delete a reservation from the DB, first we will get the reservation, then we will delete her.
-
         function getReservationByID(resID) {
             id = resID;
             let api = `../api/Users/getResById/${id}`;
-            ajaxCall("GET", api, "", getReservationByIdSCB, getReservationByIdECB);
+            ajaxCall("GET", api, "", getReservationByIdSCB, errorCB);
         }
 
+        //Success function for getting the reservation.
         function getReservationByIdSCB(reservation) {
             console.log(reservation);
             let id = reservation.Id;
             let price = reservation.Price;
-            let hostId = reservation.HostId;
+            let hostId = reservation.HostID;
             let userID = reservation.UserID;
             let from = reservation.From;
             let to = reservation.To;
             let api = `../api/Users/cancelReservation`;
-            let reservation = {
+            let reservationToCancel = {
                 Id: id,
                 Price: price,
                 HostId: hostId,
                 UserID: userID
             }
-            ajaxCall("DELETE", api, JSON.stringify(reservation), getReservationToCancelSCB, getReservationToCancelECB);
+            //Clearing the datatable before deleting
+            $('#reservationsData').dataTable().fnClearTable();
+            //After receving the reservation we will provide details and reduce the relevant parameters from host & user.
+            ajaxCall("DELETE", api, JSON.stringify(reservationToCancel), cancelSCB, errorCB);
         }
 
-        function getReservationByIdECB(error) {
-            console.log(error);
-        }
-
-
-        function getReservationToCancelSCB(success) {
+        //success function for canceling the reservation, in the next ajaxCall we will re-render the reservations(to make sure it succeeded).
+        function cancelSCB(success) {
             console.log(success);
-        }
-        
-
-        function getReservationToCancelECB(error) {
-            console.log(error);
+            let api = `../api/Users/${id}`;
+            ajaxCall('GET', api, "", newDataSCB, errorCB);
         }
 
+        //success function for getting the new reservations after cancelation.
+        function newDataSCB(reservations) {
+            console.log(reservations);
+            $('#reservationsData').dataTable().fnAddData(reservations);
+        }
+
+        //Success function for getting the reservations by user id, now we will render with datatable.
         function successCB(reservationsData) {
             console.log(reservationsData);
-
 
             reservations = reservationsData; // keep the cars array in a global variable;
             try {

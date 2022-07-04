@@ -634,7 +634,7 @@ namespace AirBNB.Models.DAL
         }
 
         // Get reservation by id.
-        public Reservation getReservationsById(int id)
+        public Reservation getReservationById(int id)
         {
             SqlConnection con = Connect();
 
