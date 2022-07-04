@@ -40,6 +40,11 @@
         $(document).ready(function () {
 
             loggedIn = checkLogin();
+            if (loggedIn == false) {
+                alert("you need to log in");
+                location.replace("index.html")
+            }
+            _
             //If apartment ID isnt at local storage so page not found.
             if (localStorage.getItem("apartmentId") == undefined) {
                 location.replace("404.html");

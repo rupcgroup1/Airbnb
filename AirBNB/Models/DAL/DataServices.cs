@@ -554,5 +554,48 @@ namespace AirBNB.Models.DAL
             return command;
         }
 
+        // Get reservations by userID.
+        public List<Reservation> getAllUserReservations(int userId)
+        {
+            SqlConnection con = Connect();
+
+            // Create Command
+            SqlCommand command = CreateSelectCommand(con, userId);
+
+            SqlDataReader dr = command.ExecuteReader(CommandBehavior.CloseConnection);
+
+            List<Reservation> list = new List<Reservation>();
+
+            while (dr.Read())
+            {
+                int id = Convert.ToInt32(dr["id"]);
+                string from = dr["fromDate"].ToString();
+                string to = dr["toDate"].ToString();
+                int price = Convert.ToInt32(dr["price"]);
+                int nights = Convert.ToInt32(dr["nights"]);
+                string apartmentName = dr["apartmentName"].ToString();
+                list.Add(new Reservation(id,from, to,price,nights,apartmentName));
+
+            }
+
+            con.Close();
+            return list;
+        }
+
+        //Creating get command for all the reservations by userID
+        private SqlCommand CreateSelectCommand(SqlConnection con, int userId)
+        {
+            SqlCommand command = new SqlCommand();
+
+            command.Parameters.AddWithValue("@id", userId);
+            command.CommandText = "PSPgetAllUserReservations";
+            command.Connection = con;
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.CommandTimeout = 10; // in seconds
+
+            return command;
+        }
+
+
     }
 }
