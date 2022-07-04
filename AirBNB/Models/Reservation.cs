@@ -10,22 +10,25 @@ namespace AirBNB.Models
     {
         private int id;
         private int apartmentID;
+        private int hostID;
         private int userID;
         private string from;
         private string to;
 
-        public Reservation(int id,int apartmentID, int userID, string from, string to)
+        public Reservation(int id,int apartmentID, int hostID, int userID, string from, string to)
         {
             this.id = id;
             this.ApartmentID = apartmentID;
+            this.HostID = hostID;
             this.UserID = userID;
             this.From = from;
             this.To = to;
         }
 
-        public Reservation(int apartmentID, int userID, string from, string to)
+        public Reservation(int apartmentID, int hostID, int userID, string from, string to)
         {
             this.ApartmentID = apartmentID;
+            this.HostID = hostID;
             this.UserID = userID;
             this.From = from;
             this.To = to;
@@ -49,6 +52,7 @@ namespace AirBNB.Models
         public string From { get => from; set => from = value; }
         public string To { get => to; set => to = value; }
         public int Id { get => id; set => id = value; }
+        public int HostID { get => hostID; set => hostID = value; }
 
         public int reserveApartment(Apartment a)
         {
