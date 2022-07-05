@@ -103,5 +103,14 @@ namespace AirBNB.Models
             DataServices ds = new DataServices();
             return ds.getReservationById(id);
         }
+
+        public List<User> getAllUsers()
+        {
+            DataServices ds = new DataServices();
+            return ds.getAllUsers();
+        }
+
+
+        
     }
 }
