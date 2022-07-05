@@ -203,11 +203,48 @@
 
             let from = $("#from").val();
             let to = $("#to").val();
+
+            if (validateDates(from, to) == false) {
+                alert("invalid dates");
+                return false;
+            }
+
+
             console.log(apartmentName);
             let api = `../api/Users/bookApartment/${apartmentID}/${hostId}/${id}/${from}/${to}/${minNights}/${maxNights}/${price}/${apartmentName}`;
             ajaxCall("POST", api, "", bookSuccessCB, bookErrorCB);
 
             return false;
+        }
+
+        function validateDates(checkIn, checkOut) {
+            checkIn = new Date(checkIn);
+            checkOut = new Date(checkOut);
+            nowDate = new Date();
+            checkIn.setHours(0);
+            checkIn.setMinutes(0);
+            checkIn.setSeconds(0);
+            checkOut.setHours(0);
+            checkOut.setMinutes(0);
+            checkOut.setSeconds(0);
+            nowDate.setHours(0);
+            nowDate.setMinutes(0);
+            nowDate.setSeconds(0);
+            
+            let diffTime = (checkIn - checkOut);
+            let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+            let diffTimeNow = (nowDate - checkIn);
+            let diffDaysNow = Math.ceil(diffTimeNow / (1000 * 60 * 60 * 24));
+
+            console.log(nowDate);
+            console.log(checkIn);
+
+            if (diffDays > 0) 
+                return false;
+            else if (diffDaysNow > 0)
+                return false;
+            return true;
         }
 
         function bookSuccessCB(success) {
