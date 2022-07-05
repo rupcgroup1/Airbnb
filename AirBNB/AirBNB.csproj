@@ -183,9 +183,9 @@
     <Content Include="Global.asax" />
     <Content Include="Models\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Pages\googleTRY.html" />
-    <Content Include="Pages\hostManagement.html" />
     <Content Include="Pages\images\airbnb1.png" />
     <Content Include="Pages\reservationsManagment.html" />
+    <Content Include="Pages\usersManagment.html" />
     <Content Include="Scripts\ajaxCalls.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

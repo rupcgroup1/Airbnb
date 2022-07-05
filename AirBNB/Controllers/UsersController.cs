@@ -12,9 +12,10 @@ namespace AirBNB.Controllers
     public class UsersController : ApiController
     {
         // GET api/<controller>
-        public IEnumerable<string> Get()
+        public List<User> Get()
         {
-            return new string[] { "value1", "value2" };
+            User u = new User();
+            return u.getAllUsers(); ;
         }
 
 

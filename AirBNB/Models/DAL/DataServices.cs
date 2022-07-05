@@ -754,12 +754,55 @@ namespace AirBNB.Models.DAL
             return hostsList;
         }
 
-        //Select command for getting all apartments
+        //Select command for getting all hosts.
         private SqlCommand CreateSelectAllHostsCommand(SqlConnection con)
         {
 
             SqlCommand command = new SqlCommand();
             command.CommandText = "PSPgetAllHosts";
+            command.Connection = con;
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.CommandTimeout = 10; // in seconds
+
+            return command;
+        }
+
+        // Get all users.
+        public List<User> getAllUsers()
+        {
+            SqlConnection con = Connect();
+
+            // Create Command
+            SqlCommand command = CreateSelectAllUsersCommand(con);
+
+            SqlDataReader dr = command.ExecuteReader(CommandBehavior.CloseConnection);
+
+            List<User> users = new List<User>();
+
+
+            while (dr.Read())
+            {
+                int id = Convert.ToInt32(dr["id"]);
+                string email = dr["email"].ToString();
+                string username = dr["username"].ToString();
+                string registeredFrom = dr["registeredFrom"].ToString();
+                int numOfRentals = Convert.ToInt16(dr["numOfRentals"]);
+                int totalIncome = Convert.ToInt32(dr["totalIncome"]);
+                int numOfCancelation = Convert.ToInt16(dr["numOfCancelation"]);
+
+                users.Add(new User(id, email, username, registeredFrom, numOfRentals, totalIncome, numOfCancelation));
+            }
+
+            con.Close();
+            return users;
+        }
+
+        //Select command for getting all users.
+        private SqlCommand CreateSelectAllUsersCommand(SqlConnection con)
+        {
+
+            SqlCommand command = new SqlCommand();
+            command.CommandText = "PSPgetAllUsers";
             command.Connection = con;
             command.CommandType = System.Data.CommandType.StoredProcedure;
             command.CommandTimeout = 10; // in seconds
