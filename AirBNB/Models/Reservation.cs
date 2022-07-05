@@ -31,15 +31,16 @@ namespace AirBNB.Models
             this.Nights = nights;
         }
 
-        public Reservation(int id, string from, string to, int price, int nights, string apartmentName)
+        public Reservation(int id, int hostID,string from, string to, int price, int nights, string apartmentName,int apartmentID)
         {
+            this.HostID = hostID;
             this.From = from;
             this.To = to;
             this.Id = id;
             this.ApartmentName = apartmentName;
             this.Price = price;
             this.Nights = nights;
-
+            this.ApartmentID = apartmentID;
         }
 
         public Reservation(int userId, string from, string to, int apartmentID, string apartmentName, int hostId, int price)

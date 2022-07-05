@@ -567,7 +567,6 @@ namespace AirBNB.Models.DAL
             SqlDataReader dr = command.ExecuteReader(CommandBehavior.CloseConnection);
 
             List<Reservation> list = new List<Reservation>();
-
             while (dr.Read())
             {
                 int id = Convert.ToInt32(dr["id"]);
@@ -576,8 +575,10 @@ namespace AirBNB.Models.DAL
                 int price = Convert.ToInt32(dr["price"]);
                 int nights = Convert.ToInt32(dr["nights"]);
                 string apartmentName = dr["apartmentName"].ToString();
-                list.Add(new Reservation(id,from, to,price,nights,apartmentName));
-
+                int apartmentID = Convert.ToInt32(dr["apartmentId"]);
+                int hostID = Convert.ToInt32(dr["hostId"]);
+            
+                list.Add(new Reservation(id,hostID,from, to,price,nights,apartmentName,apartmentID));
             }
 
             con.Close();

@@ -79,7 +79,6 @@
         function markSelected(btn) {
             $("#reservationsData tr").removeClass("selected"); // remove seleced class from rows that were selected before
             row = (btn.parentNode).parentNode; // button is in TD which is in Row
-            console.log(row);
             row.className = 'selected'; // mark as selected
         }
 
@@ -137,6 +136,7 @@
             console.log(reservationsData);
 
             reservations = reservationsData; // keep the cars array in a global variable;
+            console.log(reservations);
             try {
                 tbl = $('#reservationsData').DataTable({
                     data: reservations,
@@ -182,7 +182,6 @@
             nowDate = new Date();
             let diffTime = (fromDate - nowDate);
             let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-            console.log(diffDays);
 
             if (diffDays > 1)
                 return 1; // Able to cancel. future - more than 2 days.
