@@ -63,6 +63,8 @@
                 localStorage.setItem("index", JSON.stringify(id * 6));
                 location.reload();
             });
+
+            routeSingleApartmentHTML();
         });
 
         //Rendering the page's number.
@@ -125,6 +127,20 @@
                 j++;
             }
         }
+
+        //Routing to single catalog page if guest clicks on apartment to view more details.
+        function routeSingleApartmentHTML() {
+            $('.img-link, .apartment').click(function (event) {
+                // Remember the link href
+                let href = 'property-catalog-single.html';
+                let id = this.id;
+                // Save apartment id in local storage
+                localStorage.setItem("apartmentId", JSON.stringify(id));
+                // Go to the link
+                window.location = href;
+            });
+        }
+
 
     </script>
 
