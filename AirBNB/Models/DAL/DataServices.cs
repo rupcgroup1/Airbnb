@@ -577,8 +577,9 @@ namespace AirBNB.Models.DAL
                 string apartmentName = dr["apartmentName"].ToString();
                 int apartmentID = Convert.ToInt32(dr["apartmentId"]);
                 int hostID = Convert.ToInt32(dr["hostId"]);
-            
-                list.Add(new Reservation(id,hostID,from, to,price,nights,apartmentName,apartmentID));
+                int userID = Convert.ToInt32(dr["userId"]);
+
+                list.Add(new Reservation(id, apartmentID, hostID, userID, from, to, price, nights, apartmentName));
             }
 
             con.Close();

@@ -62,6 +62,7 @@
 
             // Route cancel Reservation button.
             $(document).on("click", ".cancelBtn", function () {
+                $('#viewDiv').hide();
                 markSelected(this);
                 var reservationID = this.getAttribute('id');
                 swal({ // this will open a dialouge
@@ -123,6 +124,7 @@
         //Success function for getting the reservation.
         function cancelReservation(id) {
             let reservation = getReservation(id);
+            console.log(reservation);
             let api = `../api/Users/cancelReservation`;
 
             //Clearing the datatable before deleting
