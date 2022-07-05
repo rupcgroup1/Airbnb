@@ -727,6 +727,46 @@ namespace AirBNB.Models.DAL
             return command;
         }
 
+        //Get all Hosts
+        public List<Host> getAllHosts()
+        {
+            SqlConnection con = Connect();
+
+            // Create Command
+            SqlCommand command = CreateSelectAllHostsCommand(con);
+
+            SqlDataReader dr = command.ExecuteReader(CommandBehavior.CloseConnection);
+
+            List<Host> hostsList = new List<Host>();
+
+
+            while (dr.Read())
+            {
+                int hostId = Convert.ToInt32(dr["hostId"]);
+                string hostName = dr["hostName"].ToString();
+                int numOfApartments = Convert.ToInt32(dr["numOfApartments"]);
+                int totalIncome = Convert.ToInt32(dr["totalIncome"]);
+                int numOfCancelation = Convert.ToInt16(dr["numOfCancelation"]);
+                hostsList.Add(new Host(numOfApartments,totalIncome, numOfCancelation, hostId, hostName));
+            }
+
+            con.Close();
+            return hostsList;
+        }
+
+        //Select command for getting all apartments
+        private SqlCommand CreateSelectAllHostsCommand(SqlConnection con)
+        {
+
+            SqlCommand command = new SqlCommand();
+            command.CommandText = "PSPgetAllHosts";
+            command.Connection = con;
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.CommandTimeout = 10; // in seconds
+
+            return command;
+        }
+
 
 
     }
