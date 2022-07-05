@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="css/fonts.css">
     <link rel="stylesheet" href="css/style.css">
 
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="../Scripts/ajaxCalls.js"></script>
     <script src="../Scripts/jquery-3.3.1.min.js"></script>
     <script>
@@ -32,7 +33,7 @@
             $('#email').on('blur', validateEmail);
         });
 
-         //Validating the email
+        //Validating the email
         function validateEmail() {
             let email = $('#email').val();
             var re = /\S+@\S+\.\S+/;
@@ -41,7 +42,13 @@
             else {
                 this.validity.valid = false;
                 this.setCustomValidity('email is not valid, please enter again');
-                alert("email is not valid, please enter again");
+                swal({ // this will open a dialouge
+                    title: "Your email is not valid",
+                    text: "Please enter again.",
+                    icon: "warning",
+                    button: true,
+                    dangerMode: true
+                })
             }
 
         }
@@ -65,7 +72,13 @@
         }
         //The registration has completed successfully
         function insertSCB() {
-            alert("added successfuly!");
+            swal({ // this will open a dialouge
+                title: "User added successfuly!",
+                text: "",
+                icon: "success",
+                button: true,
+                dangerMode: false
+            })
         }
 
         //The registration has failed.
@@ -93,15 +106,23 @@
 
         //Success User exist function, if the user exist we relocate him to index.html.
         function userExistSCB(user) {
-            alert("user exist");
-            console.log(user);
+            if (user == null) {
+                swal({ // this will open a dialouge
+                    title: "Your email/username or passsword is not correct.",
+                    text: "Please enter again or register.",
+                    icon: "warning",
+                    button: true,
+                    dangerMode: true
+                })
+                return;
+            }
             localStorage.setItem("userLogged", JSON.stringify(user));
             location.replace("index.html");
         }
 
         //Error User exist function, if the user exist we relocate him to index.html.
         function userErrorCB(error) {
-            alert("user not exist");
+            console.log("user not exist");
         }
 
     </script>
