@@ -127,6 +127,9 @@
             if (beds == 0) beds = 1;
             if (rating == 0) rating = 1;
 
+            filters = { keyword, from, to, minP, maxP, minD, maxD, beds, rating };
+            localStorage.setItem('filters', JSON.stringify(filters));
+
             let api = `../api/Apartments/search/${keyword}/${from}/${to}/${minP}/${maxP}/${minD}/${maxD}/${beds}/${rating}`;
             ajaxCall('GET', api, "", searchSCB, errorCB);
 

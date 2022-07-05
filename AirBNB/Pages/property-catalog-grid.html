@@ -36,6 +36,17 @@
             //Index is used for paging, array contains all apartments, index describes the amount of apartments the guest paged so far.
             if (localStorage.getItem("index") != undefined)
                 index1 = JSON.parse(localStorage.getItem("index"));
+            // Client filters.
+            if (localStorage.getItem("filters") != undefined) {
+                filters = JSON.parse(localStorage.getItem("filters"));
+                //Rendering the page's number.
+                renderFilters(filters);
+            }
+
+            
+
+            //Routing the submit button for filter search.
+            $('#frmSubmit').submit(searchApartments);
 
             //Rendering the page's number.
             renderNumbers(index1, apartments1);
@@ -90,6 +101,50 @@
                     $(".pagination li:nth-child(" + i + ")").html("<a class='showPage' id='" + tmp + "'>" + tmp++ + "</a>");
                 }
             }
+        }
+
+        function renderFilters(currentFilters) {
+            $('#keyword').val(currentFilters.keyword);
+            $('#from').val(currentFilters.from);
+            $('#to').val(currentFilters.to);
+            console.log(currentFilters);
+            $('#range-1').html(currentFilters.minP);
+            $('#range-2').text(currentFilters.maxP);
+            $('#range-3').val(currentFilters.minD);
+            $('#range-4').val(currentFilters.maxD);
+            $('#select-search-7').prop('selectedIndex', currentFilters.beds);
+            $('#select-search-8').prop('selectedIndex', currentFilters.rating);
+        }
+
+        //Search apartments by filter.
+        function searchApartments() {
+            let keyword = $('#keyword').val();
+            let from = $('#from').val();
+            let to = $('#to').val();
+            let minP = $('#range-1').val();
+            let maxP = $('#range-2').val();
+            let minD = $('#range-3').val();
+            let maxD = $('#range-4').val();
+            let beds = $('#select-search-7').prop('selectedIndex');
+            let rating = $('#select-search-8').prop('selectedIndex');
+            if (beds == 0) beds = 1;
+            if (rating == 0) rating = 1;
+
+            filters = { keyword, from, to, minP, maxP, minP, maxD, beds, rating };
+            localStorage.setItem('filters', JSON.stringify(filters));
+
+            let api = `../api/Apartments/search/${keyword}/${from}/${to}/${minP}/${maxP}/${minD}/${maxD}/${beds}/${rating}`;
+            ajaxCall('GET', api, "", searchSCB, errorCB);
+
+            return false;
+        }
+
+        //Success CB function, the apartments that was found by filter will be shown in the grid catalog.
+        function searchSCB(apartments) {
+            console.log(apartments);
+            localStorage.setItem('searchApartments', JSON.stringify(apartments)); // Send apartments results.
+            localStorage.setItem('index', JSON.stringify(0));                     // Send starting index.
+            window.location = 'property-catalog-grid.html';
         }
 
         //Rendering the apartments of current page.
