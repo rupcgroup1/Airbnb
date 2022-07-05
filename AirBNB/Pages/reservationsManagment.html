@@ -21,6 +21,17 @@
         #apartmentImg{
             border-radius:10px;
         }
+        .a {
+            background-color: #f7f7f7 !important;
+        }
+
+        .b {
+            background-color: white !important;
+        }
+        .closeBtn{
+            text-align:center;
+        }
+
     </style>
 
     <!-- Data Table-->
@@ -87,19 +98,33 @@
                 let id = reservation.ApartmentID;
                 let api = `../api/Apartments/${id}`;
                 ajaxCall('GET', api, "", getApartmentSCB, errorCB);
-
-                $('#viewDiv').show();
             });
 
             // Hidding the view div.
             $('#viewDiv').hide();
 
+            $("#closeBtn").click(() => $('#viewDiv').hide());
+
         });
 
         function getApartmentSCB(apartment) {
             console.log(apartment);
+            console.log(reservation);
+            $("#reservationId").html(reservation.Id);
+            $("#from").html(reservation.From.split(' ')[0]);
+            $("#to").html(reservation.To.split(' ')[0]);
+            $("#nights").html(reservation.Nights);
+            $("#price").html(reservation.Price);
+            $("#rating").html(renderStars(apartment.ReviewRating));
+            $("#accomodates").html(renderPersons(apartment.Accommodates));
+            $("#distance").html(apartment.Distance.toFixed(2)+' km');
+            $("#location").html(apartment.Location);
+            $("#bedrooms").html(apartment.Bedrooms);
+            $("#apartmentImg").attr("src", apartment.Picture);
+            $("#name").html(apartment.Name);
 
-
+            //Showing the view div
+            $('#viewDiv').show();
 
         }
 
@@ -213,8 +238,6 @@
                 return 0; // Not able to cancel. future - less than 2 days.
             return -1;    // Past or present reservation.
         }
-
-
 
 
     </script>
@@ -503,35 +526,37 @@
                                                         <tr>
                                                             <td>Reservation id</td>
                                                             <td id="reservationId"></td>
-                                                            <td>Rating</td>
-                                                            <td id="rating"></td>
+                                                            <td class="b">Rating</td>
+                                                            <td class="b" id="rating"></td>
                                                         </tr>
                                                         <tr>
                                                             <td>Check in</td>
                                                             <td id="from">4</td>
-                                                            <td>Accomodates</td>
-                                                            <td id="accomodates">4</td>
+                                                            <td class='a'>Accomodates</td>
+                                                            <td class='a' id="accomodates">4</td>
                                                         </tr>
                                                         <tr>
                                                             <td>Check out</td>
                                                             <td id="to">2</td>
-                                                            <td>Distance</td>
-                                                            <td id="distance">2</td>
+                                                            <td class='b'>Distance</td>
+                                                            <td class='b' id="distance">2</td>
                                                         </tr>
                                                         <tr>
                                                             <td>Nights</td>
                                                             <td id="nights">2</td>
-                                                            <td>Location</td>
-                                                            <td id="location">2</td>
+                                                            <td class='a'>Location</td>
+                                                            <td class='a' id="location">2</td>
                                                         </tr>
                                                         <tr>
                                                             <td>Price</td>
                                                             <td id="price">Lawn, Sprinkler System, Marble Floors</td>
-                                                            <td>Bedrooms</td>
-                                                            <td id="bedrooms">Lawn, Sprinkler System, Marble Floors</td>
+                                                            <td class='b'>Bedrooms</td>
+                                                            <td class='b' id="bedrooms">Lawn, Sprinkler System, Marble Floors</td>
                                                         </tr>
+
                                                     </tbody>
                                                 </table>
+                                                
                                             </div>
                                         </div>
                                     </div>
@@ -540,6 +565,8 @@
                         <div class="col-md-6 offset-custom-5 order-md-1">
                             <div class="img-wrap inset-4"><img id ="apartmentImg" src="images/services-8.jpg" alt="" width="570" height="350"></div>
                         </div>
+
+                        <p class="closeBtn"><input type="button" id="closeBtn" value="Close" class="btn btn-sushi" /></p>
                     </div>
                 </div>
             </section>
