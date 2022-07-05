@@ -436,18 +436,18 @@ namespace AirBNB.Models.DAL
         }
 
         //Make reservation
-        public int makeReservation(Apartment a, Reservation r)
+        public int makeReservation(Reservation r)
         {
             // Connect
             SqlConnection con = Connect();
 
             // Check if this reservation is available.
             // If the return value is 0 then the apartment is available.
-            if (checkReservation(a,r) != 0)
+            if (checkReservation(r) != 0)
                 return -1;
 
             // Update host and user total income.
-            updateTotalIncome(a,r);
+            updateTotalIncome(r);
 
             // Create Command
             SqlCommand command = CreateReservationCommand(con, r);
@@ -483,12 +483,12 @@ namespace AirBNB.Models.DAL
         }
 
         // Get apartment id if the reservation is available.
-        public int checkReservation(Apartment a, Reservation r)
+        public int checkReservation(Reservation r)
         {
             SqlConnection con = Connect();
 
             // Create Command
-            SqlCommand command = CreateCheckReservationCommand(con, a, r);
+            SqlCommand command = CreateCheckReservationCommand(con,r);
 
             SqlDataReader dr = command.ExecuteReader(CommandBehavior.CloseConnection);
 
@@ -503,13 +503,11 @@ namespace AirBNB.Models.DAL
         }
 
         //Creating select command for check availablty of reservation.
-        private SqlCommand CreateCheckReservationCommand(SqlConnection con, Apartment a, Reservation r)
+        private SqlCommand CreateCheckReservationCommand(SqlConnection con, Reservation r)
         {
             SqlCommand command = new SqlCommand();
 
             command.Parameters.AddWithValue("@apartmentID", r.ApartmentID);
-            command.Parameters.AddWithValue("@minNights", a.MinNights);
-            command.Parameters.AddWithValue("@maxNights", a.MaxNights);
             command.Parameters.AddWithValue("@dateFrom", r.From);
             command.Parameters.AddWithValue("@dateTo", r.To);
             command.CommandText = "PSPreservationAvailable";
@@ -521,13 +519,13 @@ namespace AirBNB.Models.DAL
         }
 
         // Update total income of user and host
-        public int updateTotalIncome(Apartment a, Reservation r)
+        public int updateTotalIncome( Reservation r)
         {
             // Connect
             SqlConnection con = Connect();
 
             // Create Command
-            SqlCommand command = CreateUpdateCommand(con, a, r);
+            SqlCommand command = CreateUpdateCommand(con,  r);
 
             // Execute
             int numAffected = command.ExecuteNonQuery();
@@ -539,7 +537,7 @@ namespace AirBNB.Models.DAL
         }
 
         //Creating update command for total income of user and the host.
-        private SqlCommand CreateUpdateCommand(SqlConnection con, Apartment a, Reservation r)
+        private SqlCommand CreateUpdateCommand(SqlConnection con, Reservation r)
         {
             SqlCommand command = new SqlCommand();
 
@@ -547,7 +545,7 @@ namespace AirBNB.Models.DAL
             command.Parameters.AddWithValue("@hostId", r.HostID);
             command.Parameters.AddWithValue("@fromDate", r.From);
             command.Parameters.AddWithValue("@toDate", r.To);
-            command.Parameters.AddWithValue("@price", a.Price);
+            command.Parameters.AddWithValue("@price", r.Price);
             command.CommandText = "PSPupdateIncome";
             command.Connection = con;
             command.CommandType = System.Data.CommandType.StoredProcedure;

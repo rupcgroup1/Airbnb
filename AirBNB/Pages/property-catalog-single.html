@@ -228,6 +228,17 @@
                 return false;
             }
 
+            if (validateNightsRange(from, to, minNights, maxNights) == false) {
+                swal({ // this will open a dialouge
+                    title: "Your Dates is invalid",
+                    text: "Please meet the nights requirements.",
+                    icon: "warning",
+                    button: true,
+                    dangerMode: true
+                })
+                return false;
+            }
+
             let reservationToInsert = {
                 ApartmentID: apartmentID,
                 HostID: hostId,
@@ -238,8 +249,7 @@
                 ApartmentName: apartmentName,
             };
 
-            //let api = `../api/Reservations/insertReservation/${apartmentID}/${hostId}/${id}/${from}/${to}/${minNights}/${maxNights}/${price}/${apartmentName}`;
-             let api = `../api/Reservations/insertReservation/${minNights}/${maxNights}`;
+             let api = `../api/Reservations/insertReservation`;
 
             ajaxCall("POST", api, JSON.stringify(reservationToInsert), bookSuccessCB, bookErrorCB);
 
@@ -265,6 +275,20 @@
             else if (diffDaysNow > 0)
                 return false;
             return true;
+        }
+
+        // Validate dates - the nights needs to be between minNights to maxNights. 
+        function validateNightsRange(checkIn, checkOut,inMinNights, inMaxNights) {
+            checkIn = new Date(checkIn); 
+            checkOut = new Date(checkOut); 
+
+            let diffTime = (checkOut - checkIn);
+            let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+            if (diffDays >= inMinNights && diffDays <= inMaxNights)
+                return true;
+
+            return false;
         }
 
         // SuccessCB for book apartment. 

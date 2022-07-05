@@ -70,10 +70,10 @@ namespace AirBNB.Models
         public int Nights { get => nights; set => nights = value; }
         public string ApartmentName { get => apartmentName; set => apartmentName = value; }
 
-        public int reserveApartment(Apartment a)
+        public int reserveApartment()
         {
             DataServices ds = new DataServices();
-            return ds.makeReservation(a,this);
+            return ds.makeReservation(this);
         }
 
         public List<Reservation> getAllUserReservations(int id)

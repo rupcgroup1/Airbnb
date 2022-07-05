@@ -32,11 +32,10 @@ namespace AirBNB.Controllers
         }*/
 
         [HttpPost]
-        [Route("api/Reservations/insertReservation/{minNights}/{maxNights}")]
-        public int Post([FromBody]Reservation r,  int minNights, int maxNights)
+        [Route("api/Reservations/insertReservation")]
+        public int Post([FromBody]Reservation r)
         {
-            Apartment a = new Apartment(minNights, maxNights, r.Price, r.ApartmentName);
-            return r.reserveApartment(a);
+            return r.reserveApartment();
         }
 
         // PUT api/<controller>/5
