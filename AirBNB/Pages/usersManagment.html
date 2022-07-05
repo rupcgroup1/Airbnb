@@ -62,11 +62,27 @@
             row.className = 'selected'; // mark as selected
         }
 
+        function renderSum(usersData) {
+            let users = usersData.length;
+            let totalIncome = 0, numOfCancelation = 0, numOfRentals = 0;
+
+            for (let i = 0; i < users; i++) {
+                totalIncome += usersData[i].TotalIncome;
+                numOfCancelation += usersData[i].NumOfCancelation;
+                numOfRentals += usersData[i].numOfRentals;
+            }
+
+            $('#users').html(users);
+            $('#totalIncome').html(totalIncome);
+            $('#cancelation').html(numOfCancelation);
+            $('#rentals').html(numOfRentals);
+        }
 
         //Success function for getting the users, now we will render with datatable.
         function successCB(usersData) {
             console.log(usersData);
 
+            renderSum(usersData);
             try {
                 tbl = $('#usersData').DataTable({
                     data: usersData,
@@ -362,6 +378,50 @@
                     </div>
                 </div>
             </section>
+
+            <section class="section-lg">
+                <div class="container">
+                    <div class="row row-50">
+                        <div class="col-xs-6 col-md-3">
+                            <!--users-->
+                            <div class="box-counter">
+                                <div class="box-counter-main">
+                                    <div id="users" class="counter">359</div>
+                                </div>
+                                <p class="progress-circle-title text-center fw-bold h6">Users</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <!--totalIncome-->
+                            <div class="box-counter">
+                                <div class="box-counter-main">
+                                    <div id="totalIncome" class="counter">173759</div>
+                                </div>
+                                <p class="progress-circle-title text-center fw-bold h6">Total income</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <!--rentals-->
+                            <div class="box-counter">
+                                <div class="box-counter-main">
+                                    <div id="rentals" class="counter">21</div>
+                                </div>
+                                <p class="progress-circle-title text-center fw-bold h6">Rentals</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <!--cancelation-->
+                            <div class="box-counter">
+                                <div class="box-counter-main">
+                                    <div id="cancelation" class="counter">543</div>
+                                </div>
+                                <p class="progress-circle-title text-center fw-bold h6">Cancelation</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
         </main>
         <!-- Page Footer-->
         <section class="section-lg bg-gray text-center text-lg-start">
