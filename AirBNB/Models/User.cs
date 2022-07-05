@@ -41,7 +41,17 @@ namespace AirBNB.Models
             this.Type = 'C';
 
         }
+        public User(int id, string email, string username, string registeredFrom, int numOfRentals, int totalIncome, int numOfCancelation)
+        {
+            this.id = id;
+            this.email = email;
+            this.username = username;
+            this.numOfRentals = numOfRentals;
+            this.registeredFrom = registeredFrom;
+            this.totalIncome = totalIncome;
+            this.numOfCancelation = numOfCancelation;
 
+        }
 
 
         public User(string email, string password, string username)
