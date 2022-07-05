@@ -14,6 +14,7 @@ namespace AirBNB.Models
         private int reviewerID;
         private string reviewerName;
         private string revComment;
+        public static int revCounter = 0;
 
         public Review(int listing_id, int id, string date, int reviewerID, string reviewerName, string revComment)
         {
@@ -23,6 +24,7 @@ namespace AirBNB.Models
             this.ReviewerID = reviewerID;
             this.ReviewerName = reviewerName;
             this.RevComment = revComment;
+            revCounter++;
         }
 
         public Review()
@@ -41,6 +43,12 @@ namespace AirBNB.Models
         {
             DataServices ds = new DataServices();
             return ds.getAllApartmentReviews(id);
+        }
+
+        public int insertReview()
+        {
+            DataServices ds = new DataServices();
+            return ds.insertReview(this);
         }
     }
 }

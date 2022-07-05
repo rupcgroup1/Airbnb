@@ -26,8 +26,19 @@ namespace AirBNB.Controllers
         }
 
         // POST api/<controller>
-        public void Post([FromBody]string value)
+        [HttpPost]
+        [Route("api/Reviews/insertReview")]
+        public int Post([FromBody] Review r)
         {
+            Review.revCounter++;
+            r.Id = Review.revCounter;
+            if (r.insertReview() == 0)
+            {
+                Review.revCounter--;
+                return 0;
+            }
+            return 1;
+            
         }
 
         // PUT api/<controller>/5

@@ -814,6 +814,45 @@ namespace AirBNB.Models.DAL
             return command;
         }
 
+        //Insert Review to the database.
+        public int insertReview(Review review)
+        {
+            // Connect
+            SqlConnection con = Connect();
+
+            // Create Command
+            SqlCommand command = CreateInsertCommand(con, review);
+
+            // Execute
+            int numAffected = command.ExecuteNonQuery();
+
+            // Close Connection
+
+            con.Close();
+            
+            return numAffected;
+        }
+
+        //Creating insert command for insert a new company.
+        private SqlCommand CreateInsertCommand(SqlConnection con, Review review)
+        {
+            SqlCommand command = new SqlCommand();
+
+            command.Parameters.AddWithValue("@listing_id", review.Listing_id);
+            command.Parameters.AddWithValue("@id", review.Id);
+            command.Parameters.AddWithValue("@date", review.Date);
+            command.Parameters.AddWithValue("@reviewer_id", review.ReviewerID);
+            command.Parameters.AddWithValue("@reviewer_name", review.ReviewerName);
+            command.Parameters.AddWithValue("@comments", review.RevComment);
+            command.CommandText = "PSPInsertReview";
+            command.Connection = con;
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.CommandTimeout = 10; // in seconds
+
+            return command;
+        }
+
+
 
 
     }

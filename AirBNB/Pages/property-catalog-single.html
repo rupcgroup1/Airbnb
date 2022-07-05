@@ -47,8 +47,8 @@
             }
 
             //Getting the choosen apartment id.
-            let id = JSON.parse(localStorage.getItem("apartmentId"));
-            let api = `../api/Apartments/${id}`;
+            let apartmentID = JSON.parse(localStorage.getItem("apartmentId"));
+            let api = `../api/Apartments/${apartmentID}`;
             ajaxCall("GET", api, "", successApartmentCB, errorCB);
 
             //Flag represents whether the guest wants to see all reviews or partial.
@@ -66,8 +66,12 @@
                     flag = 0;
                 }
             });
-
+            //routing the submit form for booking an apartment
             $("#submitBook").submit(bookApartment);
+
+            //routing the submit review for an apartment.
+            $("#submitReview").submit(submitReview);
+
         });
 
         // Render apartment details.
@@ -245,6 +249,66 @@
         function bookErrorCB(error) {
             alert("error");
         }
+
+        function submitReview() {
+            //To submit the review the user must be logged in.
+            if (loggedIn == false) {
+                alert("You need to log in first.");
+                return false;
+            }
+            user = JSON.parse(localStorage.getItem("userLogged"));
+
+            //We need to get all the user reservations and make sure he did rent the apartment.
+
+            currentUserID = user.Id;//global variable for the user.
+            let api = `../api/Reservations/${currentUserID}`;
+            ajaxCall('GET', api, "", successCB, errorCB);
+
+            return false;//Wiring the submit form not to refresh
+        }
+
+        function successCB(reservations) {
+            let apartmentID = 0;
+            if (localStorage.getItem("apartmentId") != undefined)
+                apartmentID = JSON.parse(localStorage.getItem("apartmentId"));
+            let review = null;
+            console.log((new Date()).toLocaleDateString('en-US'));
+            for (var i = 0; i < reservations.length; i++) {
+                if (reservations[i].ApartmentID == apartmentID) {
+                    review = {
+                        Listing_id: apartmentID,
+                        Id: 1,
+                        Date: (new Date()).toLocaleDateString('en-US'),
+                        ReviewerID: user.Id,
+                        ReviewerName: $("#contact-name").val(),
+                        RevComment: $("#contact-message").val(),
+                    }
+                    break;
+                }
+            }
+            if (review != null) {
+                let api = `../api/Reviews/insertReview`;
+                ajaxCall("POST", api, JSON.stringify(review), insertReviewSCB, insertReviewECB);
+            }
+            else {
+                alert("You cant review before you book apartment")
+            }
+        }
+
+        function insertReviewSCB(success) {
+            console.log(success);
+            if (localStorage.getItem("apartmentId") != undefined)
+                apartmentID = JSON.parse(localStorage.getItem("apartmentId"));
+            renderReviews(apartmentID);
+            alert("Thank you for grading us");
+            location.reload();
+        }
+
+        function insertReviewECB(error) {
+            console.log(error);
+        }
+
+
     </script>
 </head>
 <body>
@@ -631,7 +695,7 @@
 
                                     <h4 class="border-bottom offset-custom-8">Write Review</h4>
                                     <!-- RD Mailform-->
-                                    <form class="text-start offset-custom-11">
+                                    <form class="text-start offset-custom-11" id="submitReview">
                                         <div class="row">
                                             <div class="col-12 col-md-6">
                                                 <div class="form-wrap">
@@ -639,12 +703,7 @@
                                                     <input class="form-input" id="contact-name" type="text" name="name" data-constraints="@Required">
                                                 </div>
                                             </div>
-                                            <div class="col-12 col-md-6">
-                                                <div class="form-wrap">
-                                                    <label class="form-label" for="contact-email">Enter your e-mail</label>
-                                                    <input class="form-input" id="contact-email" type="email" name="email" data-constraints="@Required @Email">
-                                                </div>
-                                            </div>
+                          
                                             <div class="col-12">
                                                 <div class="form-wrap">
                                                     <label class="form-label" for="contact-message">Enter your message</label>
@@ -652,7 +711,7 @@
                                                 </div>
                                             </div>
                                             <div class="col-12">
-                                                <button class="btn btn-sushi btn-sm" type="submit">Send message</button>
+                                                <button class="btn btn-sushi btn-sm" type="submit">Submit Review</button>
                                             </div>
                                         </div>
                                     </form>
