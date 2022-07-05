@@ -22,7 +22,7 @@ namespace AirBNB.Controllers
         }
 
         [HttpPost]
-        [Route("api/Reservations/insertReservatiom/{apartmentID}/{hostId}/{id}/{from}/{to}/{minNights}/{maxNights}/{price}/{apartmentName}")]
+        [Route("api/Reservations/insertReservation/{apartmentID}/{hostId}/{id}/{from}/{to}/{minNights}/{maxNights}/{price}/{apartmentName}")]
         public int Post(int apartmentID, int hostId, int id, string from, string to, int minNights, int maxNights, int price, string apartmentName)
         {
             Apartment a = new Apartment(minNights, maxNights, price, apartmentName);

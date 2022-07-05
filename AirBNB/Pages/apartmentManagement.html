@@ -60,7 +60,7 @@
         //Success function for getting the reservations by user id, now we will render with datatable.
         function successCB(apartmentsData) {
             console.log(apartmentsData);
-
+            renderProgressBar(apartmentsData);
             apartments = apartmentsData; // keep the hosts array in a global variable;
             try {
                 tbl = $('#apartmentsData').DataTable({
@@ -76,7 +76,7 @@
                                 return renderPersons(row.Accommodates);
                             }
                         },
-                        { data: "NumOfCancel" },
+                        { data: "NumOfCancelation" },
                         {
                             data: "ReviewRating", render: function (data, type, row, meta) {
                                 return renderStars(row.ReviewRating);
@@ -88,10 +88,28 @@
             catch (err) {
                 alert(err);
             }
+
         }
 
         function errorCB(error) {
             console.log(error);
+        }
+
+        function renderProgressBar(apartments) {
+            let avgPrice = 0;
+            let numOfCancelation =0 , rentals = 0;
+
+            for (let i = 0; i < apartments.length; i++) {
+                avgPrice += apartments[i].Price;
+                numOfCancelation += apartments[i].NumOfCancelation;
+                rentals += apartments[i].DaysRented;
+            }
+            console.log(avgPrice / apartments.length);
+            $("#avgPrice").html((avgPrice/apartments.length) + ' $');
+            $("#numOfCancelation").html(numOfCancelation);
+            $("#rentals").html(rentals);
+            $("#apartments").html(apartments.length);
+
         }
 
 
@@ -326,7 +344,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
-                            <h1>Reservations</h1>
+                            <h1>Apartments</h1>
                             <p></p>
                             <ol class="breadcrumb">
                                 <li><a href="index.html">Home</a></li>
@@ -365,7 +383,48 @@
                     </div>
                 </div>
             </section>
-
+            <section class="section-lg">
+                <div class="container">
+                    <div class="row row-50">
+                        <div class="col-xs-6 col-md-3">
+                            <!--Apartments-->
+                            <div class="box-counter">
+                                <div class="box-counter-main">
+                                    <div id="apartments" class="counter">100</div>
+                                </div>
+                                <p class="progress-circle-title text-center fw-bold h6">Apartments</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <!--Average price-->
+                            <div class="box-counter">
+                                <div class="box-counter-main">
+                                    <div id="avgPrice" class="counter">-</div>
+                                </div>
+                                <p class="progress-circle-title text-center fw-bold h6">Average price</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <!--rentals-->
+                            <div class="box-counter">
+                                <div class="box-counter-main">
+                                    <div id="rentals" class="counter">-</div>
+                                </div>
+                                <p class="progress-circle-title text-center fw-bold h6">All Rentals</p>
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-md-3">
+                            <!--cancelation-->
+                            <div class="box-counter">
+                                <div class="box-counter-main">
+                                    <div id="numOfCancelation" class="counter">-</div>
+                                </div>
+                                <p class="progress-circle-title text-center fw-bold h6">Cancelation</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </main>
         <!-- Page Footer-->
         <section class="section-lg bg-gray text-center text-lg-start">
