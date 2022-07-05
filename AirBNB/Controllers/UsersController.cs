@@ -20,15 +20,6 @@ namespace AirBNB.Controllers
 
 
         [HttpGet]
-        [Route("api/Users/{id}")]
-        // GET api/<controller>/5
-        public List<Reservation> getReservation(int id)
-        {
-            User u = new User(id);
-            return u.getAllUserReservations();
-        }
-
-        [HttpGet]
         [Route("api/Users/getResById/{id}")]
         // GET api/<controller>/5
         public Reservation getReservationById(int id)
@@ -70,13 +61,6 @@ namespace AirBNB.Controllers
         {
         }
 
-        // DELETE api/<controller>/5
-        [HttpDelete]
-        [Route("api/Users/cancelReservation")]
-        public int Delete([FromBody] Reservation r)
-        {
-            User u = new User();
-            return u.cancelReservation(r);
-        }
+        
     }
 }

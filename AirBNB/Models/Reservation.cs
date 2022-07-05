@@ -54,13 +54,10 @@ namespace AirBNB.Models
             this.Price = price;
 
         }
-        public Reservation(int apartmentID, int hostID, int userID, string from, string to)
+        public Reservation(int apartmentID, int hostID, int userID, string from, string to) : this(apartmentID, from, to)
         {
-            this.ApartmentID = apartmentID;
             this.HostID = hostID;
-            this.UserID = userID;
-            this.From = from;
-            this.To = to;
+            this.UserID = userID; 
         }
 
         public Reservation(int apartmentID,string from, string to)
@@ -92,6 +89,17 @@ namespace AirBNB.Models
             return ds.makeReservation(a,this);
         }
 
-    
+        public List<Reservation> getAllUserReservations(int id)
+        {
+            DataServices ds = new DataServices();
+            return ds.getAllUserReservations(id);
+        }
+
+        public int cancelReservation()
+        {
+            DataServices ds = new DataServices();
+            return ds.cancelReservation(this);
+        }
+
     }
 }

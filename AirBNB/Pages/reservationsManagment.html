@@ -68,7 +68,7 @@
 
             //Getting all the reservations for user by user id.
             currentUserID = user.Id;//global variable for the user.
-            let api = `../api/Users/${currentUserID}`;
+            let api = `../api/Reservations/${currentUserID}`;
             ajaxCall('GET', api, "", successCB, errorCB);
 
             // Route cancel Reservation button.
@@ -150,7 +150,7 @@
         function cancelReservation(id) {
             let reservation = getReservation(id);
             console.log(reservation);
-            let api = `../api/Users/cancelReservation`;
+            let api = `../api/Reservations/cancelReservation`;
 
             //Clearing the datatable before deleting
             $('#reservationsData').dataTable().fnClearTable();
