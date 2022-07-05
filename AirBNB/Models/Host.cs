@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AirBNB.Models.DAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -27,5 +28,11 @@ namespace AirBNB.Models
         public  int NumOfCancelation { get => numOfCancelation; set => numOfCancelation = value; }
         public int Id { get => id; set => id = value; }
         public string Name { get => name; set => name = value; }
+
+        public List<Host> getAllHosts()
+        {
+            DataServices ds = new DataServices();
+            return ds.getAllHosts();
+        }
     }
 }
