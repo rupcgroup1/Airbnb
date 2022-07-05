@@ -182,7 +182,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Models\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Pages\apartmentManagement.html" />
     <Content Include="Pages\googleTRY.html" />
+    <Content Include="Pages\hostManagement.html" />
     <Content Include="Pages\images\airbnb1.png" />
     <Content Include="Pages\reservationsManagment.html" />
     <Content Include="Pages\usersManagment.html" />
