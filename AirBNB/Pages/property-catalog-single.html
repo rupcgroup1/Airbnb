@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="css/fonts.css">
     <link rel="stylesheet" href="css/style.css">
 
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="../Scripts/renderFunction.js"></script>
     <script src="../Scripts/ajaxCalls.js"></script>
     <script src="../Scripts/jquery-3.3.1.min.js"></script>
@@ -28,6 +29,7 @@
             width: 300px;
             height: 100px;
         }
+
         #aroundBorder {
             border: solid #689029 2px !important;
             border-radius: 10px;
@@ -40,7 +42,7 @@
         $(document).ready(function () {
 
             loggedIn = checkLogin();
-            
+
             //If apartment ID isnt at local storage so page not found.
             if (localStorage.getItem("apartmentId") == undefined) {
                 location.replace("404.html");
@@ -183,13 +185,23 @@
 
         //Error cb function for getting reviews.
         function reviewECB(error) {
-            console.log(error);
+            alert(error);
         }
 
         //Booking an apartment
         function bookApartment() {
             if (loggedIn == false) {
-                alert("You need to log in first.");
+                swal({ // this will open a dialouge
+                    title: "You need to log in",
+                    text: "Press ok to log in.",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true
+                })
+                    .then(function (ok) {
+                        if (ok) location.replace("login.html");
+                        else swal("You are not logged!");
+                    });
                 return false;
             }
             let apartmentID = 0;
@@ -206,7 +218,13 @@
 
 
             if (validateDates(from, to) == false) {
-                alert("invalid dates");
+                swal({ // this will open a dialouge
+                    title: "Your Dates is invalid",
+                    text: "Please enter again.",
+                    icon: "warning",
+                    button: true,
+                    dangerMode: true
+                })
                 return false;
             }
 
@@ -226,24 +244,41 @@
             nowDate = new Date();
             nowDate.setHours(03); // time - 03:00:00
 
-            
+
             let diffTime = (checkIn - checkOut);
             let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
             let diffTimeNow = (nowDate - checkIn);
             let diffDaysNow = Math.ceil(diffTimeNow / (1000 * 60 * 60 * 24)) - 1;
 
-            if (diffDays >= 0)  
+            if (diffDays >= 0)
                 return false;
             else if (diffDaysNow > 0)
                 return false;
             return true;
         }
 
+        // SuccessCB for book apartment. 
         function bookSuccessCB(success) {
-            if (success == -1)
-                alert("making conflict");
-            else alert("succeed");
+            if (success == -1) { 
+                swal({ // this will open a dialouge
+                    title: "This apartment already book.",
+                    text: "Please enter new dates.",
+                    icon: "warning",
+                    button: true,
+                    dangerMode: true
+                })
+                return false;
+            }
+            else {
+                swal({ // this will open a dialouge
+                    title: "We got your reservation successfuly!",
+                    text: "",
+                    icon: "success",
+                    button: true,
+                    dangerMode: false
+                })
+            }
         }
 
         function bookErrorCB(error) {
@@ -253,14 +288,26 @@
         function submitReview() {
             //To submit the review the user must be logged in.
             if (loggedIn == false) {
-                alert("You need to log in first.");
+                swal({ // this will open a dialouge
+                    title: "You need to log in",
+                    text: "Press ok to log in.",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true
+                })
+                    .then(function (ok) {
+                        if (ok) location.replace("login.html");
+                        else swal("You are not logged!");
+                    });
                 return false;
             }
+
+
             user = JSON.parse(localStorage.getItem("userLogged"));
 
             //We need to get all the user reservations and make sure he did rent the apartment.
 
-            currentUserID = user.Id;//global variable for the user.
+            currentUserID = user.Id;  //global variable for the user.
             let api = `../api/Reservations/${currentUserID}`;
             ajaxCall('GET', api, "", successCB, errorCB);
 
@@ -277,7 +324,7 @@
                 if (reservations[i].ApartmentID == apartmentID) {
                     review = {
                         Listing_id: apartmentID,
-                        Id: 1,
+                        Id: 0,
                         Date: (new Date()).toLocaleDateString('en-US'),
                         ReviewerID: user.Id,
                         ReviewerName: $("#contact-name").val(),
@@ -291,7 +338,13 @@
                 ajaxCall("POST", api, JSON.stringify(review), insertReviewSCB, insertReviewECB);
             }
             else {
-                alert("You cant review before you book apartment")
+                swal({ // this will open a dialouge
+                    title: "You can't review before you book apartment.",
+                    text: "",
+                    icon: "warning",
+                    button: true,
+                    dangerMode: true
+                })
             }
         }
 
@@ -300,7 +353,13 @@
             if (localStorage.getItem("apartmentId") != undefined)
                 apartmentID = JSON.parse(localStorage.getItem("apartmentId"));
             renderReviews(apartmentID);
-            alert("Thank you for grading us");
+            swal({ // this will open a dialouge
+                title: "Your review added successfuly!",
+                text: "Thank you for grading us",
+                icon: "success",
+                button: true,
+                dangerMode: false
+            })
             location.reload();
         }
 

@@ -133,6 +133,7 @@
             let beds = $('#select-search-7').prop('selectedIndex');
             let rating = $('#select-search-8').prop('selectedIndex');
             filters = { keyword, from, to, minP, maxP, minD, maxD, beds, rating };
+            if (keyword == "") keyword = "Any";
             if (beds == 0) beds = 1;
             if (rating == 0) rating = 1;
 
