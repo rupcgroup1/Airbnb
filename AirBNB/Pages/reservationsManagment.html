@@ -83,8 +83,8 @@
                 markSelected(this);
                 var reservationID = this.getAttribute('id');
                 let reservation = getReservation(reservationID);
-                let apartmentId = reservation.ApartmentID;
-                let api = `../api/Apartments/${apartmentId}`;
+                let id = reservation.ApartmentID;
+                let api = `../api/Apartments/${id}`;
                 ajaxCall('GET', api, "", getApartmentSCB, errorCB);
 
                 $('#viewDiv').show();
@@ -96,7 +96,7 @@
         });
 
         function getApartmentSCB(apartment) {
-
+            console.log(apartment);
         }
 
         // mark the selected row
