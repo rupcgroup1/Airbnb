@@ -217,31 +217,21 @@
             return false;
         }
 
+        // Validate dates.
         function validateDates(checkIn, checkOut) {
-            checkIn = new Date(checkIn);
-            console.log(checkIn)
-            checkOut = new Date(checkOut);
-            checkIn = checkIn.split(' ')[0];
-            console.log(checkIn);
-            fromDate = new Date(fromDate);
+            checkIn = new Date(checkIn); // time - 03:00:00
+            checkOut = new Date(checkOut); // time - 03:00:00
             nowDate = new Date();
-            let diffTime = Math.abs(fromDate - nowDate);
-            let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            nowDate.setHours(03); // time - 03:00:00
 
-            if (diffDays > 1)
-                return true;
-            return false;
             
             let diffTime = (checkIn - checkOut);
             let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
             let diffTimeNow = (nowDate - checkIn);
-            let diffDaysNow = Math.ceil(diffTimeNow / (1000 * 60 * 60 * 24));
+            let diffDaysNow = Math.ceil(diffTimeNow / (1000 * 60 * 60 * 24)) - 1;
 
-            console.log(nowDate);
-            console.log(checkIn);
-
-            if (diffDays > 0) 
+            if (diffDays >= 0)  
                 return false;
             else if (diffDaysNow > 0)
                 return false;
