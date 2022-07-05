@@ -101,7 +101,23 @@ namespace AirBNB.Models
             this.numOfReviews = numOfReviews;
             this.reviewRating = reviewRating;
             this.bedrooms = bedrooms;
-            this.accommodates = accommodates;
+            this.Accommodates = accommodates;
+
+        }
+    
+        public Apartment(int id, string name, string description, string picture, int price, int numOfReviews, double reviewRating, int bedrooms, int accommodates, string location, int numOfCancel)
+        {
+            this.id = id;
+            this.name = name;
+            this.description = description;
+            this.picture = picture;
+            this.price = price;
+            this.numOfReviews = numOfReviews;
+            this.reviewRating = reviewRating;
+            this.bedrooms = bedrooms;
+            this.Accommodates = accommodates;
+            this.NumOfCancel = numOfCancel;
+            this.Location = location;
         }
 
         public Apartment(string propertyType,  int count, string picture)

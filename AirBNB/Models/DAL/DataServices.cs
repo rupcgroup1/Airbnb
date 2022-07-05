@@ -707,7 +707,10 @@ namespace AirBNB.Models.DAL
                 int numOfReviews = Convert.ToInt16(dr["numOfReviews"]);
                 double reviewRating = Convert.ToDouble(dr["reviewRating"]);
                 int bedrooms = Convert.ToInt16(dr["bedrooms"]);
-                apartmentsList.Add(new Apartment(id, name, description, picture, price, numOfReviews, reviewRating, bedrooms, accommodates));
+                string location = dr["location"].ToString();
+                int numOfCancel = Convert.ToInt16(dr["numOfCancelation"]);
+
+                apartmentsList.Add(new Apartment(id, name, description, picture, price, numOfReviews, reviewRating, bedrooms, accommodates,location,numOfCancel));
             }
 
             con.Close();
