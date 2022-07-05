@@ -625,6 +625,8 @@ namespace AirBNB.Models.DAL
             command.Parameters.AddWithValue("@hostId", r.HostID);
             command.Parameters.AddWithValue("@userId", r.UserID);
             command.Parameters.AddWithValue("@price", r.Price);
+            command.Parameters.AddWithValue("@fromDate", r.From);
+            command.Parameters.AddWithValue("@toDate", r.To);
             command.CommandText = "PSPdeleteReservation";
             command.Connection = con;
             command.CommandType = System.Data.CommandType.StoredProcedure;
