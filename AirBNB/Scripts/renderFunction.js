@@ -29,13 +29,20 @@ function renderStars(score, reviews) {
     return str;
 }
 function checkLogin() {
+
+    $('#adminPages').hide();
+
     if (localStorage.getItem("userLogged") != undefined) {
         user = JSON.parse(localStorage.getItem("userLogged"));
         $('.userLogin').html("Hello " + user.Username);
         $('.sign').html("Logout");
+
+        if ((user.Type).localeCompare('A')==0)
+            $('#adminPages').show();
         return true;
     }
     else {
+        $('#adminPages').hide();
         $('.userLogin').html("Hello Guest");
         $('.sign').html("Login/Registration");
         return false;

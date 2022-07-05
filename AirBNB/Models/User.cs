@@ -18,6 +18,19 @@ namespace AirBNB.Models
         private int numOfCancelation;
         private char type;
 
+        public User(int id, string email, string password, string username, int numOfRentals, int totalIncome, int numOfCancelation, string registeredFrom, char type)
+        {
+            this.id = id;
+            this.email = email;
+            this.password = password;
+            this.username = username;
+            this.NumOfRentals = numOfRentals;
+            this.TotalIncome = totalIncome;
+            this.NumOfCancelation = numOfCancelation;
+            this.registeredFrom = registeredFrom;
+            this.Type = type;
+        }
+
         public User(int id, string email, string password, string username, int numOfRentals, int totalIncome, int numOfCancelation, string registeredFrom)
         {
             this.id = id;
