@@ -44,18 +44,6 @@ namespace AirBNB.Controllers
             return u.insertUser();
         }
 
-        [HttpPost]
-        [Route("api/Users/bookApartment/{apartmentID}/{hostId}/{id}/{from}/{to}/{minNights}/{maxNights}/{price}/{apartmentName}")]
-        public int Post(int apartmentID, int hostId, int id ,string from,string to,int minNights,int maxNights, int price, string apartmentName)
-        {
-            Apartment a = new Apartment(minNights, maxNights, price, apartmentName);
-            Reservation r = new Reservation(id, from, to, apartmentID, apartmentName, hostId, price);
-
-            return r.reserveApartment(a);
-        }
-
-        
-
         // PUT api/<controller>/5
         public void Put(int id, [FromBody]string value)
         {

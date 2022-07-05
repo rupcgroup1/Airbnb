@@ -10,25 +10,25 @@ namespace AirBNB.Controllers
 {
     public class ReservationController : ApiController
     {
-        // GET api/<controller>
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
 
         [HttpGet]
-        [Route("api/Reservations/{id}")]
+        [Route("api/Reservations/{currentUserID}")]
         // GET api/<controller>/5
-        public List<Reservation> getReservation(int id)
+        public List<Reservation> getReservation(int currentUserID)
         {
             Reservation r = new Reservation();
-            User u = new User(id);
-            return r.getAllUserReservations(id);
+            User u = new User(currentUserID);
+            return r.getAllUserReservations(currentUserID);
         }
 
-        // POST api/<controller>
-        public void Post([FromBody]string value)
+        [HttpPost]
+        [Route("api/Reservations/insertReservatiom/{apartmentID}/{hostId}/{id}/{from}/{to}/{minNights}/{maxNights}/{price}/{apartmentName}")]
+        public int Post(int apartmentID, int hostId, int id, string from, string to, int minNights, int maxNights, int price, string apartmentName)
         {
+            Apartment a = new Apartment(minNights, maxNights, price, apartmentName);
+            Reservation r = new Reservation(id, from, to, apartmentID, apartmentName, hostId, price);
+
+            return r.reserveApartment(a);
         }
 
         // PUT api/<controller>/5

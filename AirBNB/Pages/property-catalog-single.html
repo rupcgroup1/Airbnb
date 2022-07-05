@@ -209,7 +209,7 @@
 
 
             console.log(apartmentName);
-            let api = `../api/Users/bookApartment/${apartmentID}/${hostId}/${id}/${from}/${to}/${minNights}/${maxNights}/${price}/${apartmentName}`;
+            let api = `../api/Reservations/insertReservation/${apartmentID}/${hostId}/${id}/${from}/${to}/${minNights}/${maxNights}/${price}/${apartmentName}`;
             ajaxCall("POST", api, "", bookSuccessCB, bookErrorCB);
 
             return false;

@@ -162,7 +162,7 @@
         //success function for canceling the reservation, in the next ajaxCall we will re-render the reservations(to make sure it succeeded).
         function cancelSCB(success) {
             //Current user ID is global variable from document ready, we getting again all the reservations that user has and re-render.
-            let api = `../api/Users/${currentUserID}`;
+            let api = `../api/Reservations/${currentUserID}`;
             ajaxCall('GET', api, "", newDataSCB, errorCB);
       
         }
