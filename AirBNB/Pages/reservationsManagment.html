@@ -60,10 +60,21 @@
 
         $(document).ready(function () {
             //Checking if the user is logged in
+            $('#viewDiv').hide();
             let bool = checkLogin();
             if (bool == false) {
-                alert("You need to log in");
-                location.replace("login.html");
+                swal({ // this will open a dialouge
+                    title: "You need to log in",
+                    text: "Press ok to log in.",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true
+                })
+                    .then(function (ok) {
+                        if (ok) location.replace("login.html");
+                        else swal("You are not logged!");
+                    });
+                
             }
 
             //Getting all the reservations for user by user id.

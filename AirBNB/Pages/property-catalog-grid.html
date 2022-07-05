@@ -136,6 +136,17 @@
             if (beds == 0) beds = 1;
             if (rating == 0) rating = 1;
 
+            if (validateDates(from, to) == false) {
+                swal({ // this will open a dialouge
+                    title: "Your Dates is invalid",
+                    text: "Please enter again.",
+                    icon: "warning",
+                    button: true,
+                    dangerMode: true
+                })
+                return false;
+            }
+
 
             localStorage.setItem('filters', JSON.stringify(filters));
 
@@ -155,6 +166,10 @@
 
         //Rendering the apartments of current page.
         function renderApartments(apartments, index) {
+
+            if (apartments.length > 0)
+                $('#results').html(apartments.length + " apartments found");
+            else $('#results').html("No apartments match to your requierments.");
 
             arrImgs = $('.thumbnail-3.thumbnail img');      // catch all apartments imgs.
             arrDivs = $('.thumbnail-3.thumbnail .caption'); // catch all apartments description divs.
@@ -204,6 +219,27 @@
 
         function errorCB(error) {
             console.log(error);
+        }
+
+        // Validate dates.
+        function validateDates(checkIn, checkOut) {
+            checkIn = new Date(checkIn); // time - 03:00:00
+            checkOut = new Date(checkOut); // time - 03:00:00
+            nowDate = new Date();
+            nowDate.setHours(03); // time - 03:00:00
+
+
+            let diffTime = (checkIn - checkOut);
+            let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+            let diffTimeNow = (nowDate - checkIn);
+            let diffDaysNow = Math.ceil(diffTimeNow / (1000 * 60 * 60 * 24)) - 1;
+
+            if (diffDays >= 0)
+                return false;
+            else if (diffDaysNow > 0)
+                return false;
+            return true;
         }
 
 
@@ -471,7 +507,7 @@
                                   <input class="rd-range-input-value rd-range-input-value-1 form-input" id="range-1" type="text" name="range-2"><span class="text-abbey dash">&mdash;</span>
                                   <input class="rd-range-input-value rd-range-input-value-2 form-input" id="range-2" type="text" name="range-3">
                               </div>
-                              <div class="rd-range" data-min="10" data-max="1000" data-start="[10, 1000]" data-step="10" data-tooltip="true" data-min-diff="100" data-input=".rd-range-input-value-1" data-input-2=".rd-range-input-value-2"></div>
+                              <div id="priceScale" class="rd-range" data-min="10" data-max="1000" data-start="[10, 1000]" data-step="10" data-tooltip="true" data-min-diff="100" data-input=".rd-range-input-value-1" data-input-2=".rd-range-input-value-2"></div>
                           </div>
                           <div class="form-wrap width-1">
                               <span>Distance from center(Meters)<br></span>
@@ -480,7 +516,7 @@
                                   <input class="rd-range-input-value rd-range-input-value-4 form-input" id="range-4" type="text" name="range-3">
                               </div>
 
-                              <div class="rd-range" data-min="0" data-max="10000" data-start="[0, 10000]" data-step="50" data-tooltip="true" data-min-diff="500" data-input=".rd-range-input-value-3" data-input-2=".rd-range-input-value-4"></div>
+                              <div id="distanceScale" class="rd-range" data-min="0" data-max="10000" data-start="[0, 10000]" data-step="50" data-tooltip="true" data-min-diff="500" data-input=".rd-range-input-value-3" data-input-2=".rd-range-input-value-4"></div>
                           </div>
                           <div class="form-wrap width-2">
                               <label class="form-label" for="select-search-7">Min Bedrooms</label>
@@ -517,10 +553,11 @@
                       <div class="col-12 col-md-3 text-center text-md-start">
                           <!-- RD SelectMenu-->
                           <div class="sort-input">
-                              <div class="form-wrap form-wrap-mod-1">
-                                  <label class="form-label" for="sort-1">Sorting</label>
+                              <label id="results" class="form-label" for="sort-1">Loading...</label>
+                              <div style="visibility:hidden" class="form-wrap form-wrap-mod-1">
+
                                   <!--Select 2-->
-                                  <select class="form-input select-filter" id="sort-1" data-minimum-results-for-search="Infinity">
+                                  <select  class="form-input select-filter" id="sort-1" data-minimum-results-for-search="Infinity">
                                       <option value="By Price" selected>By Price</option>
                                       <option value="By Date">By Date</option>
                                       <option value="By Square">By Square</option>

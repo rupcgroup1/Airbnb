@@ -27,6 +27,7 @@
     <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" defer></script>
     <script src="../Scripts/ajaxCalls.js"></script>
     <script src="../Scripts/jquery-3.3.1.min.js"></script>
@@ -44,8 +45,17 @@
             //Checking if the admin is logged in
             let bool = checkLogin();
             if (bool == false) {
-                alert("You need to log in");
-                location.replace("login.html");
+                swal({ // this will open a dialouge
+                    title: "You need to log in",
+                    text: "Press ok to log in.",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true
+                })
+                    .then(function (ok) {
+                        if (ok) location.replace("login.html");
+                        else swal("You are not logged!");
+                    });
             }
 
             //Getting all the users for admin.
