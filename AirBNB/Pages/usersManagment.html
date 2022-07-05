@@ -62,7 +62,8 @@
             row.className = 'selected'; // mark as selected
         }
 
-        function renderSum(usersData) {
+        // Rendering the users summary.
+        function renderSummary(usersData) {
             let users = usersData.length;
             let totalIncome = 0, numOfCancelation = 0, numOfRentals = 0;
 
@@ -82,7 +83,7 @@
         function successCB(usersData) {
             console.log(usersData);
 
-            renderSum(usersData);
+            renderSummary(usersData);
             try {
                 tbl = $('#usersData').DataTable({
                     data: usersData,
@@ -355,7 +356,7 @@
 
             <section class="section-lg bg-gray-dark">
                 <div class="container">
-                    <h2>System Users</h2>
+                    <h2>Users details</h2>
                     <hr>
                     <div class="row">
                         <div class="col-xl-8">
