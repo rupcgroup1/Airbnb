@@ -182,6 +182,18 @@
             $('.swiper-caption-wrap').find('p').last().html(renderDescription(apartments[6].Description, 10));
             $("#desc").html(renderDescription(apartments[6].Description, 10));
             $('.swiper-slide').css("background-image", 'url("' + apartments[6].Picture + '")');
+            $(".topPageBTN").attr('id', apartments[6].Id);
+
+            // Route 'book now' button.
+            $(".topPageBTN").click(function () {
+                // Remember the link href
+                let id = this.id;
+                // Save apartment id in local storage
+                localStorage.setItem("apartmentId", JSON.stringify(id));
+                // Go to the link
+                window.location = 'property-catalog-single.html';
+            });
+            
         }
 
         //Rendering the property types.
@@ -435,14 +447,14 @@
             <!--Swiper-->
             <div class="swiper-container swiper-slider swiper-slider-1">
                 <div class="swiper-wrapper">
-                    <div id="tamir" class="swiper-slide" data-slide-bg="">
+                    <div class="swiper-slide" data-slide-bg="">
                         <div class="swiper-slide-caption section-xs">
                             <div class="container">
                                 <div class="swiper-caption-wrap" data-caption-animate="fadeInDown">
                                     <p class="h3" data-caption-animate="fadeIn" data-caption-delay="800"></p>
                                     <hr data-caption-animate="fadeIn" data-caption-delay="800">
                                     <p id="desc" class="d-none d-md-block" data-caption-animate="fadeIn" data-caption-delay="800">Loading...</p>
-                                    <div class="price text-ubold" data-caption-animate="fadeIn" data-caption-delay="800"></div><a class="btn btn-sm btn-sushi" href="property-catalog-single.html" data-caption-animate="fadeIn" data-caption-delay="800">book now</a>
+                                    <div class="price text-ubold" data-caption-animate="fadeIn" data-caption-delay="800"></div><a class="btn btn-sm btn-sushi topPageBTN" data-caption-animate="fadeIn" data-caption-delay="800">book now</a>
                                 </div>
                             </div>
                         </div>

@@ -15,6 +15,9 @@
         table.dataTable tbody tr.selected td ,table.dataTable tbody tr.selected {
             background-color: darkslategray !important;
         }
+        .viewBtn-size{
+            width:90%;
+        }
     </style>
 
     <!-- Data Table-->
@@ -97,16 +100,7 @@
             let from = reservation.From;
             let to = reservation.To;
 
-            if (isAbleToCancel(from) == false) {
-                swal({ // this will open a dialouge
-                    title: "You can't cancel your reservation.",
-                    text: "You can cancel up to 2 days before your check-in.",
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true
-                })
-                return;
-            }
+            
 
 
             let api = `../api/Users/cancelReservation`;
@@ -152,8 +146,15 @@
                             render: function (data, type, row, meta) {
                                 let id = "id='" + row.Id + "'";
                                 viewBtn = "<button class = 'btn btn-sushi viewBtn' " + id + "> View </button>";
-                                cancelBtn = "<button class = 'btn btn-sushi cancelBtn' " + id +"> Cancel </button>";
-                                return  viewBtn + cancelBtn;
+                                cancelBtn = "<button class = 'btn btn-sushi cancelBtn' " + id + "> Cancel </button>";
+                                disabledCancelBtn = "<button class = 'btn btn-sushi cancelBtn disabled' " + id + "> Cancel </button>";
+
+                                if (isAbleToCancel(row.From) == 0)    
+                                    return disabledCancelBtn + viewBtn + "<br /><span style='color:red'>You can cancel up to 2 days<br /> before your check-in.</span>";
+                                else if (isAbleToCancel(row.From) == -1)    
+                                    return "<button class = 'btn btn-sushi viewBtn viewBtn-size'" + id + "> View </button>";
+                                else return cancelBtn + viewBtn;
+
                             }
                         },
                         { data: "Id" },
@@ -174,16 +175,20 @@
             console.log(error);
         }
 
+        // Function to check if the dates of reservation is past, present or future.
         function isAbleToCancel(fromDate) {
             fromDate = fromDate.split(' ')[0];
             fromDate = new Date(fromDate); 
             nowDate = new Date();
-            let diffTime = Math.abs(fromDate - nowDate);
+            let diffTime = (fromDate - nowDate);
             let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            console.log(diffDays);
 
             if (diffDays > 1)
-                return true;
-            return false;
+                return 1; // Able to cancel. future - more than 2 days.
+            else if (diffDays > -1)
+                return 0; // Not able to cancel. future - less than 2 days.
+            return -1;    // Past or present reservation.
         }
 
 
