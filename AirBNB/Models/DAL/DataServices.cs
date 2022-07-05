@@ -365,7 +365,8 @@ namespace AirBNB.Models.DAL
                 int numOfRentals = Convert.ToInt32(dr["numOfRentals"]);
                 int totalIncome = Convert.ToInt16(dr["totalIncome"]);
                 int numOfCancelation = Convert.ToInt16(dr["numOfCancelation"]);
-                u1 = new User(id, email, password, username, numOfRentals, totalIncome, numOfCancelation, registeredFrom);
+                char type = Convert.ToChar(dr["type"]);
+                u1 = new User(id, email, password, username, numOfRentals, totalIncome, numOfCancelation, registeredFrom, type);
             }
 
             
