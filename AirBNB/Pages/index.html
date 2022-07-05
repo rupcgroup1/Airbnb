@@ -34,6 +34,9 @@
     <script src="../Scripts/ajaxCalls.js"></script>
     <script src="../Scripts/jquery-3.3.1.min.js"></script>
     <script src="../Scripts/renderFunction.js"></script>
+    <script src="../Scripts/commonFunctions.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 
     <!-- Script-->
     <script>
@@ -41,7 +44,7 @@
 
             checkLogin();
 
-            
+
 
             //Removing the previous filters in localStorage.
             localStorage.removeItem("filters");
@@ -119,37 +122,6 @@
             console.error(error);
         }
 
-        //Search apartments by filter.
-        function searchApartments() {
-            let keyword = $('#keyword').val();
-            let from = $('#from').val();
-            let to = $('#to').val();
-            let minP = $('#range-1').val();
-            let maxP = $('#range-2').val();
-            let minD = $('#range-3').val();
-            let maxD = $('#range-4').val();
-            let beds = $('#select-search-7').prop('selectedIndex');
-            let rating = $('#select-search-8').prop('selectedIndex');
-            filters = { keyword, from, to, minP, maxP, minD, maxD, beds, rating }; 
-            if (beds == 0) beds = 1;
-            if (rating == 0) rating = 1;
-
-            
-            localStorage.setItem('filters', JSON.stringify(filters));
-
-            let api = `../api/Apartments/search/${keyword}/${from}/${to}/${minP}/${maxP}/${minD}/${maxD}/${beds}/${rating}`;
-            ajaxCall('GET', api, "", searchSCB, errorCB);
-
-            return false;
-        }
-
-        //Success CB function, the apartments that was found by filter will be shown in the grid catalog.
-        function searchSCB(apartments) {
-            console.log(apartments);
-            localStorage.setItem('searchApartments', JSON.stringify(apartments)); // Send apartments results.
-            localStorage.setItem('index', JSON.stringify(0));                     // Send starting index.
-            window.location = 'property-catalog-grid.html';
-        }
 
         //Success CB function for apartment catagories.
         function successPopularCB(apartmentCatgeories) {
@@ -203,7 +175,7 @@
                 // Go to the link
                 window.location = 'property-catalog-single.html';
             });
-            
+
         }
 
         //Rendering the property types.
@@ -374,12 +346,12 @@
                             <div class="form-wrap">
                                 <label class="form-label" for="from">From</label>
                                 <br />
-                                <input type="date" class="form-input" id="from" required/>
+                                <input type="date" class="form-input" id="from" min="{new Date().toISOString().split('T')[0]" required/>
                             </div>
                             <div class="form-wrap">
                                 <label class="form-label" for="to">To</label>
                                 <br />
-                                <input type="date" class="form-input" id="to" required/>
+                                <input type="date" class="form-input" id="to" min="{new Date().toISOString().split('T')[0]" required/>
                             </div>
                             <div class="form-wrap width-1">
                                 <span>Price (USD)<br></span>
