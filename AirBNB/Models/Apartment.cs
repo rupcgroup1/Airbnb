@@ -38,7 +38,6 @@ namespace AirBNB.Models
         private double reviewCommunication;
         private double reviewLocation;
         private int numOfRentals;
-        private int numOfCancel;
         private int count;
         private double distance;
         private int hostVerified;
@@ -84,7 +83,6 @@ namespace AirBNB.Models
             this.reviewCommunication = reviewCommunication;
             this.reviewLocation = reviewLocation;
             this.numOfRentals = 0;
-            this.numOfCancel = 0;
             this.distance = distance;
             this.HostVerified = hostVerified;
             Count = -1; //not from used apartment
@@ -105,7 +103,7 @@ namespace AirBNB.Models
 
         }
     
-        public Apartment(int id, string name, string description, string picture, int price, int numOfReviews, double reviewRating, int bedrooms, int accommodates, string location, int numOfCancel)
+        public Apartment(int id, string name, string description, string picture, int price, int numOfReviews, double reviewRating, int bedrooms, int accommodates, string location,int daysRented,int numOfCancelation)
         {
             this.id = id;
             this.name = name;
@@ -116,8 +114,9 @@ namespace AirBNB.Models
             this.reviewRating = reviewRating;
             this.bedrooms = bedrooms;
             this.Accommodates = accommodates;
-            this.NumOfCancel = numOfCancel;
             this.Location = location;
+            this.DaysRented = daysRented;
+            this.NumOfCancelation = numOfCancelation;
         }
 
         public Apartment(string propertyType,  int count, string picture)
@@ -170,7 +169,6 @@ namespace AirBNB.Models
         public double ReviewCommunication { get => reviewCommunication; set => reviewCommunication = value; }
         public double ReviewLocation { get => reviewLocation; set => reviewLocation = value; }
         public int NumOfRentals { get => numOfRentals; set => numOfRentals = value; }
-        public int NumOfCancel { get => numOfCancel; set => numOfCancel = value; }
         public string Since { get => since; set => since = value; }
         public int Count { get => count; set => count = value; }
         public List<string> Amenities { get => amenities; set => amenities = value; }
