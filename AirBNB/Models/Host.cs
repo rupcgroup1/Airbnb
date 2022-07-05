@@ -23,6 +23,11 @@ namespace AirBNB.Models
             this.name = name;
         }
 
+        public Host()
+        {
+
+        }
+
         public  int NumOfApartments { get => numOfApartments; set => numOfApartments = value; }
         public  int TotalIncome { get => totalIncome; set => totalIncome = value; }
         public  int NumOfCancelation { get => numOfCancelation; set => numOfCancelation = value; }

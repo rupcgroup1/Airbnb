@@ -17,7 +17,9 @@ namespace AirBNB.Controllers
         }
 
         // Get all hosts
-        public List<Host> Get()
+        [HttpGet]
+        [Route("api/Hosts/getAllHosts")]
+        public List<Host> getAllHosts()
         {
             Host h = new Host();
             return h.getAllHosts();

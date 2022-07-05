@@ -52,26 +52,28 @@
             //We need to get the user and check if he is admin--------------------------------------------------
 
 
-            let api = `../api/Hosts/getAllHosts`;      
+            let api = `../api/Apartments/getAllApartments`;
             ajaxCall('GET', api, "", successCB, errorCB);
 
         });
-       
-        //Success function for getting the reservations by user id, now we will render with datatable.
-        function successCB(hostsData) {
-            console.log(hostsData);
 
-            hosts = hostsData; // keep the hosts array in a global variable;
+        //Success function for getting the reservations by user id, now we will render with datatable.
+        function successCB(apartmentsData) {
+            console.log(apartmentsData);
+
+            apartments = apartmentsData; // keep the hosts array in a global variable;
             try {
-                tbl = $('#hostsData').DataTable({
-                    data: hosts,
+                tbl = $('#apartmentsData').DataTable({
+                    data: apartments,
                     pageLength: 5,
                     columns: [
                         { data: "Id" },
                         { data: "Name" },
-                        { data: "NumOfApartments" },
-                        { data: "TotalIncome" },
-                        { data: "NumOfCancelation" },
+                        { data: "DaysRented" },
+                        { data: "NumOfCancel" },
+                        { data: "ReviewRating" },
+                        { data: "Accomodates" },
+
                     ],
                 });
             }
@@ -337,14 +339,16 @@
                     <div class="row">
                         <div class="col-xl-8">
                             <div class="table-mobile">
-                                <table id="hostsData" class="table table-simple table-sushi display nowrap" style="width:100%">
+                                <table id="apartmentsData" class="table table-simple table-sushi display nowrap" style="width:100%">
                                     <thead>
                                         <tr class="bg-sushi text-white">
                                             <th>Id</th>
                                             <th>Name</th>
-                                            <th>Apartments amount</th>
-                                            <th>Total income</th>
+                                            <th>Location</th>
+                                            <th>Days rented</th>
+                                            <th>Accomodates</th>
                                             <th>Number of cancelation</th>
+                                            <th>Review Rating</th>
                                         </tr>
                                     </thead>
                                 </table>
@@ -353,7 +357,7 @@
                     </div>
                 </div>
             </section>
-          
+
         </main>
         <!-- Page Footer-->
         <section class="section-lg bg-gray text-center text-lg-start">

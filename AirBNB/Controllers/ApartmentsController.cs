@@ -10,6 +10,7 @@ namespace AirBNB.Controllers
 {
     public class ApartmentsController : ApiController
     {
+        //Get 6 apartments to render.
         [HttpGet]
         [Route("api/Apartments/tinyGet")]
         public List<Apartment> tinyGet()
@@ -18,6 +19,7 @@ namespace AirBNB.Controllers
             return apartment.getTinyList();
         }
 
+        //Get all apartments by specific prop type.
         [HttpGet]
         [Route("api/Apartments/getByProp/{propType}")]
         public List<Apartment> getListByPropertyType(string propType)
@@ -26,6 +28,7 @@ namespace AirBNB.Controllers
             return apartment.getAllApartmentsByPropertyType(propType);
         }
 
+        //Get apartments by filtering.
         [HttpGet]
         [Route("api/Apartments/search/{keyword}/{from}/{to}/{minP}/{maxP}/{minD}/{maxD}/{beds}/{rating}")]
         public List<Apartment> getListBySearch(string keyword, string from, string to, int minP, int maxP, double minD, double maxD, int beds, double rating)
@@ -35,6 +38,7 @@ namespace AirBNB.Controllers
             return apartment.getAllApartmentsBySearch(keyword, from, to, minP, maxP, minD, maxD, beds, rating);
         }
 
+        //Get all property types.
         [HttpGet]
         [Route("api/Apartments/propertyTypeGet")]
         public List<Apartment> propertyTypeGet()
@@ -43,6 +47,7 @@ namespace AirBNB.Controllers
             return apartment.getAllPropertyType();
         }
 
+        //Get all apartments.
         [HttpGet]
         [Route("api/Apartments/getAllApartments")]
         public List<Apartment> getAllApartments()
@@ -53,6 +58,7 @@ namespace AirBNB.Controllers
 
 
         // GET api/<controller>/5
+        //Get specific apartment by id.
         public Apartment Get(int id)
         {
             Apartment a = new Apartment();
