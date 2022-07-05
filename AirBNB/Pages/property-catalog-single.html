@@ -228,11 +228,20 @@
                 return false;
             }
 
+            let reservationToInsert = {
+                ApartmentID: apartmentID,
+                HostID: hostId,
+                UserID: id,
+                From: from,
+                To: to,
+                Price: price,
+                ApartmentName: apartmentName,
+            };
 
+            //let api = `../api/Reservations/insertReservation/${apartmentID}/${hostId}/${id}/${from}/${to}/${minNights}/${maxNights}/${price}/${apartmentName}`;
+             let api = `../api/Reservations/insertReservation/${minNights}/${maxNights}`;
 
-            console.log(apartmentName);
-            let api = `../api/Reservations/insertReservation/${apartmentID}/${hostId}/${id}/${from}/${to}/${minNights}/${maxNights}/${price}/${apartmentName}`;
-            ajaxCall("POST", api, "", bookSuccessCB, bookErrorCB);
+            ajaxCall("POST", api, JSON.stringify(reservationToInsert), bookSuccessCB, bookErrorCB);
 
             return false;
         }

@@ -20,7 +20,7 @@ namespace AirBNB.Controllers
             User u = new User(currentUserID);
             return r.getAllUserReservations(currentUserID);
         }
-
+        /*
         [HttpPost]
         [Route("api/Reservations/insertReservation/{apartmentID}/{hostId}/{id}/{from}/{to}/{minNights}/{maxNights}/{price}/{apartmentName}")]
         public int Post(int apartmentID, int hostId, int id, string from, string to, int minNights, int maxNights, int price, string apartmentName)
@@ -28,6 +28,14 @@ namespace AirBNB.Controllers
             Apartment a = new Apartment(minNights, maxNights, price, apartmentName);
             Reservation r = new Reservation(id, from, to, apartmentID, apartmentName, hostId, price);
 
+            return r.reserveApartment(a);
+        }*/
+
+        [HttpPost]
+        [Route("api/Reservations/insertReservation/{minNights}/{maxNights}")]
+        public int Post([FromBody]Reservation r,  int minNights, int maxNights)
+        {
+            Apartment a = new Apartment(minNights, maxNights, r.Price, r.ApartmentName);
             return r.reserveApartment(a);
         }
 
