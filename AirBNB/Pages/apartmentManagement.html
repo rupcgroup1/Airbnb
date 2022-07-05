@@ -69,12 +69,20 @@
                     columns: [
                         { data: "Id" },
                         { data: "Name" },
+                        { data: "Location" },
                         { data: "DaysRented" },
+                        {
+                            data: "Accommodates", render: function (data, type, row, meta) {
+                                return renderPersons(row.Accommodates);
+                            }
+                        },
                         { data: "NumOfCancel" },
-                        { data: "ReviewRating" },
-                        { data: "Accomodates" },
-
-                    ],
+                        {
+                            data: "ReviewRating", render: function (data, type, row, meta) {
+                                return renderStars(row.ReviewRating);
+                            }
+                        }
+                    ]
                 });
             }
             catch (err) {
@@ -334,7 +342,7 @@
 
             <section class="section-lg bg-gray-dark">
                 <div class="container">
-                    <h2>Hosts details</h2>
+                    <h2>Apartments Management</h2>
                     <hr>
                     <div class="row">
                         <div class="col-xl-8">
