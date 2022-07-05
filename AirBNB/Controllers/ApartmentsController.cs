@@ -43,6 +43,15 @@ namespace AirBNB.Controllers
             return apartment.getAllPropertyType();
         }
 
+        [HttpGet]
+        [Route("api/Apartments/getAllApartments")]
+        public List<Apartment> getAllApartments()
+        {
+            Apartment apartment = new Apartment();
+            return apartment.getAllApartments();
+        }
+
+
         // GET api/<controller>/5
         public Apartment Get(int id)
         {

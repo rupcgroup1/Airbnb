@@ -42,6 +42,8 @@ namespace AirBNB.Models
         private int count;
         private double distance;
         private int hostVerified;
+        private int daysRented;
+        private int numOfCancelation;
         //private Review[] reviews;
 
 
@@ -159,6 +161,8 @@ namespace AirBNB.Models
         public int Accommodates { get => accommodates; set => accommodates = value; }
         public double Distance { get => distance; set => distance = value; }
         public int HostVerified { get => hostVerified; set => hostVerified = value; }
+        public int DaysRented { get => daysRented; set => daysRented = value; }
+        public int NumOfCancelation { get => numOfCancelation; set => numOfCancelation = value; }
 
 
         //Getting a tiny apartments list to show in home page.
@@ -191,6 +195,12 @@ namespace AirBNB.Models
         {
             DataServices ds = new DataServices();
             return ds.getAllApartmentsByPropertyType(propertyType);
+        }
+
+        public List<Apartment> getAllApartments()
+        {
+            DataServices ds = new DataServices();
+            return ds.getAllApartments();
         }
 
     }

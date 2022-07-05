@@ -16,6 +16,7 @@ namespace AirBNB.Models
         private int numOfRentals;
         private int totalIncome;
         private int numOfCancelation;
+        private char type;
 
         public User(int id, string email, string password, string username, int numOfRentals, int totalIncome, int numOfCancelation, string registeredFrom)
         {
@@ -27,6 +28,7 @@ namespace AirBNB.Models
             this.TotalIncome = totalIncome;
             this.NumOfCancelation = numOfCancelation;
             this.registeredFrom = registeredFrom;
+            this.Type = 'C';
         }
 
         public User(int id, string email, string password, string username, string registeredFrom)
@@ -36,6 +38,8 @@ namespace AirBNB.Models
             this.password = password;
             this.username = username;
             this.registeredFrom = registeredFrom;
+            this.Type = 'C';
+
         }
 
 
@@ -45,15 +49,18 @@ namespace AirBNB.Models
             this.email = email;
             this.password = password;
             this.username = username;
+            this.Type = 'C';
         }
 
         public User(int id)
         {
             this.id = id;
+            this.Type = 'C';
         }
 
         public User()
         {
+            this.Type = 'C';
 
         }
 
@@ -65,6 +72,7 @@ namespace AirBNB.Models
         public int NumOfRentals { get => numOfRentals; set => numOfRentals = value; }
         public int TotalIncome { get => totalIncome; set => totalIncome = value; }
         public int NumOfCancelation { get => numOfCancelation; set => numOfCancelation = value; }
+        public char Type { get => type; set => type = value; }
 
         public int insertUser()
         {

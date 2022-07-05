@@ -677,6 +677,52 @@ namespace AirBNB.Models.DAL
             return command;
         }
 
+        //Get all apartments
+        // Get apartments by search.
+        public List<Apartment> getAllApartments()
+        {
+            SqlConnection con = Connect();
+
+            // Create Command
+            SqlCommand command = CreateSelectAllApartmentsCommand(con);
+
+            SqlDataReader dr = command.ExecuteReader(CommandBehavior.CloseConnection);
+
+            List<Apartment> apartmentsList = new List<Apartment>();
+
+
+            while (dr.Read())
+            {
+                int id = Convert.ToInt32(dr["id"]);
+                string name = dr["name"].ToString();
+                string description = dr["description"].ToString();
+                string picture = dr["picture"].ToString();
+                int accommodates = Convert.ToInt16(dr["accommodates"]);
+                int price = Convert.ToInt32(dr["price"]);
+                int numOfReviews = Convert.ToInt16(dr["numOfReviews"]);
+                double reviewRating = Convert.ToDouble(dr["reviewRating"]);
+                int bedrooms = Convert.ToInt16(dr["bedrooms"]);
+                apartmentsList.Add(new Apartment(id, name, description, picture, price, numOfReviews, reviewRating, bedrooms, accommodates));
+            }
+
+            con.Close();
+            return apartmentsList;
+        }
+
+        //Select command for getting all apartments
+        private SqlCommand CreateSelectAllApartmentsCommand(SqlConnection con)
+        {
+
+            SqlCommand command = new SqlCommand();
+            command.CommandText = "PSPgetAllApartments";
+            command.Connection = con;
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.CommandTimeout = 10; // in seconds
+
+            return command;
+        }
+
+
 
     }
 

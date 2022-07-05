@@ -219,17 +219,18 @@
 
         function validateDates(checkIn, checkOut) {
             checkIn = new Date(checkIn);
+            console.log(checkIn)
             checkOut = new Date(checkOut);
+            checkIn = checkIn.split(' ')[0];
+            console.log(checkIn);
+            fromDate = new Date(fromDate);
             nowDate = new Date();
-            checkIn.setHours(0);
-            checkIn.setMinutes(0);
-            checkIn.setSeconds(0);
-            checkOut.setHours(0);
-            checkOut.setMinutes(0);
-            checkOut.setSeconds(0);
-            nowDate.setHours(0);
-            nowDate.setMinutes(0);
-            nowDate.setSeconds(0);
+            let diffTime = Math.abs(fromDate - nowDate);
+            let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+            if (diffDays > 1)
+                return true;
+            return false;
             
             let diffTime = (checkIn - checkOut);
             let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));

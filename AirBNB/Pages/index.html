@@ -61,7 +61,20 @@
                 ajaxCall("GET", api, "", successByProp, errorByProp);
             });
 
+            $("#allApartments").click(function () {
+                let api = `../api/Apartments/getAllApartments`
+                ajaxCall("GET", api, "", getAllApartmentsSCB, errorCB);
+            });
+
         });
+
+        //Getting all apartments success.
+        function getAllApartmentsSCB(apartments) {
+            console.log(apartments);
+            localStorage.setItem('searchApartments', JSON.stringify(apartments)); // Send apartments results.
+            localStorage.setItem('index', JSON.stringify(0));                     // Send starting index.
+            window.location = 'property-catalog-grid.html';
+        }
 
         //Getting all apartments by this specific property type.
         function successByProp(apartments) {
@@ -754,7 +767,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div><a class="btn btn-sm btn-sushi offset-custom-11" href="property-catalog-grid.html">view all properties</a>
+                    </div><input type="button" class="btn btn-sm btn-sushi offset-custom-11" id="allApartments" value="View all properties" />
+
                 </div>
             </section>
             <!--Footer-->
