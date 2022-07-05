@@ -40,6 +40,10 @@
         $(document).ready(function () {
 
             checkLogin();
+
+            //Removing the previous filters in localStorage.
+            localStorage.removeItem("filters");
+
             //Getting the homepage tiny list apartments which contains 6 apartments.
             api = `../api/Apartments/tinyGet`;
             ajaxCall("GET", api, "", successCB, errorCB);
@@ -124,10 +128,11 @@
             let maxD = $('#range-4').val();
             let beds = $('#select-search-7').prop('selectedIndex');
             let rating = $('#select-search-8').prop('selectedIndex');
+            filters = { keyword, from, to, minP, maxP, minD, maxD, beds, rating };
             if (beds == 0) beds = 1;
             if (rating == 0) rating = 1;
 
-            filters = { keyword, from, to, minP, maxP, minD, maxD, beds, rating };
+            
             localStorage.setItem('filters', JSON.stringify(filters));
 
             let api = `../api/Apartments/search/${keyword}/${from}/${to}/${minP}/${maxP}/${minD}/${maxD}/${beds}/${rating}`;

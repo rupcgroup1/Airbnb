@@ -104,6 +104,11 @@
         }
 
         function renderFilters(currentFilters) {
+            let priceScale = '[' + currentFilters.minP + ', ' + currentFilters.maxP + ']';
+            let distanceScale = '[' + currentFilters.minD + ', ' + currentFilters.maxD + ']';
+            $('#distanceScale').attr('data-start', distanceScale);
+            $('#priceScale').attr('data-start', priceScale);
+
             $('#keyword').val(currentFilters.keyword);
             $('#from').val(currentFilters.from);
             $('#to').val(currentFilters.to);
@@ -127,10 +132,11 @@
             let maxD = $('#range-4').val();
             let beds = $('#select-search-7').prop('selectedIndex');
             let rating = $('#select-search-8').prop('selectedIndex');
+            filters = { keyword, from, to, minP, maxP, minD, maxD, beds, rating };
             if (beds == 0) beds = 1;
             if (rating == 0) rating = 1;
 
-            filters = { keyword, from, to, minP, maxP, minP, maxD, beds, rating };
+
             localStorage.setItem('filters', JSON.stringify(filters));
 
             let api = `../api/Apartments/search/${keyword}/${from}/${to}/${minP}/${maxP}/${minD}/${maxD}/${beds}/${rating}`;
@@ -194,6 +200,10 @@
                 // Go to the link
                 window.location = href;
             });
+        }
+
+        function errorCB(error) {
+            console.log(error);
         }
 
 
@@ -519,7 +529,7 @@
                               </div>
                           </div>
                       </div>
-                      
+
                   </div>
                   <div class="row">
                       <div class="col-12 col-xl-12">
