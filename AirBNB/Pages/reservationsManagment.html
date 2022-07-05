@@ -18,6 +18,9 @@
         .viewBtn-size{
             width:90%;
         }
+        #apartmentImg{
+            border-radius:10px;
+        }
     </style>
 
     <!-- Data Table-->
@@ -56,7 +59,8 @@
             currentUserID = user.Id;//global variable for the user.
             let api = `../api/Users/${currentUserID}`;
             ajaxCall('GET', api, "", successCB, errorCB);
-            $()
+
+            // Route cancel Reservation button.
             $(document).on("click", ".cancelBtn", function () {
                 markSelected(this);
                 var reservationID = this.getAttribute('id');
@@ -68,12 +72,32 @@
                     dangerMode: true
                 })
                     .then(function (willDelete) {
-                        if (willDelete) getReservationByID(reservationID);
+                        if (willDelete) cancelReservation(reservationID);
                         else swal("Not Deleted!");
                     });
             });
 
+            // Route view Reservation button.
+            $(document).on("click", ".viewBtn", function () {
+                $('#viewDiv').hide();
+                markSelected(this);
+                var reservationID = this.getAttribute('id');
+                let reservation = getReservation(reservationID);
+                let apartmentId = reservation.ApartmentID;
+                let api = `../api/Apartments/${apartmentId}`;
+                ajaxCall('GET', api, "", getApartmentSCB, errorCB);
+
+                $('#viewDiv').show();
+            });
+
+            // Hidding the view div.
+            $('#viewDiv').hide();
+
         });
+
+        function getApartmentSCB(apartment) {
+
+        }
 
         // mark the selected row
         function markSelected(btn) {
@@ -82,39 +106,34 @@
             row.className = 'selected'; // mark as selected
         }
 
-        // Delete a reservation from the DB, first we will get the reservation, then we will delete her.
-        function getReservationByID(resID) {
-            id = resID;
-            let api = `../api/Users/getResById/${id}`;
-            ajaxCall("GET", api, "", getReservationByIdSCB, errorCB);
+        // Populate reservation fields.
+        function populateFields(reservationId) {
+            reservation = getReservation(reservationId);
+
+            //TODO
+
         }
 
-        //Success function for getting the reservation.
-        function getReservationByIdSCB(reservation) {
-            console.log(reservation);
-            let id = reservation.Id;
-            let price = reservation.Price;
-            let hostId = reservation.HostID;
-            let userID = reservation.UserID;
-            let from = reservation.From;
-            let to = reservation.To;
-
-            
-
-
-            let api = `../api/Users/cancelReservation`;
-            let reservationToCancel = {
-                Id: id,
-                Price: price,
-                HostId: hostId,
-                UserID: userID,
-                From: from,
-                To: to
+        // get a reservation by Id
+        function getReservation(id) {
+            for (i in reservations) {
+                if (reservations[i].Id == id)
+                    return reservations[i];
             }
+            return null;
+        }
+
+
+        //Success function for getting the reservation.
+        function cancelReservation(id) {
+            let reservation = getReservation(id);
+            let api = `../api/Users/cancelReservation`;
+
             //Clearing the datatable before deleting
             $('#reservationsData').dataTable().fnClearTable();
+
             //After receving the reservation we will provide details and reduce the relevant parameters from host & user.
-            ajaxCall("DELETE", api, JSON.stringify(reservationToCancel), cancelSCB, errorCB);
+            ajaxCall("DELETE", api, JSON.stringify(reservation), cancelSCB, errorCB);
         }
 
         //success function for canceling the reservation, in the next ajaxCall we will re-render the reservations(to make sure it succeeded).
@@ -458,6 +477,25 @@
                                     </thead>
                                 </table>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="viewDiv" class="section-lg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 order-md-2">
+                            <h2 id="name">Welcome</h2>
+                            <hr>
+                            <p id="reservationId">asdas</p>
+                            <p id="from">asdas</p>
+                            <p id="to">asdas</p>
+                            <p id="nights">asdas</p>
+                            <p id="nights">asdas</p>
+                            <p id="nights">asdas</p><a class="btn btn-sm btn-sushi btn-min-width-mod-3 offset-custom-11" href="#">learn more</a>
+                        </div>
+                        <div class="col-md-6 offset-custom-5 order-md-1">
+                            <div class="img-wrap inset-4"><img id ="apartmentImg" src="images/services-8.jpg" alt="" width="570" height="350"></div>
                         </div>
                     </div>
                 </div>
