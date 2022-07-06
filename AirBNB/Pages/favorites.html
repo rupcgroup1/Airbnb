@@ -40,8 +40,8 @@
         $(document).ready(function () {
 
             if (checkLogin() == false) {
-                alert("You need to log in");
-                return;
+                alert("you need to log in");
+                location.replace("login.html");
             }
             user = JSON.parse(localStorage.getItem("userLogged"));
             let id = user.Id;
