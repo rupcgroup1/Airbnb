@@ -29,6 +29,8 @@
     <script src="../Scripts/renderFunction.js"></script>
     <script src="../Scripts/commonFunctions.js"></script>
     <script src="../Scripts/favoritesFunctions.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
@@ -43,19 +45,16 @@
             }
             user = JSON.parse(localStorage.getItem("userLogged"));
             let id = user.Id;
-            let api = `../api/Favorites/getAllApartmentsFavorites/${id}`  
+            let api = `../api/Favorites/getAllApartmentsFavorites/${id}`
             ajaxCall("GET", api, "", apartmentsFavoritesSCB, errorCB);
 
             //Index is used for paging, array contains all apartments, index describes the amount of apartments the guest paged so far.
             if (localStorage.getItem("index") != undefined)
                 index1 = JSON.parse(localStorage.getItem("index"));
-            
+
 
             // Routing favorite heart.
             $('.favorites').click(removeFavorite);
-
-            //Rendering the page's number.
-            renderNumbers(index1, apartments1);
 
             //Getting the next page, by reloading we re-rendering the apartments of the specific page we need.
             $('#next').click(function () { // using the global variable apartmentCount to count apartment seen so far.
@@ -168,12 +167,14 @@
         //Success get all apartments favorites by ID
         function apartmentsFavoritesSCB(apartments) {
             //Rendering the apartments of current page.
-            renderApartments(apartments1, index1);
+            renderApartments(apartments, index1);
+            //Rendering the page's number.
+            renderNumbers(index1, apartments);
             return;
         }
 
         // Function to insert or delete favorite.
-        function removeFromFavorite(event) {
+        function removeFavorite(event) {
             event.preventDefault(); // Prevent href a tag.
             apartmentID = this.id; // Global variable.
             let favorite = {
@@ -181,10 +182,25 @@
                 ApartmentId: apartmentID
             }
 
-            //First we gonna check if the user has this apartment already in his favorites. --- we are checking at DAL 
+            //First we gonna check if the user has this apartment already in his favorites. --- we are checking at DAL
             let api = `../api/Favorites/deleteFromFavorites`;
             ajaxCall("DELETE", api, JSON.stringify(favorite), successDeleteSCB, errorCB);
             return false;
+        }
+
+        //Succeed to delete the favorite apartment.
+        function successDeleteSCB(success) {
+            swal({ // this will open a dialouge
+                title: "Apartment removed.",
+                text: "",
+                icon: "success",
+                button: true,
+                dangerMode: false
+            });
+            //Now we will re-render the apartments.
+            let id = user.Id;// global user declared in document ready.
+            let api = `../api/Favorites/getAllApartmentsFavorites/${id}`
+            ajaxCall("GET", api, "", apartmentsFavoritesSCB, errorCB);
         }
 
     </script>
