@@ -190,7 +190,6 @@
     <Content Include="Pages\apartmentManagement.html" />
     <Content Include="Pages\css\weather.css" />
     <Content Include="Pages\favorites.html" />
-    <Content Include="Pages\gallery-1.html" />
     <Content Include="Pages\hostManagement.html" />
     <Content Include="Pages\images\airbnb1.png" />
     <Content Include="Pages\reservationsManagment.html" />
