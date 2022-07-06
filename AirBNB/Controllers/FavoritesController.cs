@@ -10,10 +10,13 @@ namespace AirBNB.Controllers
 {
     public class FavoritesController : ApiController
     {
-        // GET api/<controller>
-        public IEnumerable<string> Get()
+        // GET api/<controller>/5
+        [HttpGet]
+        [Route("api/Favorites/getAllApartmentsFavorites/{userId}")]
+        public List<Apartment> GetApartments(int userId)
         {
-            return new string[] { "value1", "value2" };
+            Favorite f = new Favorite();
+            return f.getAllApartmentsFavorites(userId);
         }
 
         // GET api/<controller>/5
