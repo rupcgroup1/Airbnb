@@ -213,12 +213,36 @@
 
                             }
                         },
-                        { data: "Id" },
-                        { data: "ApartmentName" },
-                        { data: "From" },
-                        { data: "To" },
-                        { data: "Nights" },
-                        { data: "Price" }   
+                        {
+                            render: function (data, type, row, meta) {
+                                return "<div class='col-xs d-md-none'><b>id</b></div>" + row.Id ;
+                            }
+                        },
+                        {
+                            render: function (data, type, row, meta) {
+                                return "<div class='col-xs d-md-none'><b>Name</b></div>" + row.ApartmentName;
+                            }
+                        },
+                        {
+                            render: function (data, type, row, meta) {
+                                return "<div class='col-xs d-md-none'><b>Check-in</b></div>" + row.From;
+                            }
+                        },
+                        {
+                            render: function (data, type, row, meta) {
+                                return "<div class='col-xs d-md-none'><b>Check-out</b></div>" + row.To;
+                            }
+                        },
+                        {
+                            render: function (data, type, row, meta) {
+                                return "<div class='col-xs d-md-none'><b>Nights</b></div>" + row.Nights;
+                            }
+                        },
+                        {
+                            render: function (data, type, row, meta) {
+                                return "<div class='col-xs d-md-none'><b>Price</b></div>" + row.Price;
+                            }
+                        }
                     ],
                 });
             }
