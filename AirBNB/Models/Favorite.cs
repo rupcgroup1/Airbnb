@@ -42,5 +42,11 @@ namespace AirBNB.Models
             DataServices ds = new DataServices();
             return ds.getAllFavorites(userId);
         }
+
+        public List<Apartment> getAllApartmentsFavorites(int userId)
+        {
+            DataServices ds = new DataServices();
+            return ds.getAllApartmentsFavorites(userId);
+        }
     }
 }

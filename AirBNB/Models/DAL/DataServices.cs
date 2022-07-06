@@ -959,6 +959,7 @@ namespace AirBNB.Models.DAL
             return command;
         }
 
+        // Get all user favorites.
         public List<Favorite> getAllFavorites(int id)
         {
             SqlConnection con = Connect();
@@ -987,6 +988,50 @@ namespace AirBNB.Models.DAL
             SqlCommand command = new SqlCommand();
             command.Parameters.AddWithValue("@userId", id);
             command.CommandText = "PSPgetAllUserFavorites";
+            command.Connection = con;
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.CommandTimeout = 10; // in seconds
+
+            return command;
+        }
+        
+
+        // Get all user apartments favorites.
+        public List<Apartment> getAllApartmentsFavorites(int id)
+        {
+            SqlConnection con = Connect();
+
+            // Create Command
+            SqlCommand command = createSelectGetAllApartmentsFavoriteCommand(con, id);
+
+            SqlDataReader dr = command.ExecuteReader(CommandBehavior.CloseConnection);
+
+            List<Apartment> list = new List<Apartment>();
+
+
+            while (dr.Read())
+            {
+                int apartmentId = Convert.ToInt32(dr["id"]);
+                string name = dr["name"].ToString();
+                string picture = dr["picture"].ToString();
+                int accommodates = Convert.ToInt16(dr["accommodates"]);
+                int price = Convert.ToInt32(dr["price"]);
+                int numOfReviews = Convert.ToInt16(dr["numOfReviews"]);
+                double reviewRating = Convert.ToDouble(dr["reviewRating"]);
+                int bedrooms = Convert.ToInt16(dr["bedrooms"]);
+                list.Add(new Apartment(apartmentId, name,"" ,picture, price, numOfReviews, reviewRating, bedrooms, accommodates));
+            }
+
+            con.Close();
+            return list;
+        }
+
+        private SqlCommand createSelectGetAllApartmentsFavoriteCommand(SqlConnection con, int id)
+        {
+
+            SqlCommand command = new SqlCommand();
+            command.Parameters.AddWithValue("@userId", id);
+            command.CommandText = "PSPgetAllApartmentsFavorites";
             command.Connection = con;
             command.CommandType = System.Data.CommandType.StoredProcedure;
             command.CommandTimeout = 10; // in seconds
