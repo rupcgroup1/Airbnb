@@ -1,6 +1,6 @@
 ﻿<!DOCTYPE html>
 <html class="wide wow-animation" lang="en">
-  <head>
+<head>
     <!-- Site Title-->
     <title>Additions</title>
     <meta name="format-detection" content="telephone=no">
@@ -13,7 +13,19 @@
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/fonts.css">
     <link rel="stylesheet" href="css/style.css">
-  </head>
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="../Scripts/renderFunction.js"></script>
+    <script src="../Scripts/ajaxCalls.js"></script>
+    <script src="../Scripts/jquery-3.3.1.min.js"></script>
+
+    <script>
+
+        $(document).ready(() => checkLogin());
+
+    </script>
+
+</head>
   <body>
     <div class="preloader">
       <div class="preloader-body">
@@ -72,9 +84,12 @@
                         <div class="rd-navbar-nav-wrap">
                             <!-- RD Navbar Nav-->
                             <ul class="rd-navbar-nav">
-                                <li class="active"><a href="./">Home</a></li>
+                                <li><a href="./">Home</a></li>
                                 <li>
                                     <a href="reservationsManagment.html">My reservations</a>
+                                </li>
+                                <li  class="active">
+                                    <a href="additions.html">Additions</a>
                                 </li>
                                 <li id="adminPages">
                                     <a href="">Management pages</a>
