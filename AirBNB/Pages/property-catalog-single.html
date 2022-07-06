@@ -96,15 +96,8 @@
             console.log(data);
 
             //Today
-
             let descToday = (data[3].split(' '));
-            console.log(descToday);
             $("#minD").html(descToday[descToday.indexOf("Minimum") + 2])
-            //let min = $("#min1").html(descToday[descToday.indexOf("Minimum") + 2])
-            //if (descToday.indexOf("Maximum") == -1)
-            //    $("#max1").html(descToday[descToday.indexOf("Minimum") + 2]);
-           // $("#max1").html(descToday[descToday.indexOf("Maximum") + 2])
-
 
             let moreDescToday = data[2].split(' ');
             console.log(moreDescToday);
@@ -128,11 +121,13 @@
             let minTommorow = descTommorow.indexOf("Minimum"); // Index of minimum.
             $("#day2").html(data[4].split(':')[0]); // Day name.
             $("#range2").html(descTommorow[minTommorow + 2] + ' - ' + descTommorow[descTommorow.indexOf("Maximum") + 2]);  // Temperature range.
+
             // Get weater type.
             weatherType = "";
             for (let j = 1; j < minTommorow; j++) // Calculate indexes of weather Type.
                 weatherType += descTommorow[j] + " "; // Weather type string.
             $("#type2").html(weatherType.split(',')[0]); // Insert weather type without the ','.
+
 
             /* More 2 days */
             // Calculate temperature range.
@@ -140,15 +135,12 @@
             let min2Days = desc2Days.indexOf("Minimum"); // Index of minimum.
             $("#day3").html(data[6].split(':')[0]); // Day name.
             $("#range3").html(desc2Days[min2Days + 2] + ' - ' + desc2Days[desc2Days.indexOf("Maximum") + 2]); // Temperature range.
+
             // Get weater type.
             weatherType = "";
             for (let k = 1; k < min2Days; k++) // Calculate indexes of weather Type.
                 weatherType += desc2Days[k] + " "; // Weather type string.
             $("#type3").html(weatherType.split(',')[0]); // Insert weather type without the ','.
-
-
-
-
 
         }
         // Error CB for getting weather.
