@@ -851,6 +851,79 @@ namespace AirBNB.Models.DAL
         }
 
 
+        //Insert favorite to the database.
+        public int insertFavorite(Favorite f)
+        {
+            // Connect
+            SqlConnection con = Connect();
+
+            if (checkFavorite(f) != null)
+                return 0;
+
+            // Create Command
+            SqlCommand command = CreateInsertCommand(con, f);
+
+            // Execute
+            int numAffected = command.ExecuteNonQuery();
+
+            // Close Connection
+
+            con.Close();
+
+            return numAffected;
+        }
+
+        //Creating insert command for insert a new favorite.
+        private SqlCommand CreateInsertCommand(SqlConnection con, Favorite f)
+        {
+            SqlCommand command = new SqlCommand();
+
+            command.Parameters.AddWithValue("@userId", f.IserId);
+            command.Parameters.AddWithValue("@apartmentId", f.ApartmentId);
+            command.CommandText = "PSPinsertFavorite";
+            command.Connection = con;
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.CommandTimeout = 10; // in seconds
+
+            return command;
+        }
+
+        // Get favorite and search if exist.
+        public Favortie checkFavorite(Favorite f)
+        {
+            SqlConnection con = Connect();
+
+            // Create Command
+            SqlCommand command = CreateSelectCommand(con, f);
+
+            SqlDataReader dr = command.ExecuteReader(CommandBehavior.CloseConnection);
+
+            Favorite f1 = null;
+            while (dr.Read())
+            {
+                int userId = Convert.ToInt32(dr["userId"]);
+                int apartmentId = Convert.ToInt32(dr["apartmentId"]);
+                f1 = new Favorite(userId, apartmentId);
+            }
+
+            con.Close();
+            return f1;
+        }
+
+        //Creating get command for search exist favorite.
+        private SqlCommand CreateSelectCommand(SqlConnection con, Favorite f)
+        {
+            SqlCommand command = new SqlCommand();
+
+            command.Parameters.AddWithValue("@userId", f.IserId);
+            command.Parameters.AddWithValue("@apartmentId", f.ApartmentId);
+            command.CommandText = "PSPcheckfavotireExist";
+            command.Connection = con;
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.CommandTimeout = 10; // in seconds
+
+            return command;
+        }
 
 
     }
