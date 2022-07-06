@@ -99,12 +99,16 @@
             //Today
             let minD = 0;
             let descToday = (data[3].split(' '));
+            console.log(descToday);
             $("#minD").html(descToday[descToday.indexOf("Minimum") + 2])
-            $("#min1").html(descToday[descToday.indexOf("Minimum") + 2])
+            let min = $("#min1").html(descToday[descToday.indexOf("Minimum") + 2])
+            if (descToday.indexOf("Maximum") == -1)
+                $("#max1").html(descToday[descToday.indexOf("Minimum") + 2]);
             $("#max1").html(descToday[descToday.indexOf("Maximum") + 2])
 
 
             let moreDescToday = data[2].split(' ');
+            console.log(moreDescToday);
 
             let toTake = moreDescToday.indexOf("Minimum");
             let weatherType = "";
