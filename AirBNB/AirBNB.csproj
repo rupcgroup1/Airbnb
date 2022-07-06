@@ -159,6 +159,7 @@
     <Compile Include="Controllers\HostsController.cs" />
     <Compile Include="Controllers\ReservationController.cs" />
     <Compile Include="Controllers\ReviewsController.cs" />
+    <Compile Include="Controllers\RssController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -169,6 +170,7 @@
     <Compile Include="Models\Reservation.cs" />
     <Compile Include="Models\Review.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\XMLServices.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -188,6 +190,7 @@
     <Content Include="Pages\hostManagement.html" />
     <Content Include="Pages\images\airbnb1.png" />
     <Content Include="Pages\reservationsManagment.html" />
+    <Content Include="Pages\rss.html" />
     <Content Include="Pages\usersManagment.html" />
     <Content Include="Scripts\ajaxCalls.js" />
     <Content Include="Scripts\bootstrap.js" />

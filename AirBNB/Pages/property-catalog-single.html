@@ -48,6 +48,9 @@
                 location.replace("404.html");
             }
 
+            // RSS-Weather, get Amsterdam weather.
+            ajaxCall("GET", `../api/rss`, "", successGetRSS, errorGetRSS);
+
             //Getting the choosen apartment id.
             let apartmentID = JSON.parse(localStorage.getItem("apartmentId"));
             let api = `../api/Apartments/${apartmentID}`;
@@ -82,6 +85,16 @@
             }
 
         });
+
+        // Success CB for getting weather.
+        function successGetRSS(data) {
+            console.log(data);
+            //TODO
+        }
+        // Error CB for getting weather.
+        function errorGetRSS(err) {
+            console.log(err);
+        }
 
         // Render apartment details.
         function successApartmentCB(apartment) {
