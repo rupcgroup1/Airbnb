@@ -90,6 +90,7 @@
 
             // Route cancel Reservation button.
             $(document).on("click", ".cancelBtn", function () {
+
                 $('#viewDiv').hide();
                 markSelected(this);
                 var reservationID = this.getAttribute('id');
@@ -108,11 +109,13 @@
 
             // Route view Reservation button.
             $(document).on("click", ".viewBtn", function () {
+                
                 $('#viewDiv').hide();
                 markSelected(this);
                 var reservationID = this.getAttribute('id');
                 reservation = getReservation(reservationID);
                 let id = reservation.ApartmentID;
+                window.location.hash = "#" + id;
                 let api = `../api/Apartments/${id}`;
                 ajaxCall('GET', api, "", getApartmentSCB, errorCB);
             });
@@ -142,6 +145,8 @@
 
             //Showing the view div
             $('#viewDiv').show();
+
+            window.location.hash = "#viewDiv";
 
         }
 
