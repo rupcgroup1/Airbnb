@@ -87,6 +87,8 @@
                 $('#to').val(filters.to);
             }
 
+            //Routing the favorites button
+            $("#favorites").click(addToFavorites);
         });
 
         // Success CB for getting weather.
@@ -463,6 +465,29 @@
             console.log(error);
         }
 
+        //Add to favorites function
+        function addToFavorites() {
+            if (checkLogin() == false) {
+                alert("You need to log in");
+                return;
+            }
+        
+
+            if (localStorage.getItem("apartmentId") != undefined)
+                apartmentID = JSON.parse(localStorage.getItem("apartmentId"));
+            if (localStorage.getItem("userLogged") != undefined)
+                userID = JSON.parse(localStorage.getItem("userLogged"));
+
+            //First we gonna check if the user has this apartment already in his favorites.
+            let api = `../api/User/toFavorites/${apartmentID}/${userID}`;
+            ajaxCall("POST", api, "", successFavoriteCB, errorCB);
+        }
+
+        function successFavoriteCB(success) {
+            console.log(success);
+        }
+
+
 
     </script>
 </head>
@@ -621,6 +646,9 @@
 
                             <div class="row">
                                 <div class="col-12">
+                                    <a class="btn btn-primary btn-sm btn-min-width-md" id="favorites"><span class="icon icon-left icon-sm fa-heart"></span>Add to favorites</a>
+                                    <br />
+                                    <br />
                                     <h4 class="border-bottom">Overview</h4>
                                     <div class="table-mobile offset-custom-11">
                                         <table class="table table-default">
