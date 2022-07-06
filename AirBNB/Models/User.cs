@@ -109,11 +109,14 @@ namespace AirBNB.Models
             DataServices ds = new DataServices();
             try
             {
-                return ds.insertUser(this);
+                return ds.insertUser(this);// Succeess insert.
             }
             catch(Exception e)
             {
-                return -1;
+                if (e.Message.Contains("Violation of UNIQUE KEY"))
+                    return -1; // Email exist!
+                return 0; // Error - general exception.
+
             }
         }
 

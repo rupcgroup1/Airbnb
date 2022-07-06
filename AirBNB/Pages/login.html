@@ -77,14 +77,36 @@
             return false;
         }
         //The registration has completed successfully
-        function insertSCB() {
-            swal({ // this will open a dialouge
-                title: "User added successfuly!",
-                text: "",
-                icon: "success",
-                button: true,
-                dangerMode: false
-            })
+        function insertSCB(result) {
+
+            if (result == -1) {
+                swal({ // this will open a dialouge
+                    title: "Email already exist!",
+                    text: "Please enter other email.",
+                    icon: "warning",
+                    button: true,
+                    dangerMode: false
+                });
+            }
+            else if (result == 0) {
+                swal({ // this will open a dialouge
+                    title: "Some thing missing!",
+                    text: "Please try again later.",
+                    icon: "warning",
+                    button: true,
+                    dangerMode: false
+                });
+            }
+            else {
+                swal({ // this will open a dialouge
+                    title: "User added successfuly!",
+                    text: "",
+                    icon: "success",
+                    button: true,
+                    dangerMode: false
+                });
+            }
+
         }
 
         //The registration has failed.
