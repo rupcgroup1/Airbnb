@@ -191,7 +191,6 @@
     <Content Include="Pages\hostManagement.html" />
     <Content Include="Pages\images\airbnb1.png" />
     <Content Include="Pages\reservationsManagment.html" />
-    <Content Include="Pages\rss.html" />
     <Content Include="Pages\usersManagment.html" />
     <Content Include="Scripts\ajaxCalls.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -243,8 +242,6 @@
     <Content Include="Pages\bat\ReCaptcha\RequestMethod\SocketPost.php" />
     <Content Include="Pages\bat\ReCaptcha\RequestParameters.php" />
     <Content Include="Pages\bat\ReCaptcha\Response.php" />
-    <Content Include="Pages\buttons.html" />
-    <Content Include="Pages\contact_us.html" />
     <Content Include="Pages\css\bootstrap.css" />
     <Content Include="Pages\css\fonts.css" />
     <Content Include="Pages\css\style.css" />
@@ -254,7 +251,6 @@
     <Content Include="Pages\fonts\lg.svg" />
     <Content Include="Pages\fonts\linecons.svg" />
     <Content Include="Pages\fonts\materialdesignicons-webfont.svg" />
-    <Content Include="Pages\icons.html" />
     <Content Include="Pages\images\08_Agency_Page_16.jpg" />
     <Content Include="Pages\images\agency-1.jpg" />
     <Content Include="Pages\images\agency-2.jpg" />
@@ -453,19 +449,8 @@
     <Content Include="Pages\js\script.js" />
     <Content Include="Pages\js\suppot.js" />
     <Content Include="Pages\login.html" />
-    <Content Include="Pages\pricing.html" />
-    <Content Include="Pages\progress-bars.html" />
     <Content Include="Pages\property-catalog-grid.html" />
     <Content Include="Pages\property-catalog-single.html" />
-    <Content Include="Pages\right_sidebar_blog.html" />
-    <Content Include="Pages\services-2.html" />
-    <Content Include="Pages\services.html" />
-    <Content Include="Pages\submit-property.html" />
-    <Content Include="Pages\tables.html" />
-    <Content Include="Pages\tabs-accordion.html" />
-    <Content Include="Pages\terms.html" />
-    <Content Include="Pages\timeline.html" />
-    <Content Include="Pages\typography.html" />
     <Content Include="Scripts\renderFunction.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
