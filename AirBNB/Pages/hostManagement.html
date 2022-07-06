@@ -89,6 +89,7 @@
         //Success function for getting the hosts and now we will render with datatable.
         function successCB(hostsData) {
             renderSummary(hostsData);
+            console.log(hostsData);
 
             try {
                 tbl = $('#hostsData').DataTable({
@@ -97,7 +98,7 @@
                     columns: [
                         {
                             render: function (data, type, row, meta) {
-                                return "<div class='col-xs d-md-none'><b>Id</b></div>" + row.HostId;
+                                return "<div class='col-xs d-md-none'><b>Id</b></div>" + row.Id;
                             }
                         },
                         {
