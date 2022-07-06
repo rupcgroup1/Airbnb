@@ -1,8 +1,8 @@
 ﻿<!DOCTYPE html>
 <html class="wide wow-animation" lang="en">
-<head>
+  <head>
     <!-- Site Title-->
-    <title>Login</title>
+    <title>Additions</title>
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
@@ -13,146 +13,7 @@
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/fonts.css">
     <link rel="stylesheet" href="css/style.css">
-
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="../Scripts/ajaxCalls.js"></script>
-    <script src="../Scripts/jquery-3.3.1.min.js"></script>
-    <script>
-
-        $(document).ready(function () {
-            //Removing the users that exist in localStorage.
-            localStorage.removeItem("userLogged");
-
-            // Hide admin pages.
-            $('#adminPages').hide();
-
-            //Routing the submit login button.
-            $('#login').submit(login);
-
-            //Routing the submit register button.
-            $('#register').submit(register);
-
-            //Validating the email
-            $('#email').on('blur', validateEmail);
-        });
-
-        //Validating the email
-        function validateEmail() {
-            let email = $('#email').val();
-            var emailpattern = /\S+@\S+\.\S+/;
-            if (emailpattern.test(email) == true) {
-                this.validity.valid = true;
-                this.setCustomValidity('');
-                
-            }
-            else {
-                this.validity.valid = false;
-                this.setCustomValidity('email is not valid, please enter again');
-                swal({ // this will open a dialouge
-                    title: "Your email is not valid",
-                    text: "Please enter again.",
-                    icon: "warning",
-                    button: true,
-                    dangerMode: true
-                })
-            }
-
-        }
-
-        //Form function, here we register the user.
-        function register() {
-            let username = $('#name-2').val();
-            let password = $('#password-2').val();
-            let email = $('#email').val();
-
-            let user = {
-                Username: username,
-                Password: password,
-                Email: email
-            };
-
-            let api = `../api/Users/insertUser`;
-            ajaxCall("POST", api, JSON.stringify(user), insertSCB, insertECB);
-
-            return false;
-        }
-        //The registration has completed successfully
-        function insertSCB(result) {
-
-            if (result == -1) {
-                swal({ // this will open a dialouge
-                    title: "Email already exist!",
-                    text: "Please enter other email.",
-                    icon: "warning",
-                    button: true,
-                    dangerMode: true
-                });
-            }
-            else if (result == 0) {
-                swal({ // this will open a dialouge
-                    title: "Some thing missing!",
-                    text: "Please try again later.",
-                    icon: "warning",
-                    button: true,
-                    dangerMode: true
-                });
-            }
-            else {
-                swal({ // this will open a dialouge
-                    title: "User added successfuly!",
-                    text: "",
-                    icon: "success",
-                    button: true,
-                    dangerMode: false
-                });
-            }
-
-        }
-
-        //The registration has failed.
-        function insertECB(error) {
-            console.log(error);
-        }
-
-        //Form function, the user log in if he exist in DB.
-        function login() {
-            let email = $('#name-1').val();
-            let password = $('#password-1').val();
-
-            let user = {
-                Password: password,
-                Email: email
-            }
-
-            let api = `../api/Users/checkUser`;
-            ajaxCall("POST", api, JSON.stringify(user), userExistSCB, userErrorCB);
-
-            return false;
-        }
-
-        //Success User exist function, if the user exist we relocate him to index.html.
-        function userExistSCB(user) {
-            if (user == null) {
-                swal({ // this will open a dialouge
-                    title: "Your email/username or passsword is not correct.",
-                    text: "Please enter again or register.",
-                    icon: "warning",
-                    button: true,
-                    dangerMode: true
-                })
-                return;
-            }
-            localStorage.setItem("userLogged", JSON.stringify(user));
-            location.replace("index.html");
-        }
-
-        //Error User exist function, if the user exist we relocate him to index.html.
-        function userErrorCB(error) {
-            console.log("user not exist");
-        }
-
-    </script>
-</head>
+  </head>
   <body>
     <div class="preloader">
       <div class="preloader-body">
@@ -163,6 +24,7 @@
     </div>
     <!-- Page-->
     <div class="page">
+        <!-- Page Header-->
         <!-- Page Header-->
         <header class="page-head">
             <!-- RD Navbar-->
@@ -267,71 +129,126 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
-                            <h1>Login/Register</h1>
+                            <h1>Additions</h1>
                             <p></p>
                             <ol class="breadcrumb">
                                 <li><a href="index.html">Home</a></li>
-                                <li><a href="#">Extras</a></li>
-                                <li class="active">Login/Register</li>
+                                <li class="active">Additions</li>
                             </ol>
                         </div>
                     </div>
                 </div>
             </section>
-            <!--Section Login-->
-            <section class="section-lg">
+            <!--Section Button sizes-->
+            <section class="section-lg overflow-ellipsis grid" style="text-align:right">
                 <div class="container">
-                    <h2>Sign In</h2>
+                    <h2>Our Additions</h2>
                     <hr>
                     <div class="row">
-                        <div class="col-12 col-md-8 col-xl-5">
-                            <div class="tabs-custom tabs-corporate" id="tabs-login">
-                                <ul class="nav nav-tabs">
-                                    <li class="nav-item" role="presentation"><a class="nav-link" href="#tabs-login-1" data-bs-toggle="tab">Login</a></li>
-                                    <li class="nav-item" role="presentation"><a class="nav-link" href="#tabs-login-2" data-bs-toggle="tab">Registration</a></li>
-                                </ul>
-                                <div class="tab-content">
-                                    <div class="tab-pane fade" id="tabs-login-1">
-                                        <!-- Login form-->
-                                        <form id="login">
-                                            <div class="form-wrap">
-                                                <label class="form-label" for="name-1">Email</label>
-                                                <input class="form-input" id="name-1" type="text" name="name" required>
-                                            </div>
-                                            <div class="form-wrap">
-                                                <label class="form-label" for="password-1">Password</label>
-                                                <input class="form-input" id="password-1" type="password" name="password" required>
-                                            </div>
-                                            <div class="form-wrap-btn">
-                                                <button class="btn btn-sushi btn-sm btn-min-width-xs" type="submit">Enter</button>
-                                                <p>or enter with</p>
-                                                <div class="icon-group"><a class="icon icon-sm icon-social fa-facebook" href="#"></a><a class="icon icon-sm icon-social fa-twitter" href="#"></a><a class="icon icon-sm icon-social fa-google-plus" href="#"></a></div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="tab-pane fade" id="tabs-login-2">
-                                        <!-- Register form-->
-                                        <form id="register">
-                                            <div class="form-wrap">
-                                                <label class="form-label" for="name-2">Username</label>
-                                                <input class="form-input" id="name-2" type="text" min="4" name="name" required>
-                                            </div>
-                                            <div class="form-wrap">
-                                                <label class="form-label" for="email">E-mail</label>
-                                                <input class="form-input" id="email" type="text" name="name" required>
-                                            </div>
-                                            <div class="form-wrap">
-                                                <label class="form-label" for="password-2">Password</label>
-                                                <input class="form-input" id="password-2" type="password" min="4" name="password" required>
-                                            </div>
-                                            <div class="form-wrap-btn">
-                                                <button class="btn btn-sushi btn-sm btn-min-width-xs" type="submit">Enter</button>
-                                                <p>or enter with</p>
-                                                <div class="icon-group"><a class="icon icon-sm icon-social fa-facebook" href="#"></a><a class="icon icon-sm icon-social fa-twitter" href="#"></a><a class="icon icon-sm icon-social fa-google-plus" href="#"></a></div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
+                        <div class="col-12">
+                            <div class="well-1 bg-gray-dark">
+                                <h6 class="fw-bold">1/1</h6>
+                                <p>Welcome to our wonderful world. We sincerely hope that each and every user entering our website will find exactly what he/she is looking for. With advanced features of activating account and new login widgets, you will definitely have a great experience of using our web page. It will tell you lots of interesting things about our company, its products and services, highly professional staff and happy customers. Our site design and navigation has been thoroughly thought out.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="well-1 bg-gray-dark">
+                                <h6 class="fw-bold">1/2</h6>
+                                <p>Welcome to our wonderful world. We sincerely hope that each and every user entering our website will find exactly what he/she is looking for. With advanced features of activating account and new login widgets, you will definitely have a great experience of using our web page.</p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="well-1 bg-gray-dark">
+                                <h6 class="fw-bold">הכנסת ביקורת חדש</h6>
+                                <p>.בדף של דירה ספציפית ניתן להזין ביקורת חדשה בהינתן התנאים הבאים</p>
+                                <p>.המשתמש מחובר לאתר-</p>
+                                <p>.קיימת הזמנה בעבר או בעתיד למשתמש המחובר עבור בדירה הנ"ל-</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="well-1 bg-gray-dark">
+                                <h6 class="fw-bold">1/3</h6>
+                                <p>Welcome to our wonderful world. We sincerely hope that each and every user entering our website will find exactly what he/she is looking for.</p>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="well-1 bg-gray-dark">
+                                <h6 class="fw-bold">1/3</h6>
+                                <p>Welcome to our wonderful world. We sincerely hope that each and every user entering our website will find exactly what he/she is looking for.</p>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="well-1 bg-gray-dark">
+                                <h6 class="fw-bold">1/3</h6>
+                                <p>Welcome to our wonderful world. We sincerely hope that each and every user entering our website will find exactly what he/she is looking for.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="well-1 bg-gray-dark">
+                                <h6 class="fw-bold">גוגל מפות</h6>
+                                <p>אפשר להזיז את המפה לכל צד, ניתן לעשות זום כלפי חוץ או פנים, ניתן לצפות ברחוב ולעבור למצב לווין </p>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="well-1 bg-gray-dark">
+                                <h6 class="fw-bold">חיפוש חכם</h6>
+                                <p>בנוסף לחיפוש שהתבקשנו לבצע, ישנה האופציה לחפש לפי מילת מפתח. כאשר היא תחפש בתכולת הדירה שמה וסוגה</p>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="well-1 bg-gray-dark">
+                                <h6 class="fw-bold">תצוגת סיכום בדפי ניהול</h6>
+                                <p>בדפי הניהול, בנוסף לשלל הנתונים עבור הדירות, המשתמשים והמארחים ישנו מתחת לטבלה סיכום כולל.</p>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="well-1 bg-gray-dark">
+                                <h6 class="fw-bold">1/4</h6>
+                                <p>Welcome to our wonderful world. We sincerely hope that each and every user entering our website will find exactly what he/she is looking for.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <div class="well-1 bg-gray-dark">
+                                <h6 class="fw-bold">1/6</h6>
+                                <p>Welcome to our wonderful world.</p>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="well-1 bg-gray-dark">
+                                <h6 class="fw-bold">1/6</h6>
+                                <p>Welcome to our wonderful world.</p>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="well-1 bg-gray-dark">
+                                <h6 class="fw-bold">1/6</h6>
+                                <p>Welcome to our wonderful world.</p>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="well-1 bg-gray-dark">
+                                <h6 class="fw-bold">1/6</h6>
+                                <p>Welcome to our wonderful world.</p>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="well-1 bg-gray-dark">
+                                <h6 class="fw-bold">1/6</h6>
+                                <p>Welcome to our wonderful world.</p>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="well-1 bg-gray-dark">
+                                <h6 class="fw-bold">1/6</h6>
+                                <p>Welcome to our wonderful world.</p>
                             </div>
                         </div>
                     </div>
@@ -339,6 +256,7 @@
             </section>
         </main>
         <!-- Page Footer-->
+
         <section class="section-lg bg-gray text-center text-lg-start">
             <div class="container">
                 <h2>Our Advantages</h2>
