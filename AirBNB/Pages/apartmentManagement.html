@@ -10,7 +10,7 @@
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     <style>
         table.dataTable tbody tr.selected td, table.dataTable tbody tr.selected {
-            background-color: darkslategray !important;
+            background-color: pink !important;
         }
     </style>
 
@@ -79,19 +79,39 @@
                     data: apartments,
                     pageLength: 5,
                     columns: [
-                        { data: "Id" },
-                        { data: "Name" },
-                        { data: "Location" },
-                        { data: "DaysRented" },
                         {
-                            data: "Accommodates", render: function (data, type, row, meta) {
-                                return renderPersons(row.Accommodates);
+                            render: function (data, type, row, meta) {
+                                return "<div class='col-xs d-md-none'><b>id</b></div>" + row.Id;
                             }
                         },
-                        { data: "NumOfCancelation" },
                         {
-                            data: "ReviewRating", render: function (data, type, row, meta) {
-                                return renderStars(row.ReviewRating);
+                            render: function (data, type, row, meta) {
+                                return "<div class='col-xs d-md-none'><b>Name</b></div>" + row.Name;
+                            }
+                        },
+                        {
+                            render: function (data, type, row, meta) {
+                                return "<div class='col-xs d-md-none'><b>Location</b></div>" + row.Location;
+                            }
+                        },
+                        {
+                            render: function (data, type, row, meta) {
+                                return "<div class='col-xs d-md-none'><b>Days Rented</b></div>" + row.DaysRented;
+                            }
+                        },
+                        {
+                            render: function (data, type, row, meta) {
+                                return "<div class='col-xs d-md-none'><b>Accommodates</b></div>" +renderPersons(row.Accommodates);
+                            }
+                        },
+                        {
+                            render: function (data, type, row, meta) {
+                                return "<div class='col-xs d-md-none'><b>Num Of Cancelation</b></div>" + row.NumOfCancelation;
+                            }
+                        },
+                        {
+                            render: function (data, type, row, meta) {
+                                return "<div class='col-xs d-md-none'><b>Review Rating</b></div>" + renderStars(row.ReviewRating);
                             }
                         }
                     ]

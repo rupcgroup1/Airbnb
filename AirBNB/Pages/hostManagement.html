@@ -10,7 +10,7 @@
     <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     <style>
         table.dataTable tbody tr.selected td, table.dataTable tbody tr.selected {
-            background-color: darkslategray !important;
+            background-color: pink !important;
         }
     </style>
 
@@ -95,11 +95,31 @@
                     data: hostsData,
                     pageLength: 5,
                     columns: [
-                        { data: "Id" },
-                        { data: "Name" },
-                        { data: "NumOfApartments" },
-                        { data: "TotalIncome" },
-                        { data: "NumOfCancelation" },
+                        {
+                            render: function (data, type, row, meta) {
+                                return "<div class='col-xs d-md-none'><b>Id</b></div>" + row.HostId;
+                            }
+                        },
+                        {
+                            render: function (data, type, row, meta) {
+                                return "<div class='col-xs d-md-none'><b>Name</b></div>" + row.Name;
+                            }
+                        },
+                        {
+                            render: function (data, type, row, meta) {
+                                return "<div class='col-xs d-md-none'><b>Apartments</b></div>" + row.NumOfApartments;
+                            }
+                        },
+                        {
+                            render: function (data, type, row, meta) {
+                                return "<div class='col-xs d-md-none'><b>Total Income</b></div>" + row.TotalIncome;
+                            }
+                        },
+                        {
+                            render: function (data, type, row, meta) {
+                                return "<div class='col-xs d-md-none'><b>Num Of Cancelation</b></div>" + row.NumOfCancelation;
+                            }
+                        }
                     ],
                 });
             }

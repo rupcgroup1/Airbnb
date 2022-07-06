@@ -11,9 +11,8 @@
     <style>
 
         table.dataTable tbody tr.selected td, table.dataTable tbody tr.selected {
-            background-color: darkslategray !important;
+            background-color: pink !important;
         }
-
     </style>
 
     <!-- Data Table-->
@@ -102,14 +101,42 @@
                     data: usersData,
                     pageLength: 5,
                     columns: [
-                        { data: "Id" },
-                        { data: "Email" },
-                        { data: "Username" },
-                        { data: "RegisteredFrom" },
-                        { data: "NumOfRentals" },
-                        { data: "TotalIncome" },
-                        { data: "NumOfCancelation" }
-                    ],
+                        {
+                            render: function (data, type, row, meta) {
+                                return "<div class='col-xs d-md-none'><b>id</b></div>" + row.Id;
+                            }
+                        },
+                        {
+                            render: function (data, type, row, meta) {
+                                return "<div class='col-xs d-md-none'><b>Email</b></div>" + row.Email;
+                            }
+                        },
+                        {
+                            render: function (data, type, row, meta) {
+                                return "<div class='col-xs d-md-none'><b>User name</b></div>" + row.Username;
+                            }
+                        },
+                        {
+                            render: function (data, type, row, meta) {
+                                return "<div class='col-xs d-md-none'><b>Registered From</b></div>" + row.RegisteredFrom;
+                            }
+                        },
+                        {
+                            render: function (data, type, row, meta) {
+                                return "<div class='col-xs d-md-none'><b>Num Of Rentals</b></div>" + row.NumOfRentals;
+                            }
+                        },
+                        {
+                            render: function (data, type, row, meta) {
+                                return "<div class='col-xs d-md-none'><b>Total Income</b></div>" + row.TotalIncome;
+                            }
+                        },
+                        {
+                            render: function (data, type, row, meta) {
+                                return "<div class='col-xs d-md-none'><b>Num Of Cancelation</b></div>" + row.NumOfCancelation;
+                            }
+                        }
+                        ]
                 });
             }
             catch (err) {
