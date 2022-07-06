@@ -182,7 +182,6 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Models\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Pages\additions.html" />
@@ -218,6 +217,7 @@
     <Content Include="Models\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Models\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Models\fonts\glyphicons-halflings-regular.woff2" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\commonFunctions.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -643,18 +643,6 @@
     <Folder Include="AirBNB\Models\" />
     <Folder Include="AirBNB\obj\Debug\TempPE\" />
     <Folder Include="App_Data\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.min.css.map" />
