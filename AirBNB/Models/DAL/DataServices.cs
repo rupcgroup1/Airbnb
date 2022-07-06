@@ -379,7 +379,6 @@ namespace AirBNB.Models.DAL
         {
             SqlCommand command = new SqlCommand();
 
-            command.Parameters.AddWithValue("@username", u.Username);
             command.Parameters.AddWithValue("@password", u.Password);
             command.Parameters.AddWithValue("@email", u.Email);
             command.CommandText = "PSPcheckUserExist";

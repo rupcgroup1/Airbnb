@@ -39,9 +39,12 @@
         //Validating the email
         function validateEmail() {
             let email = $('#email').val();
-            var re = /\S+@\S+\.\S+/;
-            if (re.test(email) == true)
+            var emailpattern = /\S+@\S+\.\S+/;
+            if (emailpattern.test(email) == true) {
                 this.validity.valid = true;
+                this.setCustomValidity('');
+                
+            }
             else {
                 this.validity.valid = false;
                 this.setCustomValidity('email is not valid, please enter again');
@@ -93,10 +96,8 @@
         function login() {
             let email = $('#name-1').val();
             let password = $('#password-1').val();
-            let name = $('#name-1').val();
 
             let user = {
-                Username: name,
                 Password: password,
                 Email: email
             }
@@ -272,7 +273,7 @@
                                         <!-- Login form-->
                                         <form id="login">
                                             <div class="form-wrap">
-                                                <label class="form-label" for="name-1">Username or e-mail</label>
+                                                <label class="form-label" for="name-1">Email</label>
                                                 <input class="form-input" id="name-1" type="text" name="name" required>
                                             </div>
                                             <div class="form-wrap">

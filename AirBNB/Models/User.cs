@@ -75,6 +75,13 @@ namespace AirBNB.Models
             this.Type = 'C';
         }
 
+        public User(string email, string password)
+        {
+            this.email = email;
+            this.password = password;
+            this.Type = 'C';
+        }
+
         public User(int id)
         {
             this.id = id;
@@ -96,11 +103,18 @@ namespace AirBNB.Models
         public int TotalIncome { get => totalIncome; set => totalIncome = value; }
         public int NumOfCancelation { get => numOfCancelation; set => numOfCancelation = value; }
         public char Type { get => type; set => type = value; }
-
+  
         public int insertUser()
         {
             DataServices ds = new DataServices();
-            return ds.insertUser(this);
+            try
+            {
+                return ds.insertUser(this);
+            }
+            catch(Exception e)
+            {
+                return -1;
+            }
         }
 
         public User checkUser()
