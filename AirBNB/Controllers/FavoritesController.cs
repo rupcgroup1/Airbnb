@@ -22,6 +22,8 @@ namespace AirBNB.Controllers
             return "value";
         }
 
+        [HttpPost]
+        [Route("api/insertFavorite")]
         // POST api/<controller>
         public int Post([FromBody]Favorite f)
         {

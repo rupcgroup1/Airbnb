@@ -478,13 +478,51 @@
             if (localStorage.getItem("userLogged") != undefined)
                 userID = JSON.parse(localStorage.getItem("userLogged"));
 
+            let favorite = {
+                UserId: userID,
+                ApartmentId : apartmentID
+            }
+
             //First we gonna check if the user has this apartment already in his favorites.
-            let api = `../api/User/toFavorites/${apartmentID}/${userID}`;
-            ajaxCall("POST", api, "", successFavoriteCB, errorCB);
+            let api = `../api/Favorites/insertFavorite`;
+            ajaxCall("POST", api, JSON.stringify(favorite), successFavoriteCB, errorCB);
         }
 
-        function successFavoriteCB(success) {
-            console.log(success);
+        function successFavoriteCB(res) {
+            console.log(res);
+            if (res == 0) {
+                swal({ // this will open a dialouge
+                    title: "This apartment already in your favorites",
+                    text: "Press Ok for delete from favorites.",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true
+                })
+                        .then(function (ok) {
+                            if (ok) {
+                                let favorite = {
+                                    UserId: userID,
+                                    ApartmentId: apartmentID
+                                }
+                                let api = `../api/Favorites/deleteFavorite`;
+                                ajaxCall("DELETE", api, JSON.stringify(favorite), deleteFavoriteSCB, errorCB);
+                            }
+                            else swal("Apartment stays in your favorites.");
+                        });
+            }
+            else {
+                swal({ // this will open a dialouge
+                    title: "Added to favorites!",
+                    text: "",
+                    icon: "success",
+                    buttons: true,
+                    dangerMode: false
+                })
+            }
+        }
+
+        function deleteFavoriteSCB() {
+
         }
 
 
