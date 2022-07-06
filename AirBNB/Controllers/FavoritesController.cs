@@ -17,13 +17,16 @@ namespace AirBNB.Controllers
         }
 
         // GET api/<controller>/5
-        public string Get(int id)
+        [HttpGet]
+        [Route("api/Favorites/getAllFavorites")]
+        public List<Favorite> Get(int userId)
         {
-            return "value";
+            Favorite f = new Favorite();
+            return f.getAllFavorites(userId);
         }
 
         [HttpPost]
-        [Route("api/insertFavorite")]
+        [Route("api/Favorites/insertFavorite")]
         // POST api/<controller>
         public int Post([FromBody]Favorite f)
         {
@@ -36,8 +39,11 @@ namespace AirBNB.Controllers
         }
 
         // DELETE api/<controller>/5
-        public void Delete(int id)
+        [HttpDelete]
+        [Route("api/Favorites/deleteFromFavorites")]
+        public List<Favorite> Delete([FromBody]Favorite f)
         {
+            return f.deleteFromFavorite();
         }
     }
 }

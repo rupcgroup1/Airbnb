@@ -878,7 +878,7 @@ namespace AirBNB.Models.DAL
         {
             SqlCommand command = new SqlCommand();
 
-            command.Parameters.AddWithValue("@userId", f.IserId);
+            command.Parameters.AddWithValue("@userId", f.UserId);
             command.Parameters.AddWithValue("@apartmentId", f.ApartmentId);
             command.CommandText = "PSPinsertFavorite";
             command.Connection = con;
@@ -889,7 +889,7 @@ namespace AirBNB.Models.DAL
         }
 
         // Get favorite and search if exist.
-        public Favortie checkFavorite(Favorite f)
+        public Favorite checkFavorite(Favorite f)
         {
             SqlConnection con = Connect();
 
@@ -915,15 +915,86 @@ namespace AirBNB.Models.DAL
         {
             SqlCommand command = new SqlCommand();
 
-            command.Parameters.AddWithValue("@userId", f.IserId);
+            command.Parameters.AddWithValue("@userId", f.UserId);
             command.Parameters.AddWithValue("@apartmentId", f.ApartmentId);
-            command.CommandText = "PSPcheckfavotireExist";
+            command.CommandText = "PSPcheckFavoriteExist";
             command.Connection = con;
             command.CommandType = System.Data.CommandType.StoredProcedure;
             command.CommandTimeout = 10; // in seconds
 
             return command;
         }
+
+        // Delete reservation by userID.
+        public List<Favorite> deleteFromFavorite(Favorite f)
+        {
+            // Connect
+            SqlConnection con = Connect();
+
+            // Create Command
+            SqlCommand command = CreateDeleteCommand(con, f);
+
+            // Execute
+            int numAffected = command.ExecuteNonQuery();
+
+            // Close Connection
+            con.Close();
+            
+
+            return getAllFavorites(f.UserId);
+        }
+
+        //Creating cancel command for specific reservation.
+        private SqlCommand CreateDeleteCommand(SqlConnection con, Favorite f)
+        {
+            SqlCommand command = new SqlCommand();
+
+            command.Parameters.AddWithValue("@userId", f.UserId);
+            command.Parameters.AddWithValue("@apartmentId", f.ApartmentId);
+            command.CommandText = "PSPdeleteFavorite";
+            command.Connection = con;
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.CommandTimeout = 10; // in seconds
+
+            return command;
+        }
+
+        public List<Favorite> getAllFavorites(int id)
+        {
+            SqlConnection con = Connect();
+
+            // Create Command
+            SqlCommand command = createSelectGetAllFavoriteCommand(con,id);
+
+            SqlDataReader dr = command.ExecuteReader(CommandBehavior.CloseConnection);
+
+            List<Favorite> list = new List<Favorite>();
+
+
+            while (dr.Read())
+            {
+                int apartmentId = Convert.ToInt32(dr["apartmentId"]);
+                list.Add(new Favorite(id, apartmentId));
+            }
+
+            con.Close();
+            return list;
+        }
+
+        private SqlCommand createSelectGetAllFavoriteCommand(SqlConnection con,int id)
+        {
+
+            SqlCommand command = new SqlCommand();
+            command.Parameters.AddWithValue("@userId", id);
+            command.CommandText = "PSPgetAllUserFavorites";
+            command.Connection = con;
+            command.CommandType = System.Data.CommandType.StoredProcedure;
+            command.CommandTimeout = 10; // in seconds
+
+            return command;
+        }
+
+
 
 
     }

@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta charset="utf-8">
-    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     <!-- Stylesheets-->
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Lato:400,700,900,400italic">
     <link rel="stylesheet" href="css/bootstrap.css">
@@ -55,7 +54,7 @@
             ajaxCall("GET", `../api/rss`, "", successGetRSS, errorGetRSS);
 
             //Getting the choosen apartment id.
-            let apartmentID = JSON.parse(localStorage.getItem("apartmentId"));
+            apartmentID = JSON.parse(localStorage.getItem("apartmentId")); // global variable
             let api = `../api/Apartments/${apartmentID}`;
             ajaxCall("GET", api, "", successApartmentCB, errorCB);
 
@@ -269,10 +268,8 @@
                     });
                 return false;
             }
-            let apartmentID = 0;
-            let id = 0;
-            if (localStorage.getItem("apartmentId") != undefined)
-                apartmentID = JSON.parse(localStorage.getItem("apartmentId"));
+
+
             if (localStorage.getItem("userLogged") != undefined)
                 id = JSON.parse(localStorage.getItem("userLogged")).Id;
             if (apartmentID == 0 || id == 0)
@@ -448,9 +445,7 @@
 
         function insertReviewSCB(success) {
             console.log(success);
-            if (localStorage.getItem("apartmentId") != undefined)
-                apartmentID = JSON.parse(localStorage.getItem("apartmentId"));
-            renderReviews(apartmentID);
+            renderReviews(apartmentID); // apartmentID from global variable at document ready.
             swal({ // this will open a dialouge
                 title: "Your review added successfuly!",
                 text: "Thank you for grading us",
@@ -476,18 +471,19 @@
             if (localStorage.getItem("apartmentId") != undefined)
                 apartmentID = JSON.parse(localStorage.getItem("apartmentId"));
             if (localStorage.getItem("userLogged") != undefined)
-                userID = JSON.parse(localStorage.getItem("userLogged"));
+                user = JSON.parse(localStorage.getItem("userLogged"));
 
             let favorite = {
-                UserId: userID,
+                UserId: user.Id,
                 ApartmentId : apartmentID
             }
 
-            //First we gonna check if the user has this apartment already in his favorites.
+            //First we gonna check if the user has this apartment already in his favorites. --- we are checking at DAL 
             let api = `../api/Favorites/insertFavorite`;
             ajaxCall("POST", api, JSON.stringify(favorite), successFavoriteCB, errorCB);
         }
 
+        //Success callback for success insertfavorite function
         function successFavoriteCB(res) {
             console.log(res);
             if (res == 0) {
@@ -501,13 +497,13 @@
                         .then(function (ok) {
                             if (ok) {
                                 let favorite = {
-                                    UserId: userID,
+                                    UserId: user.Id,
                                     ApartmentId: apartmentID
                                 }
-                                let api = `../api/Favorites/deleteFavorite`;
+                                let api = `../api/Favorites/deleteFromFavorites`;
                                 ajaxCall("DELETE", api, JSON.stringify(favorite), deleteFavoriteSCB, errorCB);
                             }
-                            else swal("Apartment stays in your favorites.");
+                            else swal("No change");
                         });
             }
             else {
@@ -519,10 +515,19 @@
                     dangerMode: false
                 })
             }
+
         }
 
-        function deleteFavoriteSCB() {
-
+        //Deleting from favorites and returning the new array.
+        function deleteFavoriteSCB(favorites) {
+            console.log(favorites);
+            swal({ // this will open a dialouge
+                title: "Deleted successfully",
+                text: "",
+                icon: "success",
+                buttons: true,
+                dangerMode: false
+            });
         }
 
 
