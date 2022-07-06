@@ -17,6 +17,7 @@
     <script src="../Scripts/renderFunction.js"></script>
     <script src="../Scripts/ajaxCalls.js"></script>
     <script src="../Scripts/jquery-3.3.1.min.js"></script>
+    <script src="../Scripts/favoritesFunctions.js"></script>
 
     <!--Weather-->
     <link href="css/weather.css" rel="stylesheet" />
@@ -93,7 +94,7 @@
         // Success CB for getting weather.
         function successGetRSS(data) {
             console.log(data);
-           // minD, weatherType, wind, humidity, uvRisk, min max - min1, max1, min2, max2, min3, max3 day2, day2
+            // minD, weatherType, wind, humidity, uvRisk, min max - min1, max1, min2, max2, min3, max3 day2, day2
 
             //Today
             let minD = 0;
@@ -107,8 +108,8 @@
 
             let toTake = moreDescToday.indexOf("Minimum");
             let weatherType = "";
-            for (let i = 1; i < toTake; i++) 
-                weatherType +=  moreDescToday[i] + " ";
+            for (let i = 1; i < toTake; i++)
+                weatherType += moreDescToday[i] + " ";
 
             //Parameters today
 
@@ -116,7 +117,7 @@
             $("#wind").html('<br/>Wind: ' + descToday[descToday.indexOf("Speed:") + 1]);
             $("#humidity").html("Humidity: " + (descToday[descToday.indexOf("Humidity:") + 1]).split(",")[0]);
             $("#uvRisk").html("UV Risk: " + descToday[descToday.indexOf("Risk:") + 1]);
-            
+
 
             //Tommorow
             let descTommorow = (data[5].split(' '));
@@ -130,7 +131,7 @@
             $("#min3").html(desc2Days[desc2Days.indexOf("Minimum") + 2])
             $("#max3").html(desc2Days[desc2Days.indexOf("Maximum") + 2])
 
-            
+
 
 
 
@@ -458,76 +459,6 @@
 
         function insertReviewECB(error) {
             console.log(error);
-        }
-
-        //Add to favorites function
-        function addToFavorites() {
-            if (checkLogin() == false) {
-                alert("You need to log in");
-                return;
-            }
-        
-
-            if (localStorage.getItem("apartmentId") != undefined)
-                apartmentID = JSON.parse(localStorage.getItem("apartmentId"));
-            if (localStorage.getItem("userLogged") != undefined)
-                user = JSON.parse(localStorage.getItem("userLogged"));
-
-            let favorite = {
-                UserId: user.Id,
-                ApartmentId : apartmentID
-            }
-
-            //First we gonna check if the user has this apartment already in his favorites. --- we are checking at DAL 
-            let api = `../api/Favorites/insertFavorite`;
-            ajaxCall("POST", api, JSON.stringify(favorite), successFavoriteCB, errorCB);
-        }
-
-        //Success callback for success insertfavorite function
-        function successFavoriteCB(res) {
-            console.log(res);
-            if (res == 0) {
-                swal({ // this will open a dialouge
-                    title: "This apartment already in your favorites",
-                    text: "Press Ok for delete from favorites.",
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true
-                })
-                        .then(function (ok) {
-                            if (ok) {
-                                let favorite = {
-                                    UserId: user.Id,
-                                    ApartmentId: apartmentID
-                                }
-                                let api = `../api/Favorites/deleteFromFavorites`;
-                                ajaxCall("DELETE", api, JSON.stringify(favorite), deleteFavoriteSCB, errorCB);
-                            }
-                            else swal("No change");
-                        });
-            }
-            else {
-                swal({ // this will open a dialouge
-                    title: "Added to favorites!",
-                    text: "",
-                    icon: "success",
-                    buttons: true,
-                    dangerMode: false
-                })
-            }
-
-        }
-
-        //Deleting from favorites and returning the new array.
-        function deleteFavoriteSCB(favorites) {
-            console.log(favorites);
-            swal({ // this will open a dialouge
-                title: "Deleted successfully",
-                text: "",
-                icon: "success",
-                buttons: true,
-                dangerMode: false
-            });
         }
 
 

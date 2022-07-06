@@ -6,6 +6,11 @@
             width: 370px;
             height: 250px;
         }
+
+        span.fa-heart {
+            position: relative;
+            top: 30px;
+        }
     </style>
     <!-- Site Title-->
     <title>Search apartment</title>
@@ -24,6 +29,7 @@
     <script src="../Scripts/jquery-3.3.1.min.js"></script>
     <script src="../Scripts/renderFunction.js"></script>
     <script src="../Scripts/commonFunctions.js"></script>
+    <script src="../Scripts/favoritesFunctions.js"></script>
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
@@ -47,7 +53,8 @@
                 renderFilters(filters);
             }
 
-
+            // Routing favorite heart.
+            $('.favorites').click(addToFavorite);
 
             //Routing the submit button for filter search.
             $('#frmSubmit').submit(searchApartments);
@@ -81,6 +88,21 @@
 
             routeSingleApartmentHTML();
         });
+
+        // Function to insert or delete favorite.
+        function addToFavorite(event) {
+            event.preventDefault(); // Prevent href a tag.
+            apartmentID = this.id; // Global variable.
+            let favorite = {
+                UserId: user.Id,
+                ApartmentId: apartmentID
+            }
+
+            //First we gonna check if the user has this apartment already in his favorites. --- we are checking at DAL 
+            let api = `../api/Favorites/insertFavorite`;
+            ajaxCall("POST", api, JSON.stringify(favorite), successFavoriteCB, errorCB);
+            return false;
+        }
 
         //Rendering the page's number.
         function renderNumbers(index, apartment) {
@@ -154,6 +176,7 @@
 
                 let div = arrDivs.eq(i);
                 div.parent().parent().show();
+                div.parent().parent().children('a').attr('id', apartments[j].Id);
                 let str = apartments[j].Price + '$/<span class="mon text-regular">night</span>';
                 div.find('span').first().html(str);
                 div.find('a').html(apartments[j].Name);
@@ -406,6 +429,7 @@
                         <div class="col-12 col-xl-12">
                             <div class="row clearleft-custom-5">
                                 <div class="col-12 col-md-6">
+                                    <a class="favorites" href=""><span class="fa-heart"></span></a>
                                     <div class="thumbnail thumbnail-3">
                                         <a class="img-link" href="property-catalog-single.html"><img src="images/loading.gif" alt="" width="370" height="250" /></a>
                                         <div class="caption">
@@ -439,6 +463,7 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6">
+                                    <a class="favorites" href=""><span class="fa-heart"></span></a>
                                     <div class="thumbnail thumbnail-3">
                                         <a class="img-link" href="property-catalog-single.html"><img src="images/loading.gif" alt="" width="370" height="250" /></a>
                                         <div class="caption">
@@ -472,6 +497,7 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6">
+                                    <a href="" class="favorites"><span class="fa-heart"></span></a>
                                     <div class="thumbnail thumbnail-3">
                                         <a class="img-link" href="property-catalog-single.html"><img src="images/loading.gif" alt="" width="370" height="250" /></a>
                                         <div class="caption">
@@ -505,10 +531,11 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6">
+                                    <a class="favorites" href=""><span class="fa-heart"></span></a>
                                     <div class="thumbnail thumbnail-3">
                                         <a class="img-link" href="property-catalog-single.html"><img src="images/loading.gif" alt="" width="370" height="250" /></a>
                                         <div class="caption">
-                                            <h4><a class="text-sushi" href="property-catalog-single.html">---</a></h4><span class="thumbnail-price h5">$4,339.00/<span class="mon text-regular">--</span></span>
+                                            <h4><a class="text-sushi" href="property-catalog-single.html">---</a></h4><span class="thumbnail-price h5">---/<span class="mon text-regular">--</span></span>
                                             <ul class="describe-1">
                                                 <li>
                                                     <span class="icon-square icon-sm">
@@ -538,6 +565,7 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6">
+                                    <a class="favorites" href=""><span class="fa-heart"></span></a>
                                     <div class="thumbnail thumbnail-3">
                                         <a class="img-link" href="property-catalog-single.html"><img src="images/loading.gif" alt="" width="370" height="250" /></a>
                                         <div class="caption">
@@ -571,6 +599,7 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6">
+                                    <a class="favorites" href=""><span class="fa-heart"></span></a>
                                     <div class="thumbnail thumbnail-3">
                                         <a class="img-link" href="property-catalog-single.html"><img src="images/loading.gif" alt="" width="370" height="250" /></a>
                                         <div class="caption">
