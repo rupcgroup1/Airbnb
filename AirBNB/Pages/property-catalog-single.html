@@ -424,7 +424,8 @@
             let review = null;
             console.log((new Date()).toLocaleDateString('en-US'));
             for (var i = 0; i < reservations.length; i++) {
-                if (reservations[i].ApartmentID == apartmentID) {
+
+                if (reservations[i].ApartmentID == apartmentID && ((new Date() - new Date(reservations[i].To)) > 0) ) {
                     review = {
                         Listing_id: apartmentID,
                         Id: 0,
@@ -442,8 +443,8 @@
             }
             else {
                 swal({ // this will open a dialouge
-                    title: "You can't review before you book apartment.",
-                    text: "",
+                    title: "You can't review yet!",
+                    text: "Please wait until your back from this apartment.",
                     icon: "warning",
                     button: true,
                     dangerMode: true
