@@ -20,7 +20,7 @@
 
         $(document).ready(function () {
             //Removing the users that exist in localStorage.
-            localStorage.removeItem("userLogged");
+            localStorage.removeItem("group101_userLogged");
 
             // Hide admin pages.
             $('#adminPages').hide();
@@ -141,7 +141,7 @@
                 })
                 return;
             }
-            localStorage.setItem("userLogged", JSON.stringify(user));
+            localStorage.setItem("group101_userLogged", JSON.stringify(user));
             location.replace("index.html");
         }
 

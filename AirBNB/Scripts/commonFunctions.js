@@ -26,7 +26,7 @@ function searchApartments() {
     }
 
 
-    localStorage.setItem('filters', JSON.stringify(filters));
+    localStorage.setItem('group101_filters', JSON.stringify(filters));
 
     let api = `../api/Apartments/search/${keyword}/${from}/${to}/${minP}/${maxP}/${minD}/${maxD}/${beds}/${rating}`;
     ajaxCall('GET', api, "", searchSCB, errorCB);
@@ -59,7 +59,7 @@ function validateDates(checkIn, checkOut) {
 //Success CB function, the apartments that was found by filter will be shown in the grid catalog.
 function searchSCB(apartments) {
     console.log(apartments);
-    localStorage.setItem('searchApartments', JSON.stringify(apartments)); // Send apartments results.
-    localStorage.setItem('index', JSON.stringify(0));                     // Send starting index.
+    localStorage.setItem('group101_searchApartments', JSON.stringify(apartments)); // Send apartments results.
+    localStorage.setItem('group101_index', JSON.stringify(0));                     // Send starting index.
     window.location = 'property-catalog-grid.html';
 }

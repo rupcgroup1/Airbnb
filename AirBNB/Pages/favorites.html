@@ -38,51 +38,76 @@
     <script>
 
         $(document).ready(function () {
-
+            
+            $(".col-12 .col-md-6").hide(); // Hide apartments.
+            $(".pagination").hide();    // Hide numbers.
+        
             if (checkLogin() == false) {
-                alert("You need to log in");
-                return;
+                swal({ // this will open a dialouge
+                    title: "You need to log in",
+                    text: "Press ok to log in or cancel to Home.",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true
+                })
+                    .then(function (ok) {
+                        if (ok) location.replace("login.html");
+                        else location.replace("index.html");
+                    });
             }
-            user = JSON.parse(localStorage.getItem("userLogged"));
+            
+
+            user = JSON.parse(localStorage.getItem("group101_userLogged"));
             let id = user.Id;
             let api = `../api/Favorites/getAllApartmentsFavorites/${id}`
             ajaxCall("GET", api, "", apartmentsFavoritesSCB, errorCB);
 
             //Index is used for paging, array contains all apartments, index describes the amount of apartments the guest paged so far.
-            if (localStorage.getItem("index") != undefined)
-                index1 = JSON.parse(localStorage.getItem("index"));
+            if (localStorage.getItem("group101_indexFavorite") != undefined)
+                index1 = JSON.parse(localStorage.getItem("group101_indexFavorite"));
+            else {
+                index1 = 0;
+                localStorage.setItem("group101_indexFavorite", JSON.stringify(index1));
+            }
 
 
             // Routing favorite heart.
             $('.favorites').click(removeFavorite);
 
-            //Getting the next page, by reloading we re-rendering the apartments of the specific page we need.
-            $('#next').click(function () { // using the global variable apartmentCount to count apartment seen so far.
-                localStorage.setItem("index", JSON.stringify(apartmentCount));
-                location.reload();
-            });
-
-            //Getting the previous page, by reloading we re-rendering the apartments of the specific page we need.
-            $('#previous').click(function () { // using the global variable apartmentCount.
-                if (localStorage.getItem("index") != undefined)
-                    index1 = JSON.parse(localStorage.getItem("index"));
-                localStorage.setItem("index", JSON.stringify(index1 - 6));
-                location.reload();
-            });
-
-            //Getting the current page if the user skip pages / clicking specific num.
-            $('.showPage').click(function () { // using the global variable apartmentCount.
-                let id = this.id - 1; //this.id is the current page we clicked. every page contains up to 6 apartments.
-                localStorage.setItem("index", JSON.stringify(id * 6));
-                location.reload();
-            });
 
             routeSingleApartmentHTML();
         });
 
+        function routeNumbersButtons() {
+            //Getting the next page, by reloading we re-rendering the apartments of the specific page we need.
+            $(document).on("click", "#next", function () { // using the global variable apartmentCount to count apartment seen so far.
+                localStorage.setItem("group101_indexFavorite", JSON.stringify(apartmentCount));
+                location.reload();
+            });
+
+            //Getting the previous page, by reloading we re-rendering the apartments of the specific page we need.
+            $(document).on("click", "#previous", function () { // using the global variable apartmentCount.
+
+                // index1 global variable.
+                if (index1 < 6)
+                    return;
+
+                localStorage.setItem("group101_indexFavorite", JSON.stringify(index1 - 6));
+                location.reload();
+            });
+
+            //Getting the current page if the user skip pages / clicking specific num.
+            $(document).on("click", ".showPage", function () { // using the global variable apartmentCount.
+                let id = this.id - 1; //this.id is the current page we clicked. every page contains up to 6 apartments.
+                localStorage.setItem("group101_indexFavorite", JSON.stringify(id * 6));
+                location.reload();
+            });
+        }
+
 
         //Rendering the page's number.
         function renderNumbers(index, apartment) {
+            $(".pagination").show();
             if ((apartment.length - index) / 6 <= 4) {
                 tmp = index / 6;
                 tmp++;
@@ -104,12 +129,14 @@
                     $(".pagination li:nth-child(" + i + ")").html("<a class='showPage' id='" + tmp + "'>" + tmp++ + "</a>");
                 }
             }
+
+            routeNumbersButtons();
         }
 
 
         //Rendering the apartments of current page.
         function renderApartments(apartments, index) {
-
+            console.log(apartments);
             if (apartments.length > 0)
                 $('#results').html(apartments.length + " Apartments in favorites.");
             else $('#results').html("No apartments in your favorites.");
@@ -121,7 +148,7 @@
             if (apartments.length < apartmentCount)
                 apartmentCount = apartments.length;
 
-            $(".col-12 .col-md-6").hide();
+            //$(".col-12 .col-md-6").hide();
 
             size = 6;
             if ((apartments.length - index) < 6)
@@ -154,7 +181,7 @@
                 let href = 'property-catalog-single.html';
                 let id = this.id;
                 // Save apartment id in local storage
-                localStorage.setItem("apartmentId", JSON.stringify(id));
+                localStorage.setItem("group101_apartmentId", JSON.stringify(id));
                 // Go to the link
                 window.location = href;
             });

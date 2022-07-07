@@ -23,7 +23,6 @@
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta charset="utf-8">
-    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
 
     <!-- Stylesheets-->
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Lato:400,700,900,400italic">
@@ -45,7 +44,7 @@
             checkLogin();
 
             //Removing the previous filters in localStorage.
-            localStorage.removeItem("filters");
+            localStorage.removeItem("group101_filters");
 
             //Getting the homepage tiny list apartments which contains 6 apartments.
             api = `../api/Apartments/tinyGet`;
@@ -78,16 +77,16 @@
         //Getting all apartments success.
         function getAllApartmentsSCB(apartments) {
             console.log(apartments);
-            localStorage.setItem('searchApartments', JSON.stringify(apartments)); // Send apartments results.
-            localStorage.setItem('index', JSON.stringify(0));                     // Send starting index.
+            localStorage.setItem('group101_searchApartments', JSON.stringify(apartments)); // Send apartments results.
+            localStorage.setItem('group101_index', JSON.stringify(0));                     // Send starting index.
             window.location = 'property-catalog-grid.html';
         }
 
         //Getting all apartments by this specific property type.
         function successByProp(apartments) {
             console.log(apartments);
-            localStorage.setItem('searchApartments', JSON.stringify(apartments)); // Send apartments results.
-            localStorage.setItem('index', JSON.stringify(0));                     // Send starting index.
+            localStorage.setItem('group101_searchApartments', JSON.stringify(apartments)); // Send apartments results.
+            localStorage.setItem('group101_index', JSON.stringify(0));                     // Send starting index.
             window.location = 'property-catalog-grid.html';
         }
 
@@ -104,7 +103,7 @@
                 let href = 'property-catalog-single.html';
                 let id = this.id;
                 // Save apartment id in local storage
-                localStorage.setItem("apartmentId", JSON.stringify(id));
+                localStorage.setItem("group101_apartmentId", JSON.stringify(id));
                 // Go to the link
                 window.location = href;
             });
@@ -169,7 +168,7 @@
                 // Remember the link href
                 let id = this.id;
                 // Save apartment id in local storage
-                localStorage.setItem("apartmentId", JSON.stringify(id));
+                localStorage.setItem("group101_apartmentId", JSON.stringify(id));
                 // Go to the link
                 window.location = 'property-catalog-single.html';
             });

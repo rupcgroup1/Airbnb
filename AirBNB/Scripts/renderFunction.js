@@ -32,8 +32,8 @@ function checkLogin() {
 
     $('#adminPages').hide();
 
-    if (localStorage.getItem("userLogged") != undefined) {
-        user = JSON.parse(localStorage.getItem("userLogged"));
+    if (localStorage.getItem("group101_userLogged") != undefined) {
+        user = JSON.parse(localStorage.getItem("group101_userLogged"));
         $('.userLogin').html("Hello " + user.Username);
         $('.sign').html("Logout");
 

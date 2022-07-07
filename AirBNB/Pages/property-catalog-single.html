@@ -47,7 +47,7 @@
             loggedIn = checkLogin();
 
             //If apartment ID isnt at local storage so page not found.
-            if (localStorage.getItem("apartmentId") == undefined) {
+            if (localStorage.getItem("group101_apartmentId") == undefined) {
                 location.replace("404.html");
             }
 
@@ -55,7 +55,7 @@
             ajaxCall("GET", `../api/rss`, "", successGetRSS, errorGetRSS);
 
             //Getting the choosen apartment id.
-            apartmentID = JSON.parse(localStorage.getItem("apartmentId")); // global variable
+            apartmentID = JSON.parse(localStorage.getItem("group101_apartmentId")); // global variable
             let api = `../api/Apartments/${apartmentID}`;
             ajaxCall("GET", api, "", successApartmentCB, errorCB);
 
@@ -81,8 +81,8 @@
             $("#submitReview").submit(submitReview);
 
             // Rendering the wanted dates.
-            if (localStorage.getItem('filters') != undefined) {
-                let filters = JSON.parse(localStorage.getItem('filters'));
+            if (localStorage.getItem('group101_filters') != undefined) {
+                let filters = JSON.parse(localStorage.getItem('group101_filters'));
                 $('#from').val(filters.from);
                 $('#to').val(filters.to);
             }
@@ -278,8 +278,8 @@
             }
 
 
-            if (localStorage.getItem("userLogged") != undefined)
-                id = JSON.parse(localStorage.getItem("userLogged")).Id;
+            if (localStorage.getItem("group101_userLogged") != undefined)
+                id = JSON.parse(localStorage.getItem("group101_userLogged")).Id;
             if (apartmentID == 0 || id == 0)
                 return false;
 
@@ -406,7 +406,7 @@
             }
 
 
-            user = JSON.parse(localStorage.getItem("userLogged"));
+            user = JSON.parse(localStorage.getItem("group101_userLogged"));
 
             //We need to get all the user reservations and make sure he did rent the apartment.
 
@@ -419,8 +419,8 @@
 
         function successCB(reservations) {
             let apartmentID = 0;
-            if (localStorage.getItem("apartmentId") != undefined)
-                apartmentID = JSON.parse(localStorage.getItem("apartmentId"));
+            if (localStorage.getItem("group101_apartmentId") != undefined)
+                apartmentID = JSON.parse(localStorage.getItem("group101_apartmentId"));
             let review = null;
             console.log((new Date()).toLocaleDateString('en-US'));
             for (var i = 0; i < reservations.length; i++) {

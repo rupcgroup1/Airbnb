@@ -18,7 +18,6 @@
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta charset="utf-8">
-    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
     <!-- Stylesheets-->
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Lato:400,700,900,400italic">
     <link rel="stylesheet" href="css/bootstrap.css">
@@ -41,14 +40,14 @@
             checkLogin();
 
             //Checking if apartments exist in localStorage by filter.
-            if (localStorage.getItem("searchApartments") != undefined)
-                apartments1 = JSON.parse(localStorage.getItem("searchApartments"));
+            if (localStorage.getItem("group101_searchApartments") != undefined)
+                apartments1 = JSON.parse(localStorage.getItem("group101_searchApartments"));
             //Index is used for paging, array contains all apartments, index describes the amount of apartments the guest paged so far.
-            if (localStorage.getItem("index") != undefined)
-                index1 = JSON.parse(localStorage.getItem("index"));
+            if (localStorage.getItem("group101_index") != undefined)
+                index1 = JSON.parse(localStorage.getItem("group101_index"));
             // Client filters.
-            if (localStorage.getItem("filters") != undefined) {
-                filters = JSON.parse(localStorage.getItem("filters"));
+            if (localStorage.getItem("group101_filters") != undefined) {
+                filters = JSON.parse(localStorage.getItem("group101_filters"));
                 //Rendering the page's number.
                 renderFilters(filters);
             }
@@ -67,22 +66,22 @@
 
             //Getting the next page, by reloading we re-rendering the apartments of the specific page we need.
             $('#next').click(function () { // using the global variable apartmentCount to count apartment seen so far.
-                localStorage.setItem("index", JSON.stringify(apartmentCount));
+                localStorage.setItem("group101_indexFavorite", JSON.stringify(apartmentCount));
                 location.reload();
             });
 
             //Getting the previous page, by reloading we re-rendering the apartments of the specific page we need.
             $('#previous').click(function () { // using the global variable apartmentCount.
-                if (localStorage.getItem("index") != undefined)
-                    index1 = JSON.parse(localStorage.getItem("index"));
-                localStorage.setItem("index", JSON.stringify(index1 - 6));
+                if (localStorage.getItem("group101_index") != undefined)
+                    index1 = JSON.parse(localStorage.getItem("group101_index"));
+                localStorage.setItem("group101_index", JSON.stringify(index1 - 6));
                 location.reload();
             });
 
             //Getting the current page if the user skip pages / clicking specific num.
             $('.showPage').click(function () { // using the global variable apartmentCount.
                 let id = this.id - 1;
-                localStorage.setItem("index", JSON.stringify(id * 6));
+                localStorage.setItem("group101_index", JSON.stringify(id * 6));
                 location.reload();
             });
 
@@ -91,6 +90,20 @@
 
         // Function to insert or delete favorite.
         function addToFavorite(event) {
+            if (user == undefined) {
+                swal({ // this will open a dialouge
+                    title: "You need to log in",
+                    text: "Press ok to log in.",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true
+                })
+                    .then(function (ok) {
+                        if (ok) location.replace("login.html");
+ 
+                    });
+                return false;
+            }
             event.preventDefault(); // Prevent href a tag.
             apartmentID = this.id; // Global variable.
             let favorite = {
@@ -196,7 +209,7 @@
                 let href = 'property-catalog-single.html';
                 let id = this.id;
                 // Save apartment id in local storage
-                localStorage.setItem("apartmentId", JSON.stringify(id));
+                localStorage.setItem("group101_apartmentId", JSON.stringify(id));
                 // Go to the link
                 window.location = href;
             });

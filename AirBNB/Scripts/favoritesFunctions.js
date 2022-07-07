@@ -1,14 +1,24 @@
 ﻿//Add to favorites function
 function addToFavorites() {
     if (checkLogin() == false) {
-        alert("You need to log in");
-        return;
+        swal({ // this will open a dialouge
+            title: "You need to log in",
+            text: "Press ok to log in.",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true
+        })
+            .then(function (ok) {
+                if (ok) location.replace("login.html");
+                else swal("You are not logged!");
+            });
+        return false;
     }
 
-    if (localStorage.getItem("apartmentId") != undefined)
-        apartmentID = JSON.parse(localStorage.getItem("apartmentId"));
-    if (localStorage.getItem("userLogged") != undefined)
-        user = JSON.parse(localStorage.getItem("userLogged"));
+    if (localStorage.getItem("group101_apartmentId") != undefined)
+        apartmentID = JSON.parse(localStorage.getItem("group101_apartmentId"));
+    if (localStorage.getItem("group101_userLogged") != undefined)
+        user = JSON.parse(localStorage.getItem("group101_userLogged"));
 
     let favorite = {
         UserId: user.Id,
@@ -40,7 +50,6 @@ function successFavoriteCB(res) {
                     let api = `../api/Favorites/deleteFromFavorites`;
                     ajaxCall("DELETE", api, JSON.stringify(favorite), deleteFavoriteSCB, errorCB);
                 }
-                else swal("No change");
             });
     }
     else {
