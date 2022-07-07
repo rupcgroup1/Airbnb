@@ -62,7 +62,8 @@
 
             //If the user clicks on the property type, we will show him all the apartments with this type.
             $(".propertyType").click(function () {
-                let propType = $(".propertyType").find("h4").html();
+                let id = this.id;                
+                let propType = $('#h' + this.id).html();
                 let api = `../api/Apartments/getByProp/${propType}`
                 ajaxCall("GET", api, "", successByProp, errorByProp);
             });
@@ -181,16 +182,21 @@
             let arrDivs = $('.img-thumbnail-variant-1 .caption'); // catch all apartments description divs.
             let count = 0;
             let size = 0;
-            for (var i = 0; i < 3; i++) { // 3 - Number of categories.
+            for (var i = 0; i < 4; i++) { // 3 - Number of categories.
 
                 let img = arr_aTags.eq(i).find('img');
                 img.attr("src", apartmentCatgeories[i].Picture);
                 let div = arrDivs.eq(i);
+
+                div.parent().parent().attr('id', 'div' + (i + 1));
+                div.find('h4').attr('id', 'hdiv' + (i + 1));
+
                 div.find('h4').html(apartmentCatgeories[i].PropertyType);
                 div.find('p').html(apartmentCatgeories[i].Count + " Properties");
                 count += apartmentCatgeories[i].Count;
                 size += apartmentCatgeories[i].Count;
             }
+            /*
             for (var i = 3; i < apartmentCatgeories.length; i++)
                 size += apartmentCatgeories[i].Count;
             let img = arr_aTags.eq(3).find('img');
@@ -198,6 +204,7 @@
             let div = arrDivs.eq(3);
             div.find('h4').html("Other");
             div.find('p').html((size - count) + " Properties");
+            */
         }
     </script>
 </head>
