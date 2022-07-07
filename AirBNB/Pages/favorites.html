@@ -137,6 +137,7 @@
         //Rendering the apartments of current page.
         function renderApartments(apartments, index) {
             console.log(apartments);
+            //$(".col-12 .col-md-6").show();
             if (apartments.length > 0)
                 $('#results').html(apartments.length + " Apartments in favorites.");
             else $('#results').html("No apartments in your favorites.");
@@ -150,9 +151,9 @@
 
             //$(".col-12 .col-md-6").hide();
 
-            size = 6;
-            if ((apartments.length - index) < 6)
-                size = (apartments.length - index);
+            let size = 6;
+            if ((apartments.length - index) < 6) 
+                size = apartments.length;
             // render 6 apartments for each page.
             for (let i = 0; i < size; i++) {
 
@@ -200,6 +201,15 @@
             return;
         }
 
+        //Success get all apartments favorites by ID
+        function apartmentsFavoritesReRenderSCB(apartments2) {
+            //Rendering the apartments of current page.
+            renderApartments(apartments2, 0);
+            //Rendering the page's number.
+            renderNumbers(0, apartments2);
+            return;
+        }
+
         // Function to insert or delete favorite.
         function removeFavorite(event) {
             event.preventDefault(); // Prevent href a tag.
@@ -227,7 +237,7 @@
             //Now we will re-render the apartments.
             let id = user.Id;// global user declared in document ready.
             let api = `../api/Favorites/getAllApartmentsFavorites/${id}`
-            ajaxCall("GET", api, "", apartmentsFavoritesSCB, errorCB);
+            ajaxCall("GET", api, "", apartmentsFavoritesReRenderSCB, errorCB);
         }
 
     </script>
