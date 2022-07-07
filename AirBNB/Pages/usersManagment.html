@@ -43,6 +43,8 @@
         $(document).ready(function () {
             //Checking if the admin is logged in
             let bool = checkLogin();
+            $('#usersData').hide();
+            $('#summary').hide();
             if (bool == false) {
                 swal({ // this will open a dialouge
                     title: "You need to log in",
@@ -58,6 +60,23 @@
                             location.replace("index.html");
                         }
                     });
+            }
+            else if (user.Type == 'C') {
+                swal({ // this will open a dialouge
+                    title: "You are not admin!",
+                    text: "",
+                    icon: "warning",
+                    buttone: true,
+                    dangerMode: true
+                })
+                    .then(function (ok) {
+                        if (ok) location.replace("index.html");
+                        else location.replace("index.html");
+                    });
+            }
+            else {
+                $('#usersData').show();
+                $('#summary').show();
             }
 
             //Getting all the users for admin.
@@ -314,7 +333,7 @@
             </section>
 
             <section class="section-lg">
-                <div class="container">
+                <div id="summary" class="container">
                     <div class="row row-50">
                         <div class="col-xs-6 col-md-3">
                             <!--users-->
