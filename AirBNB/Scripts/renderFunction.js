@@ -31,7 +31,7 @@ function renderStars(score, reviews) {
 function checkLogin() {
 
     $('#adminPages').hide();
-
+    user = null;
     if (localStorage.getItem("group101_userLogged") != undefined) {
         user = JSON.parse(localStorage.getItem("group101_userLogged"));
         $('.userLogin').html("Hello " + user.Username);
